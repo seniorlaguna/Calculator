@@ -9,8 +9,8 @@
             android:key="precision"
             android:singleLine="true"
             android:summary="How many Nachkommastellen do you want?"
-            android:text="Precision"
             android:textColor="@android:color/black"
             android:title="Precision" />
+
     </PreferenceCategory>
 </PreferenceScreen>
