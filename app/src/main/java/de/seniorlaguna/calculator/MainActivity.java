@@ -1,6 +1,9 @@
 package de.seniorlaguna.calculator;
 
+import android.content.Intent;
 import android.os.Build;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar mToolbar;
     EditText mDisplay;
     GridLayout mGridLayout;
+
+    Integer mPrecison;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
         scaleButtons();
+
+        mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
     }
 
     @Override
@@ -50,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Einstellungen", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, SettingsActivity.class));
         return true;
     }
 
@@ -99,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 insertIntoDisplay("√(");
                 break;
 
+            case R.id.btn_dot:
+                insertIntoDisplay(".");
+                break;
+
             default:
                 insertIntoDisplay(((Button) v).getText().toString());
                 break;
@@ -127,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String term = mDisplay.getText().toString();
         term = term.replace("√", "sqrt");
         Expression expression = new Expression(term);
-        expression.setPrecision(32);
+        expression.setPrecision(mPrecison);
 
         try {
             mDisplay.setText(expression.eval().toString());
