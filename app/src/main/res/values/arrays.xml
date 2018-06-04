@@ -6,4 +6,19 @@
         <item>DEG</item>
     </string-array>
 
+    <string-array name="functions">
+        <item>e</item>
+        <item>Pi</item>
+        <item>sin(x)</item>
+        <item>cos(x)</item>
+        <item>tan(x)</item>
+        <item>sin⁻¹(x)</item>
+        <item>cos⁻¹(x)</item>
+        <item>tan⁻¹(x)</item>
+        <item>abs(x)</item>
+        <item>ln(x)</item>
+        <item>lg(x)</item>
+
+    </string-array>
+
 </resources>

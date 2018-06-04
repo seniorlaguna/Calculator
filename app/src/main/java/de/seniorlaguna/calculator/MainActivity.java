@@ -2,20 +2,17 @@ package de.seniorlaguna.calculator;
 
 import android.content.Intent;
 import android.os.Build;
-import android.os.Debug;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.Toast;
 
 import com.udojava.evalex.Expression;
 
@@ -155,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {}
     }
 
-    protected void selectFunction() {}
-
     protected void calc() {
         String term = mDisplay.getText().toString();
         term = term.replace("√", "sqrt");
@@ -189,6 +184,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         mDisplay.setText(newText);
         mDisplay.setSelection(cursor+pText.length());
+    }
+
+    protected void selectFunction() {
+
+        FunctionDialog dialogFragment = new FunctionDialog();
+        dialogFragment.setMainActivity(this);
+        dialogFragment.show(getSupportFragmentManager(), "functions");
     }
 
 }
