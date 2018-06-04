@@ -2,11 +2,13 @@ package de.seniorlaguna.calculator;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Debug;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mToolbar.inflateMenu(R.menu.menu);
 
         mDisplay = (EditText) findViewById(R.id.display);
@@ -46,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
         scaleButtons();
 
-        mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+        readPrecision();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+        readPrecision();
     }
 
     @Override
@@ -66,6 +69,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(this, SettingsActivity.class));
         return true;
+    }
+
+    protected void readPrecision() {
+        try {
+            mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString("precision", "8").apply();
+            mPrecison = 8;
+        }
     }
 
     protected void scaleButtons() {
@@ -117,6 +129,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 insertIntoDisplay(".");
                 break;
 
+            case R.id.btn_fak:
+                insertIntoDisplay("fak(");
+                break;
+
             default:
                 insertIntoDisplay(((Button) v).getText().toString());
                 break;
@@ -145,10 +161,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String term = mDisplay.getText().toString();
         term = term.replace("√", "sqrt");
         Expression expression = new Expression(term);
+
+        expression.addFunction(Functions.factorial);
+
         expression.setPrecision(mPrecison);
 
         try {
-            mDisplay.setText(expression.eval().toString());
+            mDisplay.setText(expression.eval().toPlainString());
         } catch (Exception e) {
             mDisplay.setText("Error");
         }

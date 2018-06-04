@@ -9,8 +9,15 @@
             android:key="precision"
             android:singleLine="true"
             android:summary="How many Nachkommastellen do you want?"
-            android:textColor="@android:color/black"
             android:title="Precision" />
+
+        <ListPreference
+            android:title="Winkelmaß"
+            android:summary="Radianten oder Grad als Winkelmaß"
+            android:key="angle"
+            android:entries="@array/angle"
+            android:defaultValue="RAD"
+            android:entryValues="@array/angle" />
 
     </PreferenceCategory>
 </PreferenceScreen>

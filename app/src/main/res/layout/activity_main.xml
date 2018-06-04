@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -20,7 +20,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +31,8 @@
         android:hint="0"
         android:inputType="none"
         android:textColor="@android:color/black"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:backgroundTint="@android:color/transparent" />
 
     <GridLayout
         android:id="@+id/grid_layout"
