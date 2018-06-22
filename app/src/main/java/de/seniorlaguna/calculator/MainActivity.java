@@ -143,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void deleteOne() {
+
+        if (mDisplay.getText().toString().contains("Error")) {
+            mDisplay.setText("");
+            return;
+        }
+
         try {
             int cursor = mDisplay.getSelectionStart();
             String oldText = mDisplay.getText().toString();
