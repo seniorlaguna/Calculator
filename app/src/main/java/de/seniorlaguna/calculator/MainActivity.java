@@ -70,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void readPreferences() {
         try {
-            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), "8"));
         } catch (Exception e) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString("precision", "8").apply();
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), getString(R.string.prefs_precision_default)).apply();
             mPrecision = 8;
         }
 
-        mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("delete_after_equals", false);
+        mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
     }
 
     protected void scaleButtons() {
@@ -111,33 +111,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deleteOne();
                 break;
 
-            case R.id.btn_pi:
-                insertIntoDisplay("π");
-                break;
-
             case R.id.btn_equals:
                 mEqualsPressed = true;
                 calc();
                 break;
 
+            case R.id.btn_pi:
+                insertIntoDisplay(getString(R.string.pi_symbol));
+                break;
+
             case R.id.btn_div:
-                insertIntoDisplay("/");
+                insertIntoDisplay(getString(R.string.divide));
                 break;
 
             case R.id.btn_mult:
-                insertIntoDisplay("*");
+                insertIntoDisplay(getString(R.string.multiply));
                 break;
 
             case R.id.btn_root:
-                insertIntoDisplay("√(");
+                insertIntoDisplay(getString(R.string.square_root_function));
                 break;
 
             case R.id.btn_dot:
-                insertIntoDisplay(".");
+                insertIntoDisplay(getString(R.string.dot));
                 break;
 
             case R.id.btn_fak:
-                insertIntoDisplay("fak(");
+                insertIntoDisplay(getString(R.string.factorial_function));
                 break;
 
             default:
@@ -149,13 +149,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void deleteAll() {
-        mDisplay.setText("");
+        mDisplay.setText(getString(R.string.empty));
     }
 
     protected void deleteOne() {
 
-        if (mDisplay.getText().toString().contains("Error")) {
-            mDisplay.setText("");
+        if (mDisplay.getText().toString().contains(getString(R.string.error))) {
+            mDisplay.setText(getString(R.string.empty));
             return;
         }
 
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void calc() {
         String term = mDisplay.getText().toString();
-        term = term.replace("√", "sqrt");
-        term = term.replace("π", "pi");
+        term = term.replace(getString(R.string.square_root_symbol), getString(R.string.square_root));
+        term = term.replace(getString(R.string.pi_symbol), getString(R.string.pi));
 
         Expression expression = new Expression(term);
 
@@ -182,20 +182,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             mDisplay.setText(expression.eval().toPlainString());
         } catch (Exception e) {
-            mDisplay.setText("Error");
+            mDisplay.setText(getString(R.string.error));
         }
         mDisplay.setSelection(mDisplay.getText().length());
     }
 
     protected void insertIntoDisplay(String pText) {
-        if (mDisplay.getText().toString().contains("Error") || (mDeleteResult && mEqualsPressed)) {
+        if (mDisplay.getText().toString().contains(getString(R.string.error)) || (mDeleteResult && mEqualsPressed)) {
             deleteAll();
             mEqualsPressed = false;
         }
 
         int cursor = mDisplay.getSelectionStart();
         String oldText = mDisplay.getText().toString();
-        String newText = "";
+        String newText = getString(R.string.empty);
         try {
             newText = oldText.substring(0, cursor) + pText + oldText.substring(cursor);
         } catch (Exception e) {

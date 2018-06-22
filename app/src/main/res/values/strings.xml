@@ -1,5 +1,31 @@
 <resources>
     <string name="app_name">Calculator</string>
     <string name="settings">Settings</string>
-    <string name="title_activity_settings">Settings</string>
+
+    <string name="prefs_category_general">General</string>
+
+    <string name="prefs_precision_key">precision_key</string>
+    <string name="prefs_precision_default">8</string>
+    <string name="prefs_precision_title">Precision</string>
+    <string name="prefs_precision_summary">The higher the more accurate</string>
+
+    <string name="prefs_auto_delete_key">auto_delete_key</string>
+    <string name="prefs_auto_delete_title">Auto Delete</string>
+    <string name="prefs_auto_delete_summary">Delete result on next input</string>
+
+
+    <string name="pi_symbol">π</string>
+    <string name="pi">pi</string>
+    <string name="divide">/</string>
+    <string name="multiply">*</string>
+    <string name="square_root_function">√(</string>
+    <string name="square_root_symbol">√</string>
+    <string name="square_root">sqrt</string>
+    <string name="dot">.</string>
+    <string name="factorial_function">fak(</string>
+
+    <string name="error">Error</string>
+    <string name="empty"></string>
+
+
 </resources>

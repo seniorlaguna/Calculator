@@ -2,20 +2,20 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="General">
+    <PreferenceCategory android:title="@string/prefs_category_general">
 
         <EditTextPreference
-            android:defaultValue="8"
-            android:key="precision"
+            android:defaultValue="@string/prefs_precision_default"
+            android:key="@string/prefs_precision_key"
             android:singleLine="true"
-            android:summary="How many Nachkommastellen do you want?"
-            android:title="Precision" />
+            android:summary="@string/prefs_precision_summary"
+            android:title="@string/prefs_precision_title" />
 
         <CheckBoxPreference
-            android:title="Auto Delete"
-            android:key="delete_after_equals"
+            android:title="@string/prefs_auto_delete_title"
+            android:key="@string/prefs_auto_delete_key"
             android:defaultValue="false"
-            android:summary="Delete result on next input" />
+            android:summary="@string/prefs_auto_delete_summary" />
 
     </PreferenceCategory>
 </PreferenceScreen>
