@@ -41,11 +41,11 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/btn_func"
+            android:id="@+id/btn_pi"
             style="@style/AppTheme.CalculatorButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="f(x)" />
+            android:text="π" />
 
         <Button
             android:id="@+id/btn_paranthese_open"

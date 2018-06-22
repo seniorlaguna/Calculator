@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deleteOne();
                 break;
 
-            case R.id.btn_func:
-                selectFunction();
+            case R.id.btn_pi:
+                insertIntoDisplay("π");
                 break;
 
             case R.id.btn_equals:
@@ -168,6 +168,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void calc() {
         String term = mDisplay.getText().toString();
         term = term.replace("√", "sqrt");
+        term = term.replace("π", "pi");
+
         Expression expression = new Expression(term);
 
         expression.addFunction(Functions.factorial);
@@ -197,13 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         mDisplay.setText(newText);
         mDisplay.setSelection(cursor+pText.length());
-    }
-
-    protected void selectFunction() {
-
-        FunctionDialog dialogFragment = new FunctionDialog();
-        dialogFragment.setMainActivity(this);
-        dialogFragment.show(getSupportFragmentManager(), "functions");
     }
 
 }
