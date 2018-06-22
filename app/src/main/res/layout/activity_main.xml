@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_column="4"
             android:layout_row="0"
+            android:background="@color/deleteAllColor"
             android:text="C" />
 
         <Button
@@ -261,6 +262,7 @@
             android:layout_height="wrap_content"
             android:layout_column="4"
             android:layout_row="4"
+            android:background="@android:color/holo_blue_light"
             android:text="=" />
     </GridLayout>
 

@@ -10,8 +10,9 @@
     <style name="AppTheme.CalculatorButton">
 
         <item name="android:textSize">25sp</item>
+        <item name="android:layout_margin">2px</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@android:color/holo_blue_light</item>
+        <item name="android:background">@android:color/holo_blue_dark</item>
         <item name="android:onClick">onClick</item>
 
     </style>

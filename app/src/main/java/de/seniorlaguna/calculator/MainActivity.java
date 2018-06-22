@@ -78,13 +78,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void scaleButtons() {
-        int size = getResources().getDisplayMetrics().widthPixels / 5;
+        //Divide by 5.1 for space between buttons
+        int size = getResources().getDisplayMetrics().widthPixels / 51 * 10;
 
         for (int i=0; i<mGridLayout.getChildCount(); i++) {
             Button button = (Button) mGridLayout.getChildAt(i);
             GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) button.getLayoutParams();
             layoutParams.width = size;
             layoutParams.height = size;
+
+            //Elevation
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                button.setElevation(10000);
+            }
+
             button.setLayoutParams(layoutParams);
         }
     }
