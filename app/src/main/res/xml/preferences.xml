@@ -11,5 +11,11 @@
             android:summary="How many Nachkommastellen do you want?"
             android:title="Precision" />
 
+        <CheckBoxPreference
+            android:title="Auto Delete"
+            android:key="delete_after_equals"
+            android:defaultValue="false"
+            android:summary="Delete result on next input" />
+
     </PreferenceCategory>
 </PreferenceScreen>

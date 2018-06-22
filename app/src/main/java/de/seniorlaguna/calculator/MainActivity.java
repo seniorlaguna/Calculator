@@ -3,7 +3,6 @@ package de.seniorlaguna.calculator;
 import android.content.Intent;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +21,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText mDisplay;
     GridLayout mGridLayout;
 
-    Integer mPrecison;
+    Integer mPrecision;
+    Boolean mDeleteResult;
+    Boolean mEqualsPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
         scaleButtons();
 
-        readPrecision();
+        readPreferences();
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        readPrecision();
+        readPreferences();
     }
 
     @Override
@@ -68,13 +68,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    protected void readPrecision() {
+    protected void readPreferences() {
         try {
-            mPrecison = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
+            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("precision", "8"));
         } catch (Exception e) {
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("precision", "8").apply();
-            mPrecison = 8;
+            mPrecision = 8;
         }
+
+        mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("delete_after_equals", false);
     }
 
     protected void scaleButtons() {
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_equals:
+                mEqualsPressed = true;
                 calc();
                 break;
 
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         expression.addFunction(Functions.factorial);
 
-        expression.setPrecision(mPrecison);
+        expression.setPrecision(mPrecision);
 
         try {
             mDisplay.setText(expression.eval().toPlainString());
@@ -185,8 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void insertIntoDisplay(String pText) {
-        if (mDisplay.getText().toString().contains("Error")) {
+        if (mDisplay.getText().toString().contains("Error") || (mDeleteResult && mEqualsPressed)) {
             deleteAll();
+            mEqualsPressed = false;
         }
 
         int cursor = mDisplay.getSelectionStart();
