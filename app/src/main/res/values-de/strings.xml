@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Taschenrechner</string>
+    <string name="settings">Einstellungen</string>
+
+    <string name="prefs_category_general">Allgemein</string>
+
+    <string name="prefs_precision_key">precision_key</string>
+    <string name="prefs_precision_default">8</string>
+    <string name="prefs_precision_title">Genauigkeit</string>
+    <string name="prefs_precision_summary">Umso höher desto genauer</string>
+
+    <string name="prefs_auto_delete_key">auto_delete_key</string>
+    <string name="prefs_auto_delete_title">Auto Delete</string>
+    <string name="prefs_auto_delete_summary">Löscht ein Ergebnis bei der nächsten Eingabe</string>
+
+
+    <string name="pi_symbol">π</string>
+    <string name="pi">pi</string>
+    <string name="divide">/</string>
+    <string name="multiply">*</string>
+    <string name="square_root_function">√(</string>
+    <string name="square_root_symbol">√</string>
+    <string name="square_root">sqrt</string>
+    <string name="dot">.</string>
+    <string name="factorial_function">fak(</string>
+
+    <string name="error">Fehler</string>
+    <string name="empty"></string>
+
+
+</resources>
