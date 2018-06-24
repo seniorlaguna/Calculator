@@ -1,4 +1,4 @@
-package de.seniorlaguna.calculator;
+package org.seniorlaguna.calculator;
 
 import com.udojava.evalex.AbstractFunction;
 import com.udojava.evalex.Expression;
