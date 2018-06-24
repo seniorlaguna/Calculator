@@ -3,11 +3,19 @@
     <string name="settings">Settings</string>
 
     <string name="prefs_category_general">General</string>
+    <string name="prefs_category_more">More</string>
 
     <string name="prefs_precision_key">precision_key</string>
-    <string name="prefs_precision_default">8</string>
     <string name="prefs_precision_title">Precision</string>
     <string name="prefs_precision_summary">The higher the more accurate</string>
+
+    <string name="prefs_round_key">round_key</string>
+    <string name="prefs_round_title">Rounding Up</string>
+    <string name="prefs_round_summary">The result is rounded up</string>
+
+    <string name="prefs_scale_key">scale_key</string>
+    <string name="prefs_scale_title">Nachkommastellen</string>
+    <string name="prefs_scale_summary">Numbers behind dot</string>
 
     <string name="prefs_auto_delete_key">auto_delete_key</string>
     <string name="prefs_auto_delete_title">Auto Delete</string>

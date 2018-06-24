@@ -5,11 +5,16 @@
     <PreferenceCategory android:title="@string/prefs_category_general">
 
         <EditTextPreference
-            android:defaultValue="@string/prefs_precision_default"
-            android:key="@string/prefs_precision_key"
             android:singleLine="true"
-            android:summary="@string/prefs_precision_summary"
-            android:title="@string/prefs_precision_title" />
+            android:key="@string/prefs_scale_key"
+            android:summary="@string/prefs_scale_summary"
+            android:title="@string/prefs_scale_title" />
+
+        <CheckBoxPreference
+            android:title="@string/prefs_round_title"
+            android:summary="@string/prefs_round_summary"
+            android:defaultValue="true"
+            android:key="@string/prefs_round_key" />
 
         <CheckBoxPreference
             android:title="@string/prefs_auto_delete_title"
@@ -18,4 +23,16 @@
             android:summary="@string/prefs_auto_delete_summary" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/prefs_category_more">
+
+        <EditTextPreference
+            android:key="@string/prefs_precision_key"
+            android:singleLine="true"
+            android:summary="@string/prefs_precision_summary"
+            android:title="@string/prefs_precision_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

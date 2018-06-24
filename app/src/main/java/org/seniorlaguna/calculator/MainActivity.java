@@ -2,9 +2,9 @@ package org.seniorlaguna.calculator;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,13 +15,20 @@ import android.widget.GridLayout;
 
 import com.udojava.evalex.Expression;
 
+import java.math.BigDecimal;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final int DEFAULT_PRECISION = 1024;
+    public static final int DEFAULT_SCALE = 2;
 
     Toolbar mToolbar;
     EditText mDisplay;
     GridLayout mGridLayout;
 
     Integer mPrecision;
+    Integer mScale;
+    Boolean mRound;
     Boolean mDeleteResult;
     Boolean mEqualsPressed = false;
 
@@ -69,13 +76,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void readPreferences() {
+
+        //read precision
         try {
-            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), "8"));
+            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()));
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(mPrecision).toString()).apply();
         } catch (Exception e) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), getString(R.string.prefs_precision_default)).apply();
-            mPrecision = 8;
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()).apply();
+            mPrecision = DEFAULT_PRECISION;
         }
 
+        //read scale
+        try {
+            mScale = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()));
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(mScale).toString()).apply();
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()).apply();
+            mScale = DEFAULT_SCALE;
+        }
+
+        //read round
+        mRound = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_round_key), true);
+
+        //read auto delete
         mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
     }
 
@@ -170,20 +193,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void calc() {
         String term = mDisplay.getText().toString();
+
+        //Empty Term
+        if (term.isEmpty()) {
+            return;
+        }
+
+        //Replace symbols
         term = term.replace(getString(R.string.square_root_symbol), getString(R.string.square_root));
         term = term.replace(getString(R.string.pi_symbol), getString(R.string.pi));
 
         Expression expression = new Expression(term);
-
         expression.addFunction(Functions.factorial);
-
         expression.setPrecision(mPrecision);
 
         try {
-            mDisplay.setText(expression.eval().toPlainString());
+
+            //Calculate and format result
+            BigDecimal result = expression.eval();
+            result = result.setScale(mScale, mRound ? BigDecimal.ROUND_HALF_UP : BigDecimal.ROUND_HALF_DOWN);
+            result = result.stripTrailingZeros();
+
+            mDisplay.setText(result.toPlainString());
+
+
         } catch (Exception e) {
             mDisplay.setText(getString(R.string.error));
         }
+
+        //place cursor at the end
         mDisplay.setSelection(mDisplay.getText().length());
     }
 
