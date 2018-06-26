@@ -17,7 +17,7 @@ import com.udojava.evalex.Expression;
 
 import java.math.BigDecimal;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     public static final int DEFAULT_PRECISION = 1024;
     public static final int DEFAULT_SCALE = 2;
@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
         scaleButtons();
 
+        //Long click for one delete
+        findViewById(R.id.btn_delete_one).setOnLongClickListener(this);
+
         readPreferences();
     }
 
@@ -73,52 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(this, SettingsActivity.class));
         return true;
-    }
-
-    protected void readPreferences() {
-
-        //read precision
-        try {
-            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()));
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(mPrecision).toString()).apply();
-        } catch (Exception e) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()).apply();
-            mPrecision = DEFAULT_PRECISION;
-        }
-
-        //read scale
-        try {
-            mScale = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()));
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(mScale).toString()).apply();
-        } catch (Exception e) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()).apply();
-            mScale = DEFAULT_SCALE;
-        }
-
-        //read round
-        mRound = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_round_key), true);
-
-        //read auto delete
-        mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
-    }
-
-    protected void scaleButtons() {
-        //Divide by 5.1 for space between buttons
-        int size = getResources().getDisplayMetrics().widthPixels / 51 * 10;
-
-        for (int i=0; i<mGridLayout.getChildCount(); i++) {
-            Button button = (Button) mGridLayout.getChildAt(i);
-            GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) button.getLayoutParams();
-            layoutParams.width = size;
-            layoutParams.height = size;
-
-            //Elevation
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                button.setElevation(10000);
-            }
-
-            button.setLayoutParams(layoutParams);
-        }
     }
 
     @Override
@@ -169,6 +126,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.btn_delete_one:
+                deleteAll();
+                return true;
+
+        }
+
+        return false;
+    }
+
+    protected void readPreferences() {
+
+        //read precision
+        try {
+            mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()));
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(mPrecision).toString()).apply();
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()).apply();
+            mPrecision = DEFAULT_PRECISION;
+        }
+
+        //read scale
+        try {
+            mScale = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()));
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(mScale).toString()).apply();
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()).apply();
+            mScale = DEFAULT_SCALE;
+        }
+
+        //read round
+        mRound = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_round_key), true);
+
+        //read auto delete
+        mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
+    }
+
+    protected void scaleButtons() {
+        //Divide by 5.1 for space between buttons
+        int size = getResources().getDisplayMetrics().widthPixels / 51 * 10;
+
+        for (int i=0; i<mGridLayout.getChildCount(); i++) {
+            Button button = (Button) mGridLayout.getChildAt(i);
+            GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) button.getLayoutParams();
+            layoutParams.width = size;
+            layoutParams.height = size;
+
+            //Elevation
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                button.setElevation(10000);
+            }
+
+            button.setLayoutParams(layoutParams);
+        }
     }
 
     protected void deleteAll() {
