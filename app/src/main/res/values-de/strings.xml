@@ -17,6 +17,8 @@
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Löscht das Ergebnis bei der nächsten Eingabe</string>
 
+
+
     <string name="error">Fehler</string>
 
 </resources>

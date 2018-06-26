@@ -33,6 +33,14 @@
             android:summary="@string/prefs_precision_summary"
             android:title="@string/prefs_precision_title" />
 
+        <Preference
+            android:key="@string/prefs_more_apps_key"
+            android:title="@string/prefs_more_apps_title" />
+
+        <Preference
+            android:key="@string/prefs_more_seniorlaguna_key"
+            android:title="@string/prefs_more_seniorlaguna_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

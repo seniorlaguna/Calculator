@@ -21,6 +21,12 @@
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Delete result on next input</string>
 
+    <string name="prefs_more_apps_key">more_apps_key</string>
+    <string name="prefs_more_apps_title">More Apps</string>
+
+    <string name="prefs_more_seniorlaguna_key">more_seniorlaguna_key</string>
+    <string name="prefs_more_seniorlaguna_title">More From Senior Laguna</string>
+
 
     <string name="pi_symbol">π</string>
     <string name="pi">pi</string>
@@ -34,6 +40,10 @@
 
     <string name="error">Error</string>
     <string name="empty"></string>
+
+    <string name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="playstore_url_market">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="github_url">https://github.com/seniorlaguna?tab=repositories</string>
 
 
 </resources>
