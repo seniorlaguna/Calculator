@@ -17,7 +17,8 @@
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Löscht das Ergebnis bei der nächsten Eingabe</string>
 
-
+    <string name="prefs_more_apps_title">Mehr Apps</string>
+    <string name="prefs_more_seniorlaguna_title">Mehr von Senior Laguna</string>
 
     <string name="error">Fehler</string>
 

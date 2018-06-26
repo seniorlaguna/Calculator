@@ -10,23 +10,24 @@
     <string name="prefs_precision_summary">The higher the more accurate</string>
 
     <string name="prefs_round_key">round_key</string>
-    <string name="prefs_round_title">Rounding Up</string>
-    <string name="prefs_round_summary">The result is rounded up</string>
+    <string name="prefs_round_title">Round Up</string>
+    <string name="prefs_round_summary">Rounding up the result</string>
 
     <string name="prefs_scale_key">scale_key</string>
-    <string name="prefs_scale_title">Nachkommastellen</string>
-    <string name="prefs_scale_summary">Numbers behind dot</string>
+    <string name="prefs_scale_title">Decimal places</string>
+    <string name="prefs_scale_summary">How many decimal places do you want</string>
 
     <string name="prefs_auto_delete_key">auto_delete_key</string>
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Delete result on next input</string>
 
     <string name="prefs_more_apps_key">more_apps_key</string>
-    <string name="prefs_more_apps_title">More Apps</string>
+    <string name="prefs_more_apps_title">More apps</string>
 
     <string name="prefs_more_seniorlaguna_key">more_seniorlaguna_key</string>
-    <string name="prefs_more_seniorlaguna_title">More From Senior Laguna</string>
+    <string name="prefs_more_seniorlaguna_title">More from Senior Laguna</string>
 
+    <string name="error">Error</string>
 
     <string name="pi_symbol">π</string>
     <string name="pi">pi</string>
@@ -38,7 +39,6 @@
     <string name="dot">.</string>
     <string name="factorial_function">fak(</string>
 
-    <string name="error">Error</string>
     <string name="empty"></string>
 
     <string name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
