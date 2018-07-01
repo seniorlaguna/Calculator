@@ -22,4 +22,25 @@
 
     <string name="error">Fehler</string>
 
+
+    <string name="prefs_precision_key">precision_key</string>
+    <string name="prefs_round_key">round_key</string>
+    <string name="prefs_scale_key">scale_key</string>
+    <string name="prefs_auto_delete_key">auto_delete_key</string>
+    <string name="prefs_more_apps_key">more_apps_key</string>
+    <string name="prefs_more_seniorlaguna_key">more_seniorlaguna_key</string>
+    <string name="pi_symbol">π</string>
+    <string name="pi">pi</string>
+    <string name="divide">/</string>
+    <string name="multiply">*</string>
+    <string name="square_root_function">√(</string>
+    <string name="square_root_symbol">√</string>
+    <string name="square_root">sqrt</string>
+    <string name="dot">.</string>
+    <string name="factorial_function">fak(</string>
+    <string name="empty"></string>
+    <string name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="playstore_url_market">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="github_url">https://github.com/seniorlaguna?tab=repositories</string>
+
 </resources>
