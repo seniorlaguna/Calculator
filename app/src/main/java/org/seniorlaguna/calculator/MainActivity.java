@@ -3,27 +3,40 @@ package org.seniorlaguna.calculator;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.TextView;
 
 import com.udojava.evalex.Expression;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ViewPager.OnPageChangeListener {
 
     public static final int DEFAULT_PRECISION = 1024;
     public static final int DEFAULT_SCALE = 2;
@@ -33,8 +46,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String PREFERENCE_NAME = "rated";
     public static final Integer PREFERENCE_RATE_BORDER = 10;
 
+    public static final Integer VERTICAL_PAGES = 2;
+    public static final Integer HORIZONTAL_PAGES = 1;
+
+
     Toolbar mToolbar;
-    EditText mDisplay;
+    TextView mToolbarTitle;
+    ViewPager mViewPager;
+    FragmentSlider mFragmentSlider;
+    ArrayList<String> mHistory;
+    ResultHistory mResultHistory;
+
     GridLayout mGridLayout;
 
     Integer mPrecision;
@@ -48,33 +70,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mToolbar.inflateMenu(R.menu.menu);
-
-        mDisplay = (EditText) findViewById(R.id.display);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mDisplay.setShowSoftInputOnFocus(false);
-        }
-        else {
-            mDisplay.setInputType(0);
-        }
-
-        mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
-        scaleButtons();
-
-        //Long click for one delete
-        findViewById(R.id.btn_delete_one).setOnLongClickListener(this);
-
+        initToolbar();
+        initViewPager();
+        initButtons();
+        initHistory();
         readPreferences();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            DisplayFragment.display.setVisibility(View.INVISIBLE);
+        } catch (NullPointerException e) {}
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         readPreferences();
+        showDisplay();
     }
 
     @Override
@@ -179,6 +194,93 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        deleteAll();
+        onItemLongClick(adapterView, view, i, l);
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        insertIntoDisplay(((TextView) view.findViewById(R.id.list_text_result)).getText().toString());
+        mViewPager.setCurrentItem(1);
+        return true;
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                setToolbarTitle(getString(R.string.history));
+                break;
+
+            case 1:
+                setToolbarTitle(getString(R.string.app_name));
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) { }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+
+    /**
+     * Initiate all different parts of the app
+     */
+    protected void initToolbar() {
+        //toolbar setup: use custom toolbar layout, disable standard toolbar title
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mToolbar.inflateMenu(R.menu.menu);
+    }
+
+    protected void initViewPager() {
+        //fragment sliding setup: set default fragment to display(1)
+        mViewPager = findViewById(R.id.view_pager);
+        mFragmentSlider = new FragmentSlider(this, getSupportFragmentManager());
+        mViewPager.setAdapter(mFragmentSlider);
+        mViewPager.setOnPageChangeListener(this);
+        mViewPager.setCurrentItem(1);
+        showDisplay();
+    }
+
+    protected void initHistory() {
+        readHistory();
+        mResultHistory = new ResultHistory(this, mHistory);
+    }
+
+    protected void initButtons() {
+        //button setup: scale them to fit the screen more or less
+        mGridLayout = (GridLayout) findViewById(R.id.grid_layout);
+        scaleButtons();
+
+        //Long click for one delete
+        findViewById(R.id.btn_delete_one).setOnLongClickListener(this);
+    }
+
+
+    /**
+     * A small focus hack for edit text
+     */
+
+    protected void showDisplay() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DisplayFragment.display.setVisibility(View.VISIBLE);
+            }
+        }, 500);
+    }
+
+    /**
+     * Manage saved values like preferences or history
+     */
     protected void readPreferences() {
 
         //read precision
@@ -206,6 +308,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
     }
 
+    protected void readHistory() {
+        mHistory = new ArrayList<>();
+    }
+
+    protected void addResultToHistory(String pTerm) {
+        if (mHistory.isEmpty() || !mHistory.get(mHistory.size()-1).equals(pTerm)) {
+            mHistory.add(0, pTerm);
+            mResultHistory.notifyDataSetChanged();
+        }
+    }
+
+    protected void saveHistory() {
+
+    }
+
+    /**
+     * Button manipulation to fit screen
+     */
     protected void scaleButtons() {
         //Divide by 5.1 for space between buttons
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
@@ -228,33 +348,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    /**
+     * Calculation functions and display manipulation
+     */
+
+    protected void setToolbarTitle(String pTitle) {
+        mToolbarTitle.setText(pTitle);
+    }
+
     protected void deleteAll() {
-        mDisplay.setText(getString(R.string.empty));
+        DisplayFragment.display.setText(getString(R.string.empty));
     }
 
     protected void deleteOne() {
 
-        if (mDisplay.getText().toString().contains(getString(R.string.error))) {
-            mDisplay.setText(getString(R.string.empty));
+        if (DisplayFragment.display.getText().toString().contains(getString(R.string.error))) {
+            DisplayFragment.display.setText(getString(R.string.empty));
             return;
         }
 
         try {
-            int cursor = mDisplay.getSelectionStart();
-            String oldText = mDisplay.getText().toString();
+            int cursor = DisplayFragment.display.getSelectionStart();
+            String oldText = DisplayFragment.display.getText().toString();
             String newText = oldText.substring(0, cursor - 1) + oldText.substring(cursor);
-            mDisplay.setText(newText);
-            mDisplay.setSelection(cursor - 1);
+            DisplayFragment.display.setText(newText);
+            DisplayFragment.display.setSelection(cursor - 1);
         } catch (Exception e) {}
     }
 
     protected void calc() {
-        String term = mDisplay.getText().toString();
+        String term = DisplayFragment.display.getText().toString();
 
         //Empty Term
         if (term.isEmpty()) {
             return;
         }
+
+        //Add term to history
+        addResultToHistory(term);
 
         //Replace symbols
         term = term.replace(getString(R.string.square_root_symbol), getString(R.string.square_root));
@@ -271,35 +403,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             result = result.setScale(mScale, mRound ? BigDecimal.ROUND_HALF_UP : BigDecimal.ROUND_HALF_DOWN);
             result = result.stripTrailingZeros();
 
-            mDisplay.setText(result.toPlainString());
-
+            DisplayFragment.display.setText(result.toPlainString());
+            addResultToHistory(result.toPlainString());
 
         } catch (Exception e) {
-            mDisplay.setText(getString(R.string.error));
+            DisplayFragment.display.setText(getString(R.string.error));
         }
 
         //place cursor at the end
-        mDisplay.setSelection(mDisplay.getText().length());
+        DisplayFragment.display.setSelection(DisplayFragment.display.getText().length());
     }
 
     protected void insertIntoDisplay(String pText) {
-        if (mDisplay.getText().toString().contains(getString(R.string.error)) || (mDeleteResult && mEqualsPressed)) {
+        if (DisplayFragment.display.getText().toString().contains(getString(R.string.error)) || (mDeleteResult && mEqualsPressed)) {
             deleteAll();
             mEqualsPressed = false;
         }
 
-        int cursor = mDisplay.getSelectionStart();
-        String oldText = mDisplay.getText().toString();
+        int cursor = DisplayFragment.display.getSelectionStart();
+        String oldText = DisplayFragment.display.getText().toString();
         String newText = getString(R.string.empty);
         try {
             newText = oldText.substring(0, cursor) + pText + oldText.substring(cursor);
         } catch (Exception e) {
             newText = oldText + pText;
         }
-        mDisplay.setText(newText);
-        mDisplay.setSelection(cursor+pText.length());
+        DisplayFragment.display.setText(newText);
+        DisplayFragment.display.setSelection(cursor+pText.length());
     }
-
 
     /**
      * dialog for app rating
@@ -319,6 +450,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }).setNegativeButton(R.string.rate_no, null);
 
             return builder.create();
+        }
+    }
+
+    /**
+     * viewpage adapter for scrolling between fragments
+     */
+    public static class FragmentSlider extends FragmentStatePagerAdapter {
+
+        MainActivity mActivity;
+
+        FragmentSlider(MainActivity pActivity, FragmentManager pFragmentManager) {
+            super(pFragmentManager);
+            mActivity = pActivity;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    HistoryFragment historyFragment = new HistoryFragment();
+                    historyFragment.setMainActivity(mActivity);
+                    return historyFragment;
+
+                case 1:
+                    DisplayFragment displayFragment = new DisplayFragment();
+                    return displayFragment;
+            }
+
+            return new DisplayFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return MainActivity.VERTICAL_PAGES;
+        }
+    }
+
+    /**
+     * array adapter for result history
+     */
+    public static class ResultHistory extends ArrayAdapter<String> {
+
+        protected Context mContext;
+        protected ArrayList<String> mResults;
+
+        ResultHistory(Context pContext, ArrayList<String> pResults) {
+            super(pContext, -1, pResults);
+            mContext = pContext;
+            mResults = pResults;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = layoutInflater.inflate(R.layout.result, parent, false);
+
+            TextView resultText = (TextView) view.findViewById(R.id.list_text_result);
+            resultText.setText(getItem(position));
+
+            return view;
+
         }
     }
 }

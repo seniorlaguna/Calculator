@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Taschenrechner</string>
     <string name="settings">Einstellungen</string>
+    <string name="history">Verlauf</string>
 
     <string name="prefs_category_general">Allgemein</string>
     <string name="prefs_category_more">Mehr</string>

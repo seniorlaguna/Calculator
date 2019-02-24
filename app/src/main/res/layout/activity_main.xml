@@ -11,6 +11,7 @@
         android:background="@color/colorPrimary">
 
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -20,19 +21,12 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/display"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/grid_layout"
-        android:layout_below="@+id/toolbar"
-        android:cursorVisible="true"
-        android:gravity="top|right"
-        android:hint="0"
-        android:inputType="none"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        app:backgroundTint="@android:color/transparent" />
+        android:layout_below="@+id/toolbar" />
 
     <GridLayout
         android:id="@+id/grid_layout"
