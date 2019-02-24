@@ -44,6 +44,11 @@
     <string name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
     <string name="playstore_url_market">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
     <string name="github_url">https://github.com/seniorlaguna?tab=repositories</string>
+    <string name="playstore_package_url">market://details?id=org.seniorlaguna.calculator</string>
+
+    <string name="rate_app">We need your feedback please! ;)</string>
+    <string name="rate_yes">Lets do it</string>
+    <string name="rate_no">Nope</string>
 
 
 </resources>

@@ -1,6 +1,12 @@
 package org.seniorlaguna.calculator;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final int DEFAULT_PRECISION = 1024;
     public static final int DEFAULT_SCALE = 2;
+
+    //Constants for app rating
+    public static final String PREFERENCE_ID = "prefs";
+    public static final String PREFERENCE_NAME = "rated";
+    public static final Integer PREFERENCE_RATE_BORDER = 10;
 
     Toolbar mToolbar;
     EditText mDisplay;
@@ -140,6 +151,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_ID, MODE_PRIVATE);
+        int counter = sharedPreferences.getInt(PREFERENCE_NAME, 0);
+
+        //ask user for app rating
+        if (counter > PREFERENCE_RATE_BORDER) {
+            new AppRatingAlert().show(getFragmentManager(), "");
+            sharedPreferences.edit().putInt(PREFERENCE_NAME, -1).apply();
+        }
+
+        //user already saw this question so don't annoy him again
+        else if (counter < 0) {
+            super.onBackPressed();
+        }
+
+        //give the user more time to experience the app
+        else {
+            sharedPreferences.edit().putInt(PREFERENCE_NAME, counter + 1).apply();
+            super.onBackPressed();
+        }
+
+
     }
 
     protected void readPreferences() {
@@ -263,4 +300,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDisplay.setSelection(cursor+pText.length());
     }
 
+
+    /**
+     * dialog for app rating
+     */
+    public static class AppRatingAlert extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.rate_app)
+                    .setPositiveButton(R.string.rate_yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.playstore_package_url))));
+                }
+            }).setNegativeButton(R.string.rate_no, null);
+
+            return builder.create();
+        }
+    }
 }
