@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
+    Preference mClearHistoryButton;
     Preference mMoreAppsButton;
     Preference mMoreSeniorLagunaButton;
 
@@ -22,9 +23,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         addPreferencesFromResource(R.xml.preferences);
         
 
+        mClearHistoryButton = findPreference(getString(R.string.prefs_clear_history_key));
         mMoreAppsButton = findPreference(getString(R.string.prefs_more_apps_key));
         mMoreSeniorLagunaButton = findPreference(getString(R.string.prefs_more_seniorlaguna_key));
 
+        mClearHistoryButton.setOnPreferenceClickListener(this);
         mMoreAppsButton.setOnPreferenceClickListener(this);
         mMoreSeniorLagunaButton.setOnPreferenceClickListener(this);
     }
@@ -33,6 +36,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public boolean onPreferenceClick(Preference preference) {
 
         switch (preference.getTitleRes()) {
+
+            case R.string.prefs_clear_history_title:
+                clearHistory();
+                break;
 
             case R.string.prefs_more_apps_title:
                 openPlaystore();
@@ -45,6 +52,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
 
         return true;
+    }
+
+    protected void clearHistory() {
+        getPreferenceManager().getSharedPreferences().edit().putString(MainActivity.PREFERENCE_NAME_HISTORY, "").apply();
     }
 
     protected void openPlaystore() {

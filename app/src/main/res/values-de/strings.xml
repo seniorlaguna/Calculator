@@ -4,6 +4,7 @@
     <string name="history">Verlauf</string>
 
     <string name="prefs_category_general">Allgemein</string>
+    <string name="prefs_category_history">Verlauf</string>
     <string name="prefs_category_more">Mehr</string>
 
     <string name="prefs_round_title">Aufrunden</string>
@@ -17,6 +18,21 @@
 
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Löscht das Ergebnis bei der nächsten Eingabe</string>
+
+    <string name="prefs_history_length_title">Anzahl der Einträge im Verlauf</string>
+    <string name="prefs_history_length_summary">Wie viele Einträge sollen maximal gespeichert werden</string>
+
+    <string name="prefs_history_save_result_title">Ergebnisse im Verlauf speichern</string>
+    <string name="prefs_history_save_result_summary">Ansonsten wird nur der Rechenweg gespeichert</string>
+
+    <string name="prefs_clear_history_title">Verlauf löschen</string>
+
+    <string name="prefs_disable_input_in_history_title">Eingaben im Verlauf deaktivieren</string>
+    <string name="prefs_disable_input_in_history_summary">Eingaben im Tab Verlauf werden nicht verarbeitet</string>
+
+    <string name="prefs_switch_to_display_on_input_title">Wechsel bei Eingaben</string>
+    <string name="prefs_switch_to_display_on_input_summary">Eingaben im Tab Verlauf wechseln zum Display</string>
+
 
     <string name="prefs_more_apps_title">Mehr Apps</string>
     <string name="prefs_more_seniorlaguna_title">Mehr von Senior Laguna</string>

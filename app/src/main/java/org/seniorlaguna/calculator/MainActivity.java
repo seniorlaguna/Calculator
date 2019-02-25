@@ -20,6 +20,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,16 +37,23 @@ import com.udojava.evalex.Expression;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ViewPager.OnPageChangeListener {
 
     public static final int DEFAULT_PRECISION = 1024;
     public static final int DEFAULT_SCALE = 2;
+    public static final int DEFAULT_HISTORY_LENGTH = 50;
 
     //Constants for app rating
     public static final String PREFERENCE_ID = "prefs";
-    public static final String PREFERENCE_NAME = "rated";
+    public static final String PREFERENCE_NAME_RATE = "rated";
     public static final Integer PREFERENCE_RATE_BORDER = 10;
+
+    //Constants for history
+    public static final String PREFERENCE_NAME_HISTORY = "history";
+    public static final String HISTORY_SEPERATOR = "#";
+
 
     public static final Integer VERTICAL_PAGES = 2;
     public static final Integer HORIZONTAL_PAGES = 1;
@@ -54,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView mToolbarTitle;
     ViewPager mViewPager;
     FragmentSlider mFragmentSlider;
-    ArrayList<String> mHistory;
+    ArrayList<String> mHistory = new ArrayList<String>();
     ResultHistory mResultHistory;
 
     GridLayout mGridLayout;
@@ -63,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Integer mScale;
     Boolean mRound;
     Boolean mDeleteResult;
+    Integer mHistoryLength;
+    Boolean mSaveResultsInHistory;
+    Boolean mInputDisabledInHistory;
+    Boolean mInputSwitchesToDisplay;
+
     Boolean mEqualsPressed = false;
 
     @Override
@@ -79,16 +93,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onPause() {
-        super.onPause();
         try {
             DisplayFragment.display.setVisibility(View.INVISIBLE);
         } catch (NullPointerException e) {}
+        saveHistory();
+        super.onPause();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         readPreferences();
+        readHistory();
         showDisplay();
     }
 
@@ -106,6 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
+        //in history tab
+        if (mViewPager.getCurrentItem() == 0) {
+            if (mInputSwitchesToDisplay) mViewPager.setCurrentItem(1);
+            if (mInputDisabledInHistory) return;
+        }
 
         switch (v.getId()) {
 
@@ -172,12 +195,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_ID, MODE_PRIVATE);
-        int counter = sharedPreferences.getInt(PREFERENCE_NAME, 0);
+        int counter = sharedPreferences.getInt(PREFERENCE_NAME_RATE, 0);
 
         //ask user for app rating
         if (counter > PREFERENCE_RATE_BORDER) {
             new AppRatingAlert().show(getFragmentManager(), "");
-            sharedPreferences.edit().putInt(PREFERENCE_NAME, -1).apply();
+            sharedPreferences.edit().putInt(PREFERENCE_NAME_RATE, -1).apply();
         }
 
         //user already saw this question so don't annoy him again
@@ -187,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //give the user more time to experience the app
         else {
-            sharedPreferences.edit().putInt(PREFERENCE_NAME, counter + 1).apply();
+            sharedPreferences.edit().putInt(PREFERENCE_NAME_RATE, counter + 1).apply();
             super.onBackPressed();
         }
 
@@ -251,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void initHistory() {
-        readHistory();
         mResultHistory = new ResultHistory(this, mHistory);
     }
 
@@ -286,6 +308,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //read precision
         try {
             mPrecision = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()));
+            if (mPrecision < 0) throw new Exception();
+
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(mPrecision).toString()).apply();
         } catch (Exception e) {
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_precision_key), new Integer(DEFAULT_PRECISION).toString()).apply();
@@ -295,6 +319,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //read scale
         try {
             mScale = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()));
+            if (mScale < 0) throw new Exception();
+
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(mScale).toString()).apply();
         } catch (Exception e) {
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_scale_key), new Integer(DEFAULT_SCALE).toString()).apply();
@@ -306,22 +332,73 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //read auto delete
         mDeleteResult = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_auto_delete_key), false);
+
+        //read history length
+        try {
+            mHistoryLength = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.prefs_history_length_key), new Integer(DEFAULT_HISTORY_LENGTH).toString()));
+            if (mHistoryLength < 0) throw new Exception();
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_history_length_key), new Integer(mHistoryLength).toString()).apply();
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.prefs_history_length_key), new Integer(DEFAULT_HISTORY_LENGTH).toString()).apply();
+            mHistoryLength = DEFAULT_HISTORY_LENGTH;
+        }
+
+        //read history save results
+        mSaveResultsInHistory = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_history_save_result_key), false);
+
+        //read disable input in history
+        mInputDisabledInHistory = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_disable_input_in_history_key), true);
+
+        //read switch back on input
+        mInputSwitchesToDisplay = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.prefs_switch_to_display_on_input_key), true);
+
     }
 
     protected void readHistory() {
-        mHistory = new ArrayList<>();
+
+        mHistory.clear();
+
+        try {
+            String resultString = PreferenceManager.getDefaultSharedPreferences(this).getString(PREFERENCE_NAME_HISTORY, "");
+            String[] results = resultString.split(HISTORY_SEPERATOR);
+
+            for (int i=0; i<results.length; i++) {
+                if (i >= mHistoryLength) break;
+                if (!results[i].isEmpty()) mHistory.add(results[i]);
+            }
+        } catch (Exception e) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(PREFERENCE_NAME_HISTORY, "").apply();
+        }
+
+        mResultHistory.notifyDataSetChanged();
     }
 
     protected void addResultToHistory(String pTerm) {
-        if (mHistory.isEmpty() || !mHistory.get(mHistory.size()-1).equals(pTerm)) {
+
+        if (mHistory.isEmpty() || !mHistory.get(0).equals(pTerm)) {
             mHistory.add(0, pTerm);
-            mResultHistory.notifyDataSetChanged();
         }
+
+        if (mHistory.size() > mHistoryLength) {
+            mHistory.remove(mHistoryLength.intValue());
+        }
+
+        mResultHistory.notifyDataSetChanged();
     }
+
 
     protected void saveHistory() {
 
+        try {
+            String resultString = TextUtils.join(HISTORY_SEPERATOR, mHistory);
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(PREFERENCE_NAME_HISTORY, resultString).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
 
     /**
      * Button manipulation to fit screen
@@ -401,10 +478,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Calculate and format result
             BigDecimal result = expression.eval();
             result = result.setScale(mScale, mRound ? BigDecimal.ROUND_HALF_UP : BigDecimal.ROUND_HALF_DOWN);
-            result = result.stripTrailingZeros();
 
-            DisplayFragment.display.setText(result.toPlainString());
-            addResultToHistory(result.toPlainString());
+            //remove useless zeros at the end
+            String textResult = result.toPlainString();
+            while ((textResult.endsWith("0") && textResult.contains(".")) || textResult.endsWith(".")) {textResult = textResult.substring(0, textResult.length()-1);}
+
+            DisplayFragment.display.setText(textResult);
+
+            //save result in history if wanted
+            if (mSaveResultsInHistory) {
+                addResultToHistory(textResult);
+            }
 
         } catch (Exception e) {
             DisplayFragment.display.setText(getString(R.string.error));
@@ -415,6 +499,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void insertIntoDisplay(String pText) {
+
         if (DisplayFragment.display.getText().toString().contains(getString(R.string.error)) || (mDeleteResult && mEqualsPressed)) {
             deleteAll();
             mEqualsPressed = false;

@@ -4,28 +4,48 @@
     <string name="history">History</string>
 
     <string name="prefs_category_general">General</string>
+    <string name="prefs_category_history">History</string>
     <string name="prefs_category_more">More</string>
 
-    <string name="prefs_precision_key">precision_key</string>
+    <string translatable="false" name="prefs_precision_key">precision_key</string>
     <string name="prefs_precision_title">Precision</string>
     <string name="prefs_precision_summary">The higher the more accurate</string>
 
-    <string name="prefs_round_key">round_key</string>
+    <string translatable="false" name="prefs_round_key">round_key</string>
     <string name="prefs_round_title">Round Up</string>
     <string name="prefs_round_summary">Rounding up the result</string>
 
-    <string name="prefs_scale_key">scale_key</string>
+    <string translatable="false" name="prefs_scale_key">scale_key</string>
     <string name="prefs_scale_title">Decimal places</string>
     <string name="prefs_scale_summary">How many decimal places do you want</string>
 
-    <string name="prefs_auto_delete_key">auto_delete_key</string>
+    <string translatable="false" name="prefs_auto_delete_key">auto_delete_key</string>
     <string name="prefs_auto_delete_title">Auto Delete</string>
     <string name="prefs_auto_delete_summary">Delete result on next input</string>
 
-    <string name="prefs_more_apps_key">more_apps_key</string>
+    <string translatable="false" name="prefs_history_length_key">history_length_key</string>
+    <string name="prefs_history_length_title">History Length</string>
+    <string name="prefs_history_length_summary">How many entries do you want to save</string>
+
+    <string translatable="false" name="prefs_history_save_result_key">history_save_result_key</string>
+    <string name="prefs_history_save_result_title">Save results in history</string>
+    <string name="prefs_history_save_result_summary">Otherwise there are just the calculations</string>
+
+    <string translatable="false" name="prefs_clear_history_key">clear_history_key</string>
+    <string name="prefs_clear_history_title">Clear history</string>
+
+    <string translatable="false" name="prefs_disable_input_in_history_key">history_save_result_key</string>
+    <string name="prefs_disable_input_in_history_title">Disable input in history</string>
+    <string name="prefs_disable_input_in_history_summary">Your inputs in history tab were not processed</string>
+
+    <string translatable="false" name="prefs_switch_to_display_on_input_key">switch_to_display_on_input_key</string>
+    <string name="prefs_switch_to_display_on_input_title">Switch on Input</string>
+    <string name="prefs_switch_to_display_on_input_summary">Inputs in history tab switches to display</string>
+
+    <string translatable="false" name="prefs_more_apps_key">more_apps_key</string>
     <string name="prefs_more_apps_title">More apps</string>
 
-    <string name="prefs_more_seniorlaguna_key">more_seniorlaguna_key</string>
+    <string translatable="false" name="prefs_more_seniorlaguna_key">more_seniorlaguna_key</string>
     <string name="prefs_more_seniorlaguna_title">More from Senior Laguna</string>
 
     <string name="error">Error</string>
@@ -42,10 +62,10 @@
 
     <string name="empty"></string>
 
-    <string name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
-    <string name="playstore_url_market">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
-    <string name="github_url">https://github.com/seniorlaguna?tab=repositories</string>
-    <string name="playstore_package_url">market://details?id=org.seniorlaguna.calculator</string>
+    <string translatable="false" name="playstore_url_https">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string translatable="false" name="playstore_url_market">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string translatable="false" name="github_url">https://github.com/seniorlaguna?tab=repositories</string>
+    <string translatable="false" name="playstore_package_url">market://details?id=org.seniorlaguna.calculator</string>
 
     <string name="rate_app">We need your feedback please! ;)</string>
     <string name="rate_yes">Lets do it</string>

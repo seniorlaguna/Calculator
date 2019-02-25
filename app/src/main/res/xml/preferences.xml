@@ -25,6 +25,27 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/prefs_category_history">
+
+        <EditTextPreference
+            android:key="@string/prefs_history_length_key"
+            android:singleLine="true"
+            android:summary="@string/prefs_history_length_summary"
+            android:title="@string/prefs_history_length_title" />
+
+        <CheckBoxPreference
+            android:key="@string/prefs_history_save_result_key"
+            android:summary="@string/prefs_history_save_result_summary"
+            android:title="@string/prefs_history_save_result_title"
+            android:defaultValue="false" />
+
+        <Preference
+            android:key="@string/prefs_clear_history_key"
+            android:title="@string/prefs_clear_history_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/prefs_category_more">
 
         <EditTextPreference
@@ -32,6 +53,18 @@
             android:singleLine="true"
             android:summary="@string/prefs_precision_summary"
             android:title="@string/prefs_precision_title" />
+
+        <CheckBoxPreference
+            android:key="@string/prefs_disable_input_in_history_key"
+            android:summary="@string/prefs_disable_input_in_history_summary"
+            android:title="@string/prefs_disable_input_in_history_title"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="@string/prefs_switch_to_display_on_input_key"
+            android:summary="@string/prefs_switch_to_display_on_input_summary"
+            android:title="@string/prefs_switch_to_display_on_input_title"
+            android:defaultValue="true" />
 
         <Preference
             android:key="@string/prefs_more_apps_key"
