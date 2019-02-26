@@ -66,4 +66,8 @@
     <string name="rate_yes">Los gehts</string>
     <string name="rate_no">Nein</string>
 
+    <string name="intro1">Wische nach rechts um deinen Verlauf zu sehen!</string>
+    <string name="intro2">Tippe kurz um den Eintrag zu benutzen. Tippe länger um den Eintrag in deine Berechnung einzufügen.</string>
+    <string name="got_it">Verstanden</string>
+
 </resources>

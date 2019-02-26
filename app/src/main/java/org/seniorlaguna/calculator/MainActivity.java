@@ -39,6 +39,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
+import uk.co.deanwild.materialshowcaseview.shape.Shape;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ViewPager.OnPageChangeListener {
 
     public static final int DEFAULT_PRECISION = 1024;
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Constants for app rating
     public static final String PREFERENCE_ID = "prefs";
     public static final String PREFERENCE_NAME_RATE = "rated";
-    public static final Integer PREFERENCE_RATE_BORDER = 10;
+    public static final Integer PREFERENCE_RATE_BORDER = 5;
 
     //Constants for history
     public static final String PREFERENCE_NAME_HISTORY = "history";
@@ -56,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public static final Integer VERTICAL_PAGES = 2;
-    public static final Integer HORIZONTAL_PAGES = 1;
 
 
     Toolbar mToolbar;
@@ -92,10 +95,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        //
+        new MaterialShowcaseView.Builder(this)
+                .setShape(new RectangleShape(0, 0))
+                .setTarget(mViewPager)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.intro1)
+                .setDelay(500) // optional but starting animations immediately in onCreate can make them choppy
+                .singleUse("1") // provide a unique ID used to ensure it is only shown once
+                .show();
+
+    }
+
+    @Override
     protected void onPause() {
-        try {
-            DisplayFragment.display.setVisibility(View.INVISIBLE);
-        } catch (NullPointerException e) {}
+        setDisplayFocus(false);
         saveHistory();
         super.onPause();
 
@@ -106,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         readPreferences();
         readHistory();
-        showDisplay();
+        setDisplayFocus(true);
     }
 
     @Override
@@ -237,6 +254,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (position) {
             case 0:
                 setToolbarTitle(getString(R.string.history));
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(mViewPager)
+                        .setShape(new RectangleShape(0,0))
+                        .setDismissText(R.string.got_it)
+                        .setContentText(R.string.intro2)
+                        .singleUse("2") // provide a unique ID used to ensure it is only shown once
+                        .show();
                 break;
 
             case 1:
@@ -270,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.setAdapter(mFragmentSlider);
         mViewPager.setOnPageChangeListener(this);
         mViewPager.setCurrentItem(1);
-        showDisplay();
+        setDisplayFocus(true);
     }
 
     protected void initHistory() {
@@ -291,13 +315,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * A small focus hack for edit text
      */
 
-    protected void showDisplay() {
+    protected void setDisplayFocus(final boolean pDisplayFocusable) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                DisplayFragment.display.setVisibility(View.VISIBLE);
+                DisplayFragment.display.setFocusableInTouchMode(pDisplayFocusable);
+                DisplayFragment.display.setFocusable(pDisplayFocusable);
             }
-        }, 500);
+        }, 1000);
+
     }
 
     /**

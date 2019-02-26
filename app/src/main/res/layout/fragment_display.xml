@@ -12,7 +12,7 @@
         android:layout_below="@+id/toolbar"
         android:cursorVisible="true"
         android:gravity="top|right"
-        android:visibility="invisible"
+        android:focusable="false"
         android:hint="0"
         android:inputType="none"
         android:textColor="@android:color/black"

@@ -34,13 +34,13 @@
     <string translatable="false" name="prefs_clear_history_key">clear_history_key</string>
     <string name="prefs_clear_history_title">Clear history</string>
 
-    <string translatable="false" name="prefs_disable_input_in_history_key">history_save_result_key</string>
+    <string translatable="false" name="prefs_disable_input_in_history_key">disable_input_in_history_key</string>
     <string name="prefs_disable_input_in_history_title">Disable input in history</string>
     <string name="prefs_disable_input_in_history_summary">Your inputs in history tab were not processed</string>
 
     <string translatable="false" name="prefs_switch_to_display_on_input_key">switch_to_display_on_input_key</string>
     <string name="prefs_switch_to_display_on_input_title">Switch on Input</string>
-    <string name="prefs_switch_to_display_on_input_summary">Inputs in history tab switches to display</string>
+    <string name="prefs_switch_to_display_on_input_summary">Inputs in history tab switch to display</string>
 
     <string translatable="false" name="prefs_more_apps_key">more_apps_key</string>
     <string name="prefs_more_apps_title">More apps</string>
@@ -70,6 +70,10 @@
     <string name="rate_app">We need your feedback please! ;)</string>
     <string name="rate_yes">Lets do it</string>
     <string name="rate_no">Nope</string>
+
+    <string name="intro1">Swipe right to open history</string>
+    <string name="intro2">Click to use. Long click to insert.</string>
+    <string name="got_it">Got It!</string>
 
 
 </resources>
