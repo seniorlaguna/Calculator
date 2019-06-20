@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Taschenrechner</string>
+
+    <!-- Main Activity -->
+
+    <string name="menu_settings">Einstellungen</string>
+
+    <!-- Navigation Drawer -->
+
+    <string name="navigation_drawer_open">Öffnen</string>
+    <string name="navigation_drawer_close">Schließen</string>
+
+    <string name="navigation_drawer_group_tools">Tools</string>
+    <string name="navigation_drawer_basic_calculator">Basis Taschenrechner</string>
+    <string name="navigation_drawer_scientific_calculator">Wissenschaftlicher Taschenrechner</string>
+    <string name="navigation_drawer_percentage_calculator">Percentage Calculator</string>
+    <string name="navigation_drawer_unit_calculator">Unit Calculator</string>
+
+    <string name="navigation_drawer_group_more">Mehr</string>
+    <string name="navigation_drawer_rate">Bewerte die App</string>
+    <string name="navigation_drawer_more_apps">Mehr Apps</string>
+    <string name="navigation_drawer_more_senior_laguna">Mehr Senior Laguna</string>
+
+
+    <!-- Settings Activity -->
+
+    <string name="settings_activity_toolbar_title">Einstellungen</string>
+
+    <!-- App Rating -->
+    
+    <string name="app_rating_request">Wir brauchen dein Feedback! ;)</string>
+    <string name="app_rating_request_no">Nein</string>
+    <string name="app_rating_request_yes">Okay</string>
+
+    <!-- Instructor -->
+    <string name="instructor_got_it">Verstanden</string>
+    <string name="instructor_intro1">Wische nach rechts um den Verlauf zu öffnen!</string>
+    <string name="instructor_intro2">Tippe kurz um den Eintrag zu benutzen. Tippe länger um den Eintrag zu verändern.</string>
+    <string name="instructor_intro3">Der wissenschaftliche Taschenrechner hat hier und da noch ein paar Problemchen. Wir arbeiten dran!</string>
+
+</resources>

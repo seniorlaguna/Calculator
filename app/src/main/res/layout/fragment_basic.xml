@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_root"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
+
+    <org.seniorlaguna.calculator.customviews.ExtendedViewPager
+            android:id="@+id/fragment_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/fragment_keyboard"/>
+
+    <TableLayout
+            android:id="@+id/fragment_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

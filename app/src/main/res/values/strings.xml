@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Calculator</string>
+
+    <!-- Main Activity -->
+
+    <string name="menu_settings">Settings</string>
+
+    <!-- Navigation Drawer -->
+
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
+
+    <string name="navigation_drawer_group_tools">Tools</string>
+    <string name="navigation_drawer_basic_calculator">Basic Calculator</string>
+    <string name="navigation_drawer_scientific_calculator">Scientific Calculator</string>
+    <string name="navigation_drawer_percentage_calculator">Percentage Calculator</string>
+    <string name="navigation_drawer_unit_calculator">Unit Calculator</string>
+
+    <string name="navigation_drawer_group_more">More</string>
+    <string name="navigation_drawer_rate">Rate</string>
+    <string name="navigation_drawer_more_apps">More Apps</string>
+    <string name="navigation_drawer_more_senior_laguna">More Senior Laguna</string>
+
+
+    <!-- Settings Activity -->
+
+    <string name="settings_activity_toolbar_title">Settings</string>
+
+    <!-- App Rating -->
+
+
+    <string name="app_rating_request">We need your feedback please! ;)</string>
+    <string name="app_rating_request_no">Nope</string>
+    <string name="app_rating_request_yes">Okay</string>
+
+
+    <!-- Instructor -->
+    <string name="instructor_got_it">Got It!</string>
+    <string name="instructor_intro1">Swipe right to show history!</string>
+    <string name="instructor_intro2">Click to use. Long click for options!</string>
+    <string name="instructor_intro3">The scientific calculator is not fully functional yet. We do our best to make it work!</string>
+
+</resources>

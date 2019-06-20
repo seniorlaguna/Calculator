@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Toolbar Title -->
+    <string name="basic_calculator_toolbar_title_display">Calculator</string>
+    <string name="basic_calculator_toolbar_title_history">History</string>
+
+    <!-- History Dialog -->
+    <string name="basic_calculator_history_dialog_title">Options</string>
+    <string name="basic_calculator_history_dialog_insert">Insert</string>
+    <string name="basic_calculator_history_dialog_rename">Rename</string>
+    <string name="basic_calculator_history_dialog_modify">Modify</string>
+    <string name="basic_calculator_history_dialog_delete">Delete</string>
+
+    <string-array name="basic_calculator_history_dialog_options">
+        <item>@string/basic_calculator_history_dialog_insert</item>
+        <item>@string/basic_calculator_history_dialog_rename</item>
+        <item>@string/basic_calculator_history_dialog_modify</item>
+        <item>@string/basic_calculator_history_dialog_delete</item>
+    </string-array>
+
+    <string name="basic_calculator_history_dialog_yes">Save</string>
+    <string name="basic_calculator_history_dialog_no">Cancel</string>
+
+    <!-- Basic Calculator Settings -->
+    <string name="prefs_basic_calculator_category_general">General</string>
+    <string name="prefs_basic_calculator_category_history">History</string>
+    <string name="prefs_basic_calculator_category_advanced">Advanced</string>
+
+    <string name="prefs_basic_calculator_decimal_places_key">basic_calculator_decimal_places_key</string>
+    <string name="prefs_basic_calculator_decimal_places_title">Decimal Places</string>
+    <string name="prefs_basic_calculator_decimal_places_summary">How many decimal places do you want</string>
+
+    <string name="prefs_basic_calculator_round_up_key">basic_calculator_round_up_key</string>
+    <string name="prefs_basic_calculator_round_up_title">Round Up</string>
+    <string name="prefs_basic_calculator_round_up_summary">Rounding up the result</string>
+
+    <string name="prefs_basic_calculator_auto_delete_key">basic_calculator_auto_delete_key</string>
+    <string name="prefs_basic_calculator_auto_delete_title">Auto Delete</string>
+    <string name="prefs_basic_calculator_auto_delete_summary">Delete result on next input</string>
+
+    <string name="prefs_basic_calculator_instant_result_key">basic_calculator_instant_result_key</string>
+    <string name="prefs_basic_calculator_instant_result_title">Instant Result</string>
+    <string name="prefs_basic_calculator_instant_result_summary">Shows the current result instantly</string>
+
+    <string name="prefs_basic_calculator_history_key">basic_calculator_history_key</string>
+    <string name="prefs_basic_calculator_history_title">History</string>
+    <string name="prefs_basic_calculator_history_summary">Do you want a history</string>
+
+    <string name="prefs_basic_calculator_history_length_key">basic_calculator_history_length_key</string>
+    <string name="prefs_basic_calculator_history_length_title">History Length</string>
+    <string name="prefs_basic_calculator_history_length_summary">How many entries do you want to save</string>
+
+    <string name="prefs_basic_calculator_history_save_results_key">basic_calculator_history_save_results_key</string>
+    <string name="prefs_basic_calculator_history_save_results_title">Save Results</string>
+    <string name="prefs_basic_calculator_history_save_results_summary">Otherwise there are just the calculations</string>
+
+    <string name="prefs_basic_calculator_history_disable_input_key">basic_calculator_history_disable_input_key</string>
+    <string name="prefs_basic_calculator_history_disable_input_title">Disable Input In History</string>
+    <string name="prefs_basic_calculator_history_disable_input_summary">Your inputs in history tab were not processed</string>
+
+    <string name="prefs_basic_calculator_history_switch_on_input_key">basic_calculator_history_switch_on_input_key</string>
+    <string name="prefs_basic_calculator_history_switch_on_input_title">Switch On Input</string>
+    <string name="prefs_basic_calculator_history_switch_on_input_summary">Inputs in history tab switch to display</string>
+
+    <string name="prefs_basic_calculator_history_clear_key">basic_calculator_history_clear_key</string>
+    <string name="prefs_basic_calculator_history_clear_title">Clear History</string>
+    <string name="prefs_basic_calculator_history_clear_summary">Remove all entries from history</string>
+
+    <string name="prefs_basic_calculator_precision_key">basic_calculator_precision_key</string>
+    <string name="prefs_basic_calculator_precision_title">Precision</string>
+    <string name="prefs_basic_calculator_precision_summary">The higher the better</string>
+
+    <!-- Basic Calculator Misc -->
+    <string name="basic_calculator_error">Error</string>
+
+</resources>

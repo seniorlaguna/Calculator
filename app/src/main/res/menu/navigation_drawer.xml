@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <item android:title="@string/navigation_drawer_group_tools">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                        android:id="@+id/navigation_drawer_basic_calculator"
+                        android:title="@string/navigation_drawer_basic_calculator"/>
+
+                <item
+                        android:id="@+id/navigation_drawer_scientific_calculator"
+                        android:title="@string/navigation_drawer_scientific_calculator"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+
+    <item android:title="@string/navigation_drawer_group_more">
+
+        <menu>
+            <item
+                    android:id="@+id/navigation_drawer_rate"
+                    android:icon="@drawable/ic_heart_black_24dp"
+                    android:title="@string/navigation_drawer_rate"/>
+            <item
+                    android:id="@+id/navigation_drawer_more_apps"
+                    android:icon="@drawable/ic_widgets_black_24dp"
+                    android:title="@string/navigation_drawer_more_apps"/>
+
+            <item
+                    android:id="@+id/navigation_drawer_more_senior_laguna"
+                    android:icon="@drawable/ic_seniorlaguna_icon"
+                    android:title="@string/navigation_drawer_more_senior_laguna"/>
+        </menu>
+    </item>
+
+</menu>
