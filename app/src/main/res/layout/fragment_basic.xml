@@ -13,10 +13,12 @@
             android:layout_height="match_parent"
             android:layout_above="@id/fragment_keyboard"/>
 
-    <TableLayout
-            android:id="@+id/fragment_keyboard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+    <fragment
+        android:id="@+id/fragment_keyboard"
+        android:name="org.seniorlaguna.calculator.basic.KeyboardFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>

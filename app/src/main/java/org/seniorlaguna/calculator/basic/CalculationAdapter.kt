@@ -1,14 +1,14 @@
-package org.seniorlaguna.calculator.basic.db
+package org.seniorlaguna.calculator.basic
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.seniorlaguna.calculator.MainActivity
+import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.R
 
-class CalculationAdapter(private val mainActivity: MainActivity) : RecyclerView.Adapter<CalculationAdapter.CalculationViewHolder>() {
+class CalculationAdapter(val onClickListener: View.OnClickListener, val onLongClickListener: View.OnLongClickListener) : RecyclerView.Adapter<CalculationAdapter.CalculationViewHolder>() {
 
     private var calculationList = ArrayList<Calculation>()
 
@@ -21,10 +21,10 @@ class CalculationAdapter(private val mainActivity: MainActivity) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalculationViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.basic_calculator_history_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.calculator_history_item, parent, false)
 
-        view.setOnClickListener(mainActivity.basicFragment.historyFragment)
-        view.setOnLongClickListener(mainActivity.basicFragment.historyFragment)
+        view.setOnClickListener(onClickListener)
+        view.setOnLongClickListener(onLongClickListener)
 
         return CalculationViewHolder(view)
     }

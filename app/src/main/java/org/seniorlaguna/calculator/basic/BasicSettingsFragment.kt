@@ -1,39 +1,47 @@
-package org.seniorlaguna.calculator.basic.settings
+package org.seniorlaguna.calculator.basic
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProviders
 import androidx.preference.*
+import org.seniorlaguna.calculator.Calculation
+import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
-import org.seniorlaguna.calculator.SettingsActivity
 import java.lang.Exception
 
 
-class BasicSettingsFragment(private val settingsActivity: SettingsActivity) : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+class BasicSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+
+    // global view model
+    private lateinit var globalViewModel: GlobalViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
+        // get global view model
+        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+
         addPreferencesFromResource(R.xml.basic_calculator_preferences)
         initOnPreferenceChangeListener()
         initOnPreferenceClickListener()
-        initPreferenceIconSpace(false)
+        initPreferenceIconSpace()
     }
 
     override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
 
-        try {
-            return when (preference?.key) {
+        return try {
+            when (preference?.key) {
                 getString(R.string.prefs_basic_calculator_decimal_places_key) -> isValidDecimalPlaces((newValue as String).toInt())
-                getString(R.string.prefs_basic_calculator_history_length_key) -> isValidHistoryLength((newValue as String).toInt()).also { if (it) settingsActivity.basicViewModel.adjustSize((newValue).toInt()) }
+                getString(R.string.prefs_basic_calculator_history_length_key) -> isValidHistoryLength((newValue as String).toInt()).also { if (it) globalViewModel.database.adjustSize(Calculation.TYPE_BASIC, (newValue).toInt()) }
                 getString(R.string.prefs_basic_calculator_precision_key) -> isValidPrecision((newValue as String).toInt())
                 else -> true
             }
-        }
-        catch (e : Exception) {
-            return false
+        } catch (e : Exception) {
+            false
         }
 
     }
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
-        settingsActivity.basicViewModel.deleteAll()
+        globalViewModel.database.clearCalculationHistory(Calculation.TYPE_BASIC)
         return true
     }
 
@@ -49,19 +57,19 @@ class BasicSettingsFragment(private val settingsActivity: SettingsActivity) : Pr
             findPreference(getString(R.string.prefs_basic_calculator_history_length_key)),
             findPreference(getString(R.string.prefs_basic_calculator_precision_key))
         ).forEach {
-            it?.setOnPreferenceChangeListener(this)
+            it?.onPreferenceChangeListener = this
         }
     }
 
     private fun initOnPreferenceClickListener() {
-        listOf<Preference?>(
+        listOf(
             findPreference<Preference>(getString(R.string.prefs_basic_calculator_history_clear_key))
         ).forEach {
-            it?.setOnPreferenceClickListener(this)
+            it?.onPreferenceClickListener = this
         }
     }
 
-    private fun initPreferenceIconSpace(enabled : Boolean) {
+    private fun initPreferenceIconSpace(enabled : Boolean = false) {
 
         for (i in 0 until preferenceScreen.preferenceCount) {
             preferenceScreen.getPreference(i)?.run {

@@ -13,8 +13,9 @@
             android:layout_height="match_parent"
             android:layout_above="@id/fragment_keyboard"/>
 
-    <TableLayout
+    <fragment
             android:id="@+id/fragment_keyboard"
+            android:name="org.seniorlaguna.calculator.scientific.KeyboardFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"/>

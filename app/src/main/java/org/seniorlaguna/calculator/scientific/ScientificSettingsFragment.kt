@@ -1,15 +1,24 @@
-package org.seniorlaguna.calculator.scientific.settings
+package org.seniorlaguna.calculator.scientific
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProviders
 import androidx.preference.*
+import org.seniorlaguna.calculator.Calculation
+import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
-import org.seniorlaguna.calculator.SettingsActivity
 import java.lang.Exception
 
 
-class ScientificSettingsFragment(private val settingsActivity: SettingsActivity) : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+class ScientificSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+
+    // global view model
+    private lateinit var globalViewModel: GlobalViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
+        // get global view model
+        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+
         addPreferencesFromResource(R.xml.scientific_calculator_preferences)
         initOnPreferenceChangeListener()
         initOnPreferenceClickListener()
@@ -21,7 +30,7 @@ class ScientificSettingsFragment(private val settingsActivity: SettingsActivity)
         try {
             return when (preference?.key) {
                 getString(R.string.prefs_scientific_calculator_decimal_places_key) -> isValidDecimalPlaces((newValue as String).toInt())
-                getString(R.string.prefs_scientific_calculator_history_length_key) -> isValidHistoryLength((newValue as String).toInt()).also { if (it) settingsActivity.scientificViewModel.adjustSize((newValue).toInt()) }
+                getString(R.string.prefs_scientific_calculator_history_length_key) -> isValidHistoryLength((newValue as String).toInt()).also { if (it) globalViewModel.database.adjustSize(Calculation.TYPE_SCIENTIFIC, (newValue).toInt()) }
                 getString(R.string.prefs_scientific_calculator_precision_key) -> isValidPrecision((newValue as String).toInt())
                 else -> true
             }
@@ -33,7 +42,7 @@ class ScientificSettingsFragment(private val settingsActivity: SettingsActivity)
     }
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
-        settingsActivity.scientificViewModel.deleteAll()
+        globalViewModel.database.clearCalculationHistory(Calculation.TYPE_SCIENTIFIC)
         return true
     }
 

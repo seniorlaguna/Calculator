@@ -1,59 +1,51 @@
 package org.seniorlaguna.calculator
 
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_basic.*
 import org.seniorlaguna.calculator.basic.BasicFragment
-import org.seniorlaguna.calculator.basic.BasicViewModel
-import org.seniorlaguna.calculator.scientific.ScientificFragment
-import org.seniorlaguna.calculator.scientific.ScientificViewModel
+import org.seniorlaguna.calculator.example.ExampleFragment
 import org.seniorlaguna.calculator.utils.askForAppRating
 import org.seniorlaguna.calculator.utils.openGithub
 import org.seniorlaguna.calculator.utils.openPlaystore
-import org.seniorlaguna.calculator.utils.showInstruction
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    companion object {
-        private val CURRENT_TOOL_KEY = "currentTool"
-    }
+    // global view model
+    private lateinit var globalViewModel: GlobalViewModel
 
-    private var currentTool
-        get() = PreferenceManager.getDefaultSharedPreferences(this).getInt(CURRENT_TOOL_KEY, R.id.navigation_drawer_basic_calculator)
-    set(value) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(CURRENT_TOOL_KEY, value).commit()
-    }
 
-    // basic calculator
-    lateinit var basicFragment: BasicFragment
-    lateinit var basicViewModel: BasicViewModel
-
-    // scientific calculator
-    lateinit var scientificFragment: ScientificFragment
-    lateinit var scientificViewModel: ScientificViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // get global view model
+        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initToolbar()
-        initViewModel()
-        initFragments()
 
-        startTool(currentTool, true)
+        // on app start
+        if (savedInstanceState == null) {
+            startTool(globalViewModel.settings.currentTool)
 
-        // ask for app rating
-        askForAppRating(this)
+            // ask for app rating
+            askForAppRating(this)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,7 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        SettingsActivity.start(this, currentTool)
+
+        // start settings activity depending on the current selected tool
+        startActivity(Intent(this, SettingsActivity::class.java)
+            .putExtra(SettingsActivity.EXTRA_SELECTED_TOOL,globalViewModel.settings.currentTool)
+        )
         return true
     }
 
@@ -71,7 +67,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navigation_drawer_rate -> openPlaystore(this, false)
             R.id.navigation_drawer_more_apps -> openPlaystore(this)
             R.id.navigation_drawer_more_senior_laguna -> openGithub(this)
-            else -> startTool(p0.itemId)
+
+            R.id.navigation_drawer_basic_calculator -> startTool(BasicFragment.TOOL_ID)
+            R.id.navigation_drawer_scientific_calculator -> startTool(ExampleFragment.TOOL_ID)
         }
 
         onBackPressed()
@@ -88,65 +86,80 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun initViewModel() {
-        basicViewModel = ViewModelProviders.of(this).get(BasicViewModel::class.java)
-        scientificViewModel = ViewModelProviders.of(this).get(ScientificViewModel::class.java)
-    }
-
-    private fun initFragments() {
-        basicFragment = BasicFragment(this)
-        scientificFragment = ScientificFragment(this)
-    }
-
     // init methods
     private fun initToolbar() {
+
+        // make toolbar visible in portrait and invisible in landscape mode
+        toolbar.visibility = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.VISIBLE else View.GONE
+
+
+        // set support action bar without default title
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // register title observer
+        globalViewModel.toolbarTitle.observe(this, Observer {
+            toolbar_title.text = it
+        })
+
+        // add navigation drawer
         ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close).run {
             drawerArrowDrawable.color = ContextCompat.getColor(this@MainActivity, android.R.color.white)
             drawer_layout.addDrawerListener(this)
             syncState()
         }
 
+        // set navigation drawer listener
         navigation_view.setNavigationItemSelectedListener(this)
     }
 
-    // start tool
-    private fun startTool(navigationId : Int, firstRun : Boolean = false) {
+    // start tool and save selection
+    private fun startTool(toolId : Int) {
 
-        navigation_view.setCheckedItem(navigationId)
+        // show selection in navigation drawer
+        navigation_view.setCheckedItem(when (toolId) {
+            BasicFragment.TOOL_ID -> R.id.navigation_drawer_basic_calculator
+            else -> R.id.navigation_drawer_scientific_calculator
+        })
 
-        val currentFragment = when (currentTool) {
-            R.id.navigation_drawer_basic_calculator -> basicFragment
-            R.id.navigation_drawer_scientific_calculator -> scientificFragment
-            else -> basicFragment
-        }
+        supportFragmentManager.let { manager ->
 
-        currentTool = navigationId
+            manager.beginTransaction().apply {
 
-        val chosenFragment = when (currentTool) {
-                R.id.navigation_drawer_basic_calculator -> basicFragment
-                R.id.navigation_drawer_scientific_calculator -> scientificFragment
-                else -> basicFragment
+                // hide current fragment
+                manager.findFragmentByTag(globalViewModel.settings.currentTool.toString())?.let { current ->
+                    Log.d("FRAGMENT", "hide current fragment")
+                    hide(current)
+                }
+
+                // show selected tool if already added
+                manager.findFragmentByTag(toolId.toString())?.let { fragment ->
+                    Log.d("FRAGMENT", "show already shown")
+                    show(fragment)
+                    commit()
+                    return@apply
+                }
+
+                Log.d("FRAGMENT", "add fragment")
+                // add fragment
+                add(R.id.fragment_container,
+                    when (toolId) {
+                        BasicFragment.TOOL_ID  -> BasicFragment()
+                        else -> ExampleFragment()
+                    },
+                    toolId.toString()
+                )
+
+                commit()
+
             }
 
-        supportFragmentManager.beginTransaction().apply {
-            if (!firstRun) hide(currentFragment)
-
-            if (supportFragmentManager.fragments.contains(chosenFragment)) {
-                show(chosenFragment)
-            }
-            else add(R.id.fragment_container, chosenFragment)
-            commit()
         }
 
+
+        // save new tool selection
+        globalViewModel.settings.currentTool = toolId
 
     }
 
-
-    // public interface
-    fun setToolbarTitle(titleRes : Int) {
-        toolbar_title.text = getString(titleRes)
-    }
 }

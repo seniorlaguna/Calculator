@@ -1,8 +1,6 @@
 package org.seniorlaguna.calculator.basic
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +9,30 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_basic.*
 import kotlinx.android.synthetic.main.fragment_basic_history.*
-import org.seniorlaguna.calculator.MainActivity
+import org.seniorlaguna.calculator.Calculation
+import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
-import org.seniorlaguna.calculator.basic.db.Calculation
-import org.seniorlaguna.calculator.basic.db.CalculationAdapter
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 
-class HistoryFragment(private val mainActivity: MainActivity) : Fragment(), View.OnClickListener, View.OnLongClickListener {
+class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickListener {
 
-    private val calculationAdapter = CalculationAdapter(mainActivity)
+    private val calculationAdapter =
+        CalculationAdapter(this, this)
+
+    // view models
+    private lateinit var globalViewModel: GlobalViewModel
+    private lateinit var toolViewModel: BasicViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        // get view models
+        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProviders.of(requireParentFragment())[BasicViewModel::class.java]
+
         return inflater.inflate(R.layout.fragment_basic_history, container, false)
     }
 
@@ -34,48 +41,43 @@ class HistoryFragment(private val mainActivity: MainActivity) : Fragment(), View
 
         history.layoutManager = LinearLayoutManager(this.context)
         history.adapter = calculationAdapter
-        history.addItemDecoration(DividerItemDecoration(mainActivity, DividerItemDecoration.VERTICAL))
+        history.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        mainActivity.basicViewModel.getAll().observe(mainActivity, object : Observer<List<Calculation>> {
-            override fun onChanged(t: List<Calculation>?) {
-                if (t != null) calculationAdapter.setData(t as ArrayList<Calculation>)
-
-            }
-        })
+        globalViewModel.database.getAllCalculations(Calculation.TYPE_BASIC).observe(requireActivity(),
+            Observer<List<Calculation>> { t -> if (t != null) calculationAdapter.setData(t as ArrayList<Calculation>) })
 
     }
 
     override fun onClick(v: View?) {
-        mainActivity.basicFragment.fragment_viewpager.currentItem = ExtendedViewPager.DISPLAY_TAB
-        mainActivity.basicFragment.calculator.replace(v?.findViewById<TextView>(R.id.history_item_calculation)?.text.toString())
+        toolViewModel.viewPagerTab.value = ExtendedViewPager.DISPLAY_TAB
+        toolViewModel.insert(v?.findViewById<TextView>(R.id.history_item_calculation)?.text.toString(), true)
     }
 
     override fun onLongClick(v: View?): Boolean {
 
         if (v == null) return true
 
-        val builder = AlertDialog.Builder(mainActivity)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(R.string.basic_calculator_history_dialog_title)
-        builder.setItems(R.array.basic_calculator_history_dialog_options, object : DialogInterface.OnClickListener {
+        builder.setItems(R.array.basic_calculator_history_dialog_options) { _, which ->
 
-            override fun onClick(dialog: DialogInterface?, which: Int) {
+            val target = Calculation(
+                v.id,
+                v.findViewById<TextView>(R.id.history_item_title).text.toString(),
+                v.findViewById<TextView>(R.id.history_item_calculation).text.toString(),
+                1
+            )
 
-                val target = Calculation(v.id,
-                    v.findViewById<TextView>(R.id.history_item_title).text.toString(),
-                    v.findViewById<TextView>(R.id.history_item_calculation).text.toString())
-
-
-                when (which) {
-                    0 -> {
-                        mainActivity.basicFragment.calculator.insert(target.calculation)
-                        mainActivity.basicFragment.fragment_viewpager.currentItem = ExtendedViewPager.DISPLAY_TAB
-                    }
-                    1 -> createEditDialog(R.string.basic_calculator_history_dialog_rename, target, true)
-                    2 -> createEditDialog(R.string.basic_calculator_history_dialog_modify, target, false)
-                    3 -> mainActivity.basicViewModel.delete(target)
+            when (which) {
+                0 -> {
+                    toolViewModel.insert(target.calculation)
+                    toolViewModel.viewPagerTab.value = ExtendedViewPager.DISPLAY_TAB
                 }
+                1 -> createEditDialog(R.string.basic_calculator_history_dialog_rename, target, true)
+                2 -> createEditDialog(R.string.basic_calculator_history_dialog_modify, target, false)
+                3 -> globalViewModel.database.deleteCalculation(target)
             }
-        })
+        }
         builder.show()
 
         return true
@@ -83,25 +85,22 @@ class HistoryFragment(private val mainActivity: MainActivity) : Fragment(), View
 
     private fun createEditDialog(titleRes : Int, calculation: Calculation, renameDialog : Boolean) {
 
-        val input = EditText(mainActivity)
+        val input = EditText(requireActivity())
         input.text.insert(0, if (renameDialog) calculation.title else calculation.calculation)
 
-        val builder = AlertDialog.Builder(mainActivity)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(titleRes)
         builder.setView(input)
-        builder.setPositiveButton(R.string.basic_calculator_history_dialog_yes, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
+        builder.setPositiveButton(R.string.basic_calculator_history_dialog_yes) { _, _ ->
 
-                if (renameDialog) {
-                    calculation.title = input.text.toString()
-                }
-                else {
-                    calculation.calculation = input.text.toString()
-                }
-
-                mainActivity.basicViewModel.updateCalculation(calculation)
+            if (renameDialog) {
+                calculation.title = input.text.toString()
+            } else {
+                calculation.calculation = input.text.toString()
             }
-        })
+
+            globalViewModel.database.updateCalculation(calculation)
+        }
         builder.setNegativeButton(R.string.basic_calculator_history_dialog_no, null)
         builder.show()
     }
