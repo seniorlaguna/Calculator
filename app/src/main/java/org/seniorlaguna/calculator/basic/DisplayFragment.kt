@@ -106,6 +106,10 @@ class DisplayFragment : Fragment() {
         // save expression
         globalViewModel.database.insertCalculation(Calculation(0, "", display.text.toString(), Calculation.TYPE_BASIC))
 
+
+        // adjust history size
+        Log.d("DISPLAY", "DB ADJUSTED")
+        globalViewModel.database.adjustSize(Calculation.TYPE_BASIC, toolViewModel.settings.historyLength)
     }
 
     /**
@@ -135,7 +139,7 @@ class DisplayFragment : Fragment() {
     }
 
     private fun onInsert(text : String) {
-        Log.d("Display", "Insert ${toolViewModel.equalsPressed} ${toolViewModel.settings.autoDelete}")
+        Log.d("Display", "Insert")
 
         // insert normally at cursor position
         display.apply {

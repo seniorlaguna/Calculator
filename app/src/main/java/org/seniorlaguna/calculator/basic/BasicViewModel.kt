@@ -44,13 +44,13 @@ class BasicViewModel(application: Application) : AndroidViewModel(application) {
             errorInExpression = false
         } catch (e : Expression.ExpressionException) {
             errorInExpression = true
-            result.value = "Error: ${e}"
+            result.value = "Error: ${e.message}"
         } catch (e : ArithmeticException) {
             errorInExpression = true
-            result.value = "Error: ${e}"
+            result.value = "Error: ${e.message}"
         } catch (e : NumberFormatException) {
             errorInExpression = true
-            result.value = "Error: ${e}"
+            result.value = "Error: ${e.message}"
         }
     }
 
