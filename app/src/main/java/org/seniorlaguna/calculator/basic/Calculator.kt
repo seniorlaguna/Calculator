@@ -88,8 +88,7 @@ class Calculator(private val settings : GlobalSettings.BasicCalculatorSettings) 
             "atanh(",
             "acoth("
         ).forEach {
-            // term = term.replace(it, "custom_$it${if (mainActivity.scientificViewModel.settings.rad) -1 else 1},")
-            result = result.replace(it, "custom_$it${if (true) -1 else 1},")
+            result = result.replace(it, "custom_$it${if (settings.rad) -1 else 1},")
         }
 
         return result

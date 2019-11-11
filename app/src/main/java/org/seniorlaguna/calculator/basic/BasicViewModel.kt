@@ -1,6 +1,7 @@
 package org.seniorlaguna.calculator.basic
 
 import android.app.Application
+import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
@@ -11,10 +12,10 @@ import org.seniorlaguna.calculator.GlobalSettings
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 import java.util.concurrent.atomic.AtomicBoolean
 
-class BasicViewModel(application: Application) : AndroidViewModel(application) {
+open class BasicViewModel(application: Application) : AndroidViewModel(application) {
 
-    val settings = GlobalSettings.getInstance(application).basicCalculator
-    val calculator = Calculator(settings)
+    open val settings = GlobalSettings.getInstance(application).basicCalculator
+    open val calculator = Calculator(GlobalSettings.getInstance(application).basicCalculator)
 
     val displayCommand = SingleLiveEvent<DisplayCommand>()
     val result = MutableLiveData<String>()

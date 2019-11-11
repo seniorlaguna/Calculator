@@ -64,36 +64,38 @@ class GlobalSettings(context: Context) {
      */
 
     @Suppress("unused")
-    inner class BasicCalculatorSettings(private val context: Context) {
+    open inner class BasicCalculatorSettings(private val context: Context) {
 
-        val decimalPlaces : Int
+        open val decimalPlaces : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_basic_calculator_decimal_places_key), "2")!!.toInt()
 
-        val roundUp : Boolean
+        open val roundUp : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_round_up_key), false)
 
-        val autoDelete : Boolean
+        open val autoDelete : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_auto_delete_key), false)
 
-        val instantResult : Boolean
+        open val instantResult : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_instant_result_key), true)
 
-        val history : Boolean
+        open val rad : Boolean = false
+
+        open val history : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_history_key), true)
 
-        val historyLength : Int
+        open val historyLength : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_basic_calculator_history_length_key), "20")!!.toInt()
 
-        val historySaveResults : Boolean
+        open val historySaveResults : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_history_save_results_key), false)
 
-        val historyDisableInput : Boolean
+        open val historyDisableInput : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_history_disable_input_key), true)
 
-        val historySwitchOnInput : Boolean
+        open val historySwitchOnInput : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_basic_calculator_history_switch_on_input_key), true)
 
-        val precision : Int
+        open val precision : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_basic_calculator_precision_key), "4096")!!.toInt()
 
     }
@@ -103,39 +105,39 @@ class GlobalSettings(context: Context) {
      */
 
     @Suppress("unused")
-    inner class ScientificCalculatorSettings(private val context: Context) {
+    inner class ScientificCalculatorSettings(private val context: Context) : BasicCalculatorSettings(context) {
 
-        val decimalPlaces : Int
+        override val decimalPlaces : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_scientific_calculator_decimal_places_key), "2")!!.toInt()
 
-        val roundUp : Boolean
+        override val roundUp : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_round_up_key), false)
 
-        val autoDelete : Boolean
+        override val autoDelete : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_auto_delete_key), false)
 
-        val instantResult : Boolean
+        override val instantResult : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_instant_result_key), true)
 
-        val rad : Boolean
+        override val rad : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_prefs_scientific_calculator_rad_deg_key), true)
 
-        val history : Boolean
+        override val history : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_history_key), true)
 
-        val historyLength : Int
+        override val historyLength : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_scientific_calculator_history_length_key), "20")!!.toInt()
 
-        val historySaveResults : Boolean
+        override val historySaveResults : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_history_save_results_key), false)
 
-        val historyDisableInput : Boolean
+        override val historyDisableInput : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_history_disable_input_key), true)
 
-        val historySwitchOnInput : Boolean
+        override val historySwitchOnInput : Boolean
             get() = sharedPreferences.getBoolean(context.getString(R.string.prefs_scientific_calculator_history_switch_on_input_key), true)
 
-        val precision : Int
+        override val precision : Int
             get() = sharedPreferences.getString(context.getString(R.string.prefs_scientific_calculator_precision_key), "4096")!!.toInt()
 
     }

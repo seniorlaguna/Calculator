@@ -72,6 +72,8 @@
     <string name="prefs_basic_calculator_precision_summary">Umso höher desto genauer</string>
 
     <!-- Basic Calculator Misc -->
-    <string name="basic_calculator_error">Fehler</string>
+    <string name="basic_calculator_error">Fehler: Ungültige Syntax</string>
+    <string name="basic_calculator_parentheses_error">Fehler: Klammerfehler</string>
+
 
 </resources>

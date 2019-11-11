@@ -1,9 +1,7 @@
 package org.seniorlaguna.calculator.basic
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +18,8 @@ import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 
 open class KeyboardFragment : Fragment() {
 
-    private lateinit var toolViewModel : BasicViewModel
-    private lateinit var tableLayout : TableLayout
+    protected lateinit var toolViewModel : BasicViewModel
+    protected lateinit var tableLayout : TableLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
@@ -37,7 +35,7 @@ open class KeyboardFragment : Fragment() {
         initKeyboard(tableLayout, keyboard1)
     }
 
-    private fun initKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
+    protected fun initKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
 
         // differentiate betwenn display orientations
         when (resources.configuration.orientation) {
@@ -94,7 +92,7 @@ open class KeyboardFragment : Fragment() {
 
     }
 
-    private fun onClick(resId : Int, insert : String?) {
+    protected open fun onClick(resId : Int, insert : String?) {
         // in history tab
         if (toolViewModel.viewPagerTab.value == ExtendedViewPager.HISTORY_TAB) {
 
@@ -124,7 +122,7 @@ open class KeyboardFragment : Fragment() {
         }
     }
 
-    private fun styleButton(btn : Button, textRes : Int, height : Int, width : Int, margin : Int, fontSize : Float) {
+    open protected fun styleButton(btn : Button, textRes : Int, height : Int, width : Int, margin : Int, fontSize : Float) {
         btn.text = getString(textRes)
         btn.textSize = fontSize
 

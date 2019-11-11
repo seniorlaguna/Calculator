@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.seniorlaguna.calculator.basic.BasicFragment
-import org.seniorlaguna.calculator.example.ExampleFragment
+import org.seniorlaguna.calculator.scientific.ScientificFragment
 import org.seniorlaguna.calculator.utils.askForAppRating
 import org.seniorlaguna.calculator.utils.openGithub
 import org.seniorlaguna.calculator.utils.openPlaystore
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navigation_drawer_more_senior_laguna -> openGithub(this)
 
             R.id.navigation_drawer_basic_calculator -> startTool(BasicFragment.TOOL_ID)
-            R.id.navigation_drawer_scientific_calculator -> startTool(ExampleFragment.TOOL_ID)
+            R.id.navigation_drawer_scientific_calculator -> startTool(ScientificFragment.TOOL_ID)
         }
 
         onBackPressed()
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 add(R.id.fragment_container,
                     when (toolId) {
                         BasicFragment.TOOL_ID  -> BasicFragment()
-                        else -> ExampleFragment()
+                        else -> ScientificFragment()
                     },
                     toolId.toString()
                 )

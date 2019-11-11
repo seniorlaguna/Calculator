@@ -18,14 +18,16 @@ import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 
-class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickListener {
+open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickListener {
+
+    protected open val calculationType = Calculation.TYPE_BASIC
 
     private val calculationAdapter =
         CalculationAdapter(this, this)
 
     // view models
-    private lateinit var globalViewModel: GlobalViewModel
-    private lateinit var toolViewModel: BasicViewModel
+    protected lateinit var globalViewModel: GlobalViewModel
+    protected lateinit var toolViewModel: BasicViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -43,7 +45,7 @@ class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickListen
         history.adapter = calculationAdapter
         history.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        globalViewModel.database.getAllCalculations(Calculation.TYPE_BASIC).observe(requireActivity(),
+        globalViewModel.database.getAllCalculations(calculationType).observe(requireActivity(),
             Observer<List<Calculation>> { t -> if (t != null) calculationAdapter.setData(t as ArrayList<Calculation>) })
 
     }

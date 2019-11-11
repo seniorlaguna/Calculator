@@ -1,12 +1,14 @@
 package org.seniorlaguna.calculator
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import org.seniorlaguna.calculator.basic.BasicFragment
 import org.seniorlaguna.calculator.basic.BasicSettingsFragment
+import org.seniorlaguna.calculator.example.ExampleFragment
 import org.seniorlaguna.calculator.scientific.ScientificSettingsFragment
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
@@ -18,10 +20,6 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
     // global view model
     private lateinit var globalViewModel: GlobalViewModel
 
-    // tool settings fragments
-    private val basicSettingsFragment: BasicSettingsFragment by lazy(::BasicSettingsFragment)
-    private val scientificSettingsFragment : ScientificSettingsFragment by lazy(::ScientificSettingsFragment)
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // get global view model
@@ -30,13 +28,44 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        // show selected fragment
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container,
-            when (intent.getIntExtra(EXTRA_SELECTED_TOOL, BasicFragment.TOOL_ID)) {
-                BasicFragment.TOOL_ID -> basicSettingsFragment
-                else -> scientificSettingsFragment
-            } as Fragment
-        ).commit()
+        // show settings fragment
+        val selection = intent.getIntExtra(EXTRA_SELECTED_TOOL, BasicFragment.TOOL_ID)
+
+        supportFragmentManager.let { manager ->
+
+            manager.beginTransaction().apply {
+
+                // hide current fragment
+                manager.findFragmentByTag(globalViewModel.settings.currentTool.toString())
+                    ?.let { current ->
+                        Log.d("FRAGMENT", "hide current fragment")
+                        hide(current)
+                    }
+
+                // show selected tool if already added
+                manager.findFragmentByTag(selection.toString())?.let { fragment ->
+                    Log.d("FRAGMENT", "show already shown")
+                    show(fragment)
+                    commit()
+                    return@apply
+                }
+
+                Log.d("FRAGMENT", "add fragment")
+                // add fragment
+                add(
+                    R.id.fragment_container,
+                    when (selection) {
+                        BasicFragment.TOOL_ID -> BasicSettingsFragment()
+                        else -> ScientificSettingsFragment()
+                    },
+                    selection.toString()
+                )
+
+                commit()
+
+            }
+        }
+
     }
 
     override fun onClick(v: View?) {

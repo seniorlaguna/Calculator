@@ -21,8 +21,8 @@ open class BasicFragment : Fragment() {
         const val SETTINGS = true
     }
 
-    val displayFragment : DisplayFragment by lazy (::DisplayFragment)
-    val historyFragment : HistoryFragment by lazy (::HistoryFragment)
+    open val displayFragment : DisplayFragment by lazy (::DisplayFragment)
+    open val historyFragment : HistoryFragment by lazy (::HistoryFragment)
 
     // view models
     protected lateinit var globalViewModel: GlobalViewModel

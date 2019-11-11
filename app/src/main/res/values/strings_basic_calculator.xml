@@ -72,6 +72,7 @@
     <string name="prefs_basic_calculator_precision_summary">The higher the better</string>
 
     <!-- Basic Calculator Misc -->
-    <string name="basic_calculator_error">Error</string>
+    <string name="basic_calculator_error">Error: Invalid Syntax</string>
+    <string name="basic_calculator_parentheses_error">Error: Mismatched Parentheses</string>
 
 </resources>

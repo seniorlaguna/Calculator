@@ -1,6 +1,5 @@
 package org.seniorlaguna.calculator.basic
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,12 +13,15 @@ import androidx.lifecycle.ViewModelProviders
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
+import java.util.regex.Pattern
 import kotlin.math.max
 
-class DisplayFragment : Fragment() {
+open class DisplayFragment : Fragment() {
 
-    private lateinit var globalViewModel: GlobalViewModel
-    private lateinit var toolViewModel: BasicViewModel
+    protected open val calculationType = Calculation.TYPE_BASIC
+
+    protected lateinit var globalViewModel: GlobalViewModel
+    protected lateinit var toolViewModel: BasicViewModel
     private lateinit var display : EditText
     private lateinit var displayResult : TextView
 
@@ -100,17 +102,32 @@ class DisplayFragment : Fragment() {
 
         // result shall be saved
         if (toolViewModel.settings.historySaveResults) {
-            globalViewModel.database.insertCalculation(Calculation(0, "", displayResult.text.toString(), Calculation.TYPE_BASIC))
+            globalViewModel.database.insertCalculation(Calculation(0, "", displayResult.text.toString(), calculationType))
         }
 
         // save expression
-        globalViewModel.database.insertCalculation(Calculation(0, "", display.text.toString(), Calculation.TYPE_BASIC))
+        globalViewModel.database.insertCalculation(Calculation(0, "", display.text.toString(), calculationType))
 
 
         // adjust history size
         Log.d("DISPLAY", "DB ADJUSTED")
-        globalViewModel.database.adjustSize(Calculation.TYPE_BASIC, toolViewModel.settings.historyLength)
+        globalViewModel.database.adjustSize(calculationType, toolViewModel.settings.historyLength)
     }
+
+    /**
+     * Resolve error message to localized error message
+     */
+    private fun resolveErrorMessage(error : String) : String {
+
+        if (error.contains("Mismatched parentheses")) {
+            return getString(R.string.basic_calculator_parentheses_error)
+        }
+        else {
+            return getString(R.string.basic_calculator_error)
+        }
+
+    }
+
 
     /**
      * Determine if the display shows an error
@@ -190,8 +207,8 @@ class DisplayFragment : Fragment() {
         // result differs from term
         if (display.text.toString() != result) {
 
-            // show result
-            displayResult.text = result
+            // modify error message if given
+            displayResult.text = if (result.startsWith("Error: ")) resolveErrorMessage(result) else result
         }
 
         // it's the same
@@ -202,4 +219,5 @@ class DisplayFragment : Fragment() {
         }
 
     }
+
 }

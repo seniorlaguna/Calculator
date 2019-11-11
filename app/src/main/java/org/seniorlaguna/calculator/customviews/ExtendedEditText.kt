@@ -9,11 +9,13 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import java.lang.StringBuilder
 
 class ExtendedEditText(context: Context, attrs: AttributeSet) : EditText(context, attrs) {
 
     // TODO: make the cursor moveable and the keyboard never appear
-
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             showSoftInputOnFocus = false
@@ -22,7 +24,5 @@ class ExtendedEditText(context: Context, attrs: AttributeSet) : EditText(context
             inputType = 0
         }
     }
-
-
 
 }
