@@ -51,10 +51,10 @@ class KeyboardFragment : KeyboardFragment() {
         btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
         btn.setBackgroundColor(
             ContextCompat.getColor(requireContext(), when(textRes) {
-                R.string.math_equals -> android.R.color.holo_blue_light
-                R.string.math_clear -> R.color.deleteAllColor
-                R.string.math_switch_page -> android.R.color.holo_orange_dark
-                else -> android.R.color.holo_blue_dark
+                R.string.math_equals -> R.color.calculatorButtonEqualsColor
+                R.string.math_clear -> R.color.calculatorButtonDeleteAllColor
+                R.string.math_switch_page -> R.color.calculatorButtonSwitchPageColor
+                else -> R.color.calculatorButtonColor
             }))
         btn.isAllCaps = false
         val params = TableRow.LayoutParams(width, height)

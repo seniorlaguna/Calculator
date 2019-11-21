@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/math_0"
             android:gravity="top|right"
-            android:textColor="@android:color/black"
+            android:textColor="@color/calculatorDisplayTextColor"
             android:textSize="30sp"
             android:layout_margin="5sp"
             android:background="@android:color/transparent"

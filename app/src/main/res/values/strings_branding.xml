@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="playstore_market_package_url" translatable="false">market://details?id=org.seniorlaguna.calculator</string>
+    <string name="playstore_http_package_url" translatable="false">https://play.google.com/store/apps/details?id=org.seniorlaguna.calculator</string>
+    <string name="playstore_market_developer_url" translatable="false">market://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="playstore_http_developer_url" translatable="false">https://play.google.com/store/apps/developer?id=Senior+Laguna</string>
+    <string name="github_url" translatable="false">https://github.com/seniorlaguna?tab=repositories</string>
+</resources>

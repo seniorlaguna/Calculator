@@ -3,5 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="deleteAllColor">#ce2020</color>
+    <color name="calculatorDisplayTextColor">@android:color/black</color>
+    <color name="calculatorButtonDeleteAllColor">#ce2020</color>
+    <color name="calculatorButtonColor">@android:color/holo_blue_dark</color>
+    <color name="calculatorButtonEqualsColor">@android:color/holo_blue_light</color>
+    <color name="calculatorButtonSwitchPageColor">@android:color/holo_orange_dark</color>
 </resources>

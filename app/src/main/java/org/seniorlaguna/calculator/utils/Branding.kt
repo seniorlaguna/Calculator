@@ -11,24 +11,18 @@ import org.seniorlaguna.calculator.R
 private const val APP_STARTS_BEFORE_ASKING_KEY = "APP_STARTS_BEFORE_ASKING_KEY"
 private const val APP_STARTS_BEFORE_ASKING = 5
 
-private const val playstore_market_package_url = "market://details?id=org.seniorlaguna.calculator"
-private const val playstore_http_package_url = "https://play.google.com/store/apps/details?id=org.seniorlaguna.calculator"
-private const val playstore_market_developer_url = "market://play.google.com/store/apps/developer?id=Senior+Laguna"
-private const val playstore_http_developer_url = "https://play.google.com/store/apps/developer?id=Senior+Laguna"
-private const val github_url = "https://github.com/seniorlaguna?tab=repositories"
-
 fun openPlaystore(context: Context, developer : Boolean = true) {
     try {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(if (developer) playstore_market_developer_url else playstore_market_package_url)
+        intent.data = Uri.parse(if (developer) context.getString(R.string.playstore_market_developer_url) else context.getString(R.string.playstore_market_package_url))
         context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        openUrl(context, if (developer) playstore_http_developer_url else playstore_http_package_url)
+        openUrl(context, if (developer) context.getString(R.string.playstore_http_developer_url) else context.getString(R.string.playstore_http_package_url))
     }
 }
 
 fun openGithub(context: Context) {
-    openUrl(context, github_url)
+    openUrl(context, context.getString(R.string.github_url))
 }
 
 private fun openUrl(context: Context, url : String) {

@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // global view model
     private lateinit var globalViewModel: GlobalViewModel
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // get global view model
