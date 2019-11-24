@@ -30,15 +30,6 @@ android {
         // default calculator version
         full
 
-        simple {
-            versionCode 1
-            versionName "1.0"
-            
-            dimension "version"
-            applicationIdSuffix ".simple"
-            versionNameSuffix "-simple"
-        }
-
         // night theme version
         night {
             versionCode 1
