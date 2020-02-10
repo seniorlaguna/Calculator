@@ -1,5 +1,6 @@
 package org.seniorlaguna.calculator.basic
 
+import android.util.Log
 import com.udojava.evalex.Expression
 import org.seniorlaguna.calculator.*
 import java.math.BigDecimal
@@ -43,7 +44,6 @@ class Calculator(private val settings : GlobalSettings.BasicCalculatorSettings) 
             addFunction(custom_coth)
             addFunction(custom_acoth)
         }
-
 
         var result = exp.eval()
         result = result.setScale(
