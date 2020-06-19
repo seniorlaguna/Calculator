@@ -17,9 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.seniorlaguna.calculator.basic.BasicFragment
 import org.seniorlaguna.calculator.scientific.ScientificFragment
-import org.seniorlaguna.calculator.utils.askForAppRating
-import org.seniorlaguna.calculator.utils.openGithub
-import org.seniorlaguna.calculator.utils.openPlaystore
+import org.seniorlaguna.calculator.utils.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +40,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             // ask for app rating
             askForAppRating(this)
+
+            // ask for donation
+            askForDonation(this)
         }
 
     }
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navigation_drawer_rate -> openPlaystore(this, false)
             R.id.navigation_drawer_more_apps -> openPlaystore(this)
             R.id.navigation_drawer_more_senior_laguna -> openGithub(this)
+            R.id.navigation_drawer_donation -> openPatreon(this)
 
             R.id.navigation_drawer_basic_calculator -> startTool(BasicFragment.TOOL_ID)
             R.id.navigation_drawer_scientific_calculator -> startTool(ScientificFragment.TOOL_ID)

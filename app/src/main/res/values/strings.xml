@@ -20,6 +20,7 @@
     <string name="navigation_drawer_rate">Rate</string>
     <string name="navigation_drawer_more_apps">More Apps</string>
     <string name="navigation_drawer_more_senior_laguna">More Senior Laguna</string>
+    <string name="navigation_drawer_donate">Donate</string>
 
 
     <!-- Settings Activity -->
@@ -33,6 +34,7 @@
     <string name="app_rating_request_no">Nope</string>
     <string name="app_rating_request_yes">Okay</string>
 
+    <string name="app_donation_request">Do you enjoy this app? Would you mind to donate a small amount of money to the developer to improve this app! :)</string>
 
     <!-- Instructor -->
     <string name="instructor_got_it">Got It!</string>

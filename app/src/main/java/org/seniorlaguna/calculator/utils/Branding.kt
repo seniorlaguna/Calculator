@@ -11,6 +11,9 @@ import org.seniorlaguna.calculator.R
 private const val APP_STARTS_BEFORE_ASKING_KEY = "APP_STARTS_BEFORE_ASKING_KEY"
 private const val APP_STARTS_BEFORE_ASKING = 5
 
+private const val APP_STARTS_BEFORE_DONATION_KEY = "APP_STARTS_BEFORE_DONATION_KEY"
+private const val APP_STARTS_BEFORE_DONATION = 10
+
 fun openPlaystore(context: Context, developer : Boolean = true) {
     try {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -25,6 +28,10 @@ fun openGithub(context: Context) {
     openUrl(context, context.getString(R.string.github_url))
 }
 
+fun openPatreon(context: Context) {
+    openUrl(context, "https://www.patreon.com/seniorlaguna")
+}
+
 private fun openUrl(context: Context, url : String) {
     try {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -33,6 +40,31 @@ private fun openUrl(context: Context, url : String) {
     } catch (e: ActivityNotFoundException) {
         // TODO("Add exception handling if no activity found")
     }
+}
+
+fun askForDonation(context: Context) {
+
+    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    val starts = prefs.getInt(APP_STARTS_BEFORE_DONATION_KEY, 0)
+
+    // already asked for rating
+    if (starts < 0) return
+
+    // don't ask yet wait some time
+    if (starts < APP_STARTS_BEFORE_DONATION) {
+        prefs.edit().putInt(APP_STARTS_BEFORE_DONATION_KEY, starts + 1).apply()
+    }
+    else {
+        prefs.edit().putInt(APP_STARTS_BEFORE_DONATION_KEY, -1).apply()
+
+        // show request
+        val builder = AlertDialog.Builder(context)
+        builder.setView(R.layout.donation)
+        builder.setNegativeButton(R.string.app_rating_request_no, null)
+        builder.setPositiveButton(R.string.app_rating_request_yes) { _, _ -> openPatreon(context) }
+        builder.show()
+    }
+
 }
 
 fun askForAppRating(context: Context) {

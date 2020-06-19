@@ -40,6 +40,11 @@
                     android:id="@+id/navigation_drawer_more_senior_laguna"
                     android:icon="@drawable/ic_seniorlaguna_icon"
                     android:title="@string/navigation_drawer_more_senior_laguna"/>
+
+            <item
+                android:id="@+id/navigation_drawer_donation"
+                android:icon="@drawable/ic_baseline_free_breakfast_24"
+                android:title="@string/navigation_drawer_donate" />
         </menu>
     </item>
 

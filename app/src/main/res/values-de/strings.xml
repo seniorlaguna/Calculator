@@ -20,6 +20,7 @@
     <string name="navigation_drawer_rate">Bewerte die App</string>
     <string name="navigation_drawer_more_apps">Mehr Apps</string>
     <string name="navigation_drawer_more_senior_laguna">Mehr Senior Laguna</string>
+    <string name="navigation_drawer_donate">Spenden</string>
 
 
     <!-- Settings Activity -->
@@ -31,6 +32,8 @@
     <string name="app_rating_request">Wir brauchen dein Feedback! ;)</string>
     <string name="app_rating_request_no">Nein</string>
     <string name="app_rating_request_yes">Okay</string>
+
+    <string name="app_donation_request">Gefällt dir die App? Würdest du einen kleinen Betrag spenden um die App zu verbessern! :)</string>
 
     <!-- Instructor -->
     <string name="instructor_got_it">Verstanden</string>
