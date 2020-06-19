@@ -67,7 +67,7 @@ open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickL
                 v.id,
                 v.findViewById<TextView>(R.id.history_item_title).text.toString(),
                 v.findViewById<TextView>(R.id.history_item_calculation).text.toString(),
-                1
+                calculationType
             )
 
             when (which) {
