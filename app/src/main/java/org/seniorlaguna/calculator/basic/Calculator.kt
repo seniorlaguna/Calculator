@@ -1,8 +1,11 @@
 package org.seniorlaguna.calculator.basic
 
 import android.util.Log
+import com.udojava.evalex.AbstractFunction
 import com.udojava.evalex.Expression
+import com.udojava.evalex.UserDefinedFunction
 import org.seniorlaguna.calculator.*
+import java.lang.ArithmeticException
 import java.math.BigDecimal
 
 /**
@@ -12,7 +15,7 @@ import java.math.BigDecimal
  * applying user preferences
  */
 
-class Calculator(private val settings : GlobalSettings.BasicCalculatorSettings) {
+class Calculator(private val settings : GlobalSettings.BasicCalculatorSettings, private val database: GlobalDao? = null) {
 
     fun calculate(expression : String) : String {
 
@@ -43,6 +46,26 @@ class Calculator(private val settings : GlobalSettings.BasicCalculatorSettings) 
             addFunction(custom_acot)
             addFunction(custom_coth)
             addFunction(custom_acoth)
+
+            // add custom constants and functions
+            database?.getAllConstants()?.forEach {
+                setVariable(it.title, BigDecimal(it.value))
+            }
+
+            database?.getAllFunctions()?.forEach {
+                addFunction(object : AbstractFunction(it.title, 1) {
+                    override fun eval(parameters: MutableList<BigDecimal>?): BigDecimal {
+
+                        if (parameters == null || parameters.size != 1) throw ArithmeticException()
+
+                        return BigDecimal(UserDefinedFunction(it.expression).eval(
+                            mapOf(
+                                "x" to parameters[0]
+                            )
+                        ))
+                    }
+                })
+            }
         }
 
         var result = exp.eval()

@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.udojava.evalex.Expression
+import org.seniorlaguna.calculator.GlobalDatabase
 import org.seniorlaguna.calculator.GlobalSettings
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 import java.util.concurrent.atomic.AtomicBoolean

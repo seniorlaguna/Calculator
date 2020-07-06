@@ -17,6 +17,19 @@
                         android:id="@+id/navigation_drawer_scientific_calculator"
                         android:title="@string/navigation_drawer_scientific_calculator"/>
 
+                <item
+                    android:id="@+id/navigation_drawer_my_constants"
+                    android:title="@string/navigation_drawer_my_constants"/>
+
+                <item
+                    android:id="@+id/navigation_drawer_my_functions"
+                    android:title="@string/navigation_drawer_my_functions"/>
+
+                <item
+                    android:id="@+id/navigation_drawer_graph"
+                    android:title="@string/navigation_drawer_graph"/>
+
+
             </group>
 
         </menu>

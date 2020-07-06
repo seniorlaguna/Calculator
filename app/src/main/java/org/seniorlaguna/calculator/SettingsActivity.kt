@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import org.seniorlaguna.calculator.basic.BasicFragment
 import org.seniorlaguna.calculator.basic.BasicSettingsFragment
-import org.seniorlaguna.calculator.example.ExampleFragment
+import org.seniorlaguna.calculator.example.DefaultSettingsFragment
+import org.seniorlaguna.calculator.example.GraphFragment
+import org.seniorlaguna.calculator.graph.GraphSettingsFragment
+import org.seniorlaguna.calculator.scientific.ScientificFragment
 import org.seniorlaguna.calculator.scientific.ScientificSettingsFragment
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
@@ -56,7 +58,9 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
                     R.id.fragment_container,
                     when (selection) {
                         BasicFragment.TOOL_ID -> BasicSettingsFragment()
-                        else -> ScientificSettingsFragment()
+                        ScientificFragment.TOOL_ID -> ScientificSettingsFragment()
+                        GraphFragment.TOOL_ID -> GraphSettingsFragment()
+                        else -> DefaultSettingsFragment()
                     },
                     selection.toString()
                 )

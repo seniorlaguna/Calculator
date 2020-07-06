@@ -16,6 +16,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.seniorlaguna.calculator.basic.BasicFragment
+import org.seniorlaguna.calculator.example.DefaultFragment
+import org.seniorlaguna.calculator.example.GraphFragment
+import org.seniorlaguna.calculator.example.MyConstantsFragment
+import org.seniorlaguna.calculator.example.MyFunctionsFragment
 import org.seniorlaguna.calculator.scientific.ScientificFragment
 import org.seniorlaguna.calculator.utils.*
 
@@ -70,6 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.navigation_drawer_basic_calculator -> startTool(BasicFragment.TOOL_ID)
             R.id.navigation_drawer_scientific_calculator -> startTool(ScientificFragment.TOOL_ID)
+            R.id.navigation_drawer_my_constants -> startTool(MyConstantsFragment.TOOL_ID)
+            R.id.navigation_drawer_my_functions -> startTool(MyFunctionsFragment.TOOL_ID)
+            R.id.navigation_drawer_graph -> startTool(GraphFragment.TOOL_ID)
         }
 
         onBackPressed()
@@ -119,7 +126,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // show selection in navigation drawer
         navigation_view.setCheckedItem(when (toolId) {
             BasicFragment.TOOL_ID -> R.id.navigation_drawer_basic_calculator
-            else -> R.id.navigation_drawer_scientific_calculator
+            ScientificFragment.TOOL_ID -> R.id.navigation_drawer_scientific_calculator
+            MyConstantsFragment.TOOL_ID -> R.id.navigation_drawer_my_constants
+            MyFunctionsFragment.TOOL_ID -> R.id.navigation_drawer_my_functions
+            GraphFragment.TOOL_ID -> R.id.navigation_drawer_graph
+            else -> R.id.navigation_drawer_donation
         })
 
         supportFragmentManager.let { manager ->
@@ -145,7 +156,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 add(R.id.fragment_container,
                     when (toolId) {
                         BasicFragment.TOOL_ID  -> BasicFragment()
-                        else -> ScientificFragment()
+                        ScientificFragment.TOOL_ID -> ScientificFragment()
+                        MyConstantsFragment.TOOL_ID -> MyConstantsFragment()
+                        MyFunctionsFragment.TOOL_ID -> MyFunctionsFragment()
+                        GraphFragment.TOOL_ID -> GraphFragment()
+                        else -> DefaultFragment()
                     },
                     toolId.toString()
                 )

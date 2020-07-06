@@ -11,10 +11,11 @@
     <string name="navigation_drawer_close">Schließen</string>
 
     <string name="navigation_drawer_group_tools">Tools</string>
-    <string name="navigation_drawer_basic_calculator">Basis Taschenrechner</string>
-    <string name="navigation_drawer_scientific_calculator">Wissenschaftlicher Taschenrechner</string>
-    <string name="navigation_drawer_percentage_calculator">Percentage Calculator</string>
-    <string name="navigation_drawer_unit_calculator">Unit Calculator</string>
+    <string name="navigation_drawer_basic_calculator">Basis Modus</string>
+    <string name="navigation_drawer_scientific_calculator">Wissenschaftlicher Modus</string>
+    <string name="navigation_drawer_my_constants">Meine Konstanten</string>
+    <string name="navigation_drawer_my_functions">Meine Funktionen</string>
+    <string name="navigation_drawer_graph">Graph</string>
 
     <string name="navigation_drawer_group_more">Mehr</string>
     <string name="navigation_drawer_rate">Bewerte die App</string>
@@ -40,5 +41,13 @@
     <string name="instructor_intro1">Wische nach rechts um den Verlauf zu öffnen!</string>
     <string name="instructor_intro2">Tippe kurz um den Eintrag zu benutzen. Tippe länger um den Eintrag zu verändern.</string>
     <string name="instructor_intro3">Der wissenschaftliche Taschenrechner hat hier und da noch ein paar Problemchen. Wir arbeiten dran!</string>
+
+    <string name="name">Name</string>
+    <string name="value">Wert</string>
+    <string name="nothing_to_configure">Hier gibt es nichts einzustellen ;)</string>
+    <string name="delete">Löschen</string>
+    <string name="choose_a_constant">Konstante wählen</string>
+    <string name="choose_a_function">Funktion wählen</string>
+    <string name="cancel">Abbrechen</string>
 
 </resources>

@@ -23,7 +23,7 @@ class GlobalSettings(context: Context) {
                 instance = GlobalSettings(context)
             }
 
-            assert(instance != null)
+            if (instance == null) throw Exception("Global settings can't be instantiated")
             return instance!!
         }
     }
@@ -40,12 +40,14 @@ class GlobalSettings(context: Context) {
 
     val basicCalculator : BasicCalculatorSettings
     val scientificCalculator : ScientificCalculatorSettings
+    val graph : GraphSettings
 
     init {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         basicCalculator = BasicCalculatorSettings(context)
         scientificCalculator = ScientificCalculatorSettings(context)
+        graph = GraphSettings(context)
     }
 
     /**
@@ -142,4 +144,17 @@ class GlobalSettings(context: Context) {
 
     }
 
+    inner class GraphSettings(private val context: Context) {
+        val minX : Float
+            get() = sharedPreferences.getString("graph_minX_key", "-10")!!.toFloat()
+
+        val minY : Float
+            get() = sharedPreferences.getString("graph_minY_key", "-10")!!.toFloat()
+
+        val maxX : Float
+            get() = sharedPreferences.getString("graph_maxX_key", "10")!!.toFloat()
+
+        val maxY : Float
+            get() = sharedPreferences.getString("graph_maxY_key", "10")!!.toFloat()
+    }
 }

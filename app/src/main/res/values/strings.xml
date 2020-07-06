@@ -11,10 +11,11 @@
     <string name="navigation_drawer_close">Close Drawer</string>
 
     <string name="navigation_drawer_group_tools">Tools</string>
-    <string name="navigation_drawer_basic_calculator">Basic Calculator</string>
-    <string name="navigation_drawer_scientific_calculator">Scientific Calculator</string>
-    <string name="navigation_drawer_percentage_calculator">Percentage Calculator</string>
-    <string name="navigation_drawer_unit_calculator">Unit Calculator</string>
+    <string name="navigation_drawer_basic_calculator">Basic Mode</string>
+    <string name="navigation_drawer_scientific_calculator">Scientific Mode</string>
+    <string name="navigation_drawer_my_constants">My Constants</string>
+    <string name="navigation_drawer_my_functions">My Functions</string>
+    <string name="navigation_drawer_graph">Graph</string>
 
     <string name="navigation_drawer_group_more">More</string>
     <string name="navigation_drawer_rate">Rate</string>
@@ -41,5 +42,14 @@
     <string name="instructor_intro1">Swipe right to show history!</string>
     <string name="instructor_intro2">Click to use. Long click for options!</string>
     <string name="instructor_intro3">The scientific calculator is not fully functional yet. We do our best to make it work!</string>
+
+
+    <string name="name">Name</string>
+    <string name="value">Value</string>
+    <string name="nothing_to_configure">Here is nothing to configure ;)</string>
+    <string name="delete">Delete</string>
+    <string name="choose_a_constant">Choose a constant</string>
+    <string name="choose_a_function">Choose a function</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
