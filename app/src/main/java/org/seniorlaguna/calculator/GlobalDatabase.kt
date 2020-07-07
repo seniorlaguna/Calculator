@@ -26,10 +26,10 @@ abstract class GlobalDatabase : RoomDatabase() {
 
         private val migration2To3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `Function` (`title` TEXT, `expression` TEXT, " +
+                database.execSQL("CREATE TABLE `Function` (`title` TEXT NOT NULL, `expression` TEXT NOT NULL, " +
                         "PRIMARY KEY(`title`))")
 
-                database.execSQL("CREATE TABLE `Constant` (`title` TEXT, `value` TEXT, " +
+                database.execSQL("CREATE TABLE `Constant` (`title` TEXT NOT NULL, `value` TEXT NOT NULL, " +
                         "PRIMARY KEY(`title`))")
             }
         }
