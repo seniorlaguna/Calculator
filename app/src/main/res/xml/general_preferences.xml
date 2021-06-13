@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="@string/prefs_basic_calculator_category_general">
+
+        <EditTextPreference
+                android:singleLine="true"
+                android:key="@string/prefs_basic_calculator_decimal_places_key"
+                android:title="@string/prefs_basic_calculator_decimal_places_title"
+                android:summary="@string/prefs_basic_calculator_decimal_places_summary"
+                android:defaultValue="2" />
+
+        <CheckBoxPreference
+                android:key="@string/prefs_basic_calculator_round_up_key"
+                android:title="@string/prefs_basic_calculator_round_up_title"
+                android:summary="@string/prefs_basic_calculator_round_up_summary"
+                android:defaultValue="false"/>
+
+        <CheckBoxPreference
+                android:key="@string/prefs_basic_calculator_auto_delete_key"
+                android:title="@string/prefs_basic_calculator_auto_delete_title"
+                android:summary="@string/prefs_basic_calculator_auto_delete_summary"
+                android:defaultValue="false"/>
+
+        <CheckBoxPreference
+            android:key="@string/prefs_basic_calculator_instant_result_key"
+            android:title="@string/prefs_basic_calculator_instant_result_title"
+            android:summary="@string/prefs_basic_calculator_instant_result_summary"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="@string/prefs_prefs_scientific_calculator_rad_deg_key"
+            android:title="@string/prefs_prefs_scientific_calculator_rad_deg_title"
+            android:summary="@string/prefs_prefs_scientific_calculator_rad_deg_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

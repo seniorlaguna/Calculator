@@ -7,34 +7,50 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.seniorlaguna.calculator.basic.BasicFragment
-import org.seniorlaguna.calculator.example.DefaultFragment
-import org.seniorlaguna.calculator.example.GraphFragment
-import org.seniorlaguna.calculator.example.MyConstantsFragment
-import org.seniorlaguna.calculator.example.MyFunctionsFragment
-import org.seniorlaguna.calculator.scientific.ScientificFragment
+import org.seniorlaguna.calculator.settings.SettingsActivity
+import org.seniorlaguna.calculator.tool.basic.BasicFragment
+import org.seniorlaguna.calculator.tool.scientific.ScientificFragment
 import org.seniorlaguna.calculator.utils.*
+import java.time.LocalDateTime
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     // global view model
     private lateinit var globalViewModel: GlobalViewModel
+    private var themeId : Int = 0
+
+    // rewarded ads
+    private var mRewardedAd : RewardedAd? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // get global view model
         globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        setTheme(globalViewModel.settings.theme)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        if (!globalViewModel.settings.isAdFree) {
+            initAds()
+        }
+
 
         initToolbar()
 
@@ -44,11 +60,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             // ask for app rating
             askForAppRating(this)
-
-            // ask for donation
-            askForDonation(this)
+            introduceAds(this
+            ) { showRewardedAds() }
         }
 
+    }
+
+    fun initAds() {
+        // ads
+        MobileAds.initialize(this) {}
+        var adRequest = AdRequest.Builder().build()
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("MainActivity", adError?.message)
+                mRewardedAd = null
+            }
+
+            override fun onAdLoaded(rewardedAd: RewardedAd) {
+                Log.d("MainActivity", "Ad was loaded.")
+                mRewardedAd = rewardedAd
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,26 +89,63 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        // start settings activity depending on the current selected tool
-        startActivity(Intent(this, SettingsActivity::class.java)
-            .putExtra(SettingsActivity.EXTRA_SELECTED_TOOL,globalViewModel.settings.currentTool)
-        )
+        // start settings activity
+        startActivity(Intent(this, SettingsActivity::class.java))
         return true
+    }
+
+    fun onRewardedAdsSuccess() {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, 30)
+        globalViewModel.settings.adFreeUntil = calendar.timeInMillis
+        recreate()
+        Toast.makeText(this, R.string.removed_ads_toast, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showRewardedAds() {
+        if (globalViewModel.settings.isAdFree) {
+            Log.d("MainActivity", "ads already removed")
+            Toast.makeText(this, R.string.already_removed_toast, Toast.LENGTH_SHORT).show()
+
+            return
+        }
+
+        mRewardedAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d("MainActivity", "Ad was dismissed.")
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                Log.d("MainActivity", "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d("MainActivity", "Ad showed fullscreen content.")
+                // Called when ad is dismissed.
+                // Don't set the ad reference to null to avoid showing the ad a second time.
+                mRewardedAd = null
+            }
+        }
+
+        if (mRewardedAd != null) {
+            mRewardedAd?.show(this) {
+                Log.d("MainActivity", "reward earned")
+                onRewardedAdsSuccess()
+            }
+        } else {
+            Log.d("MainActivity", "The rewarded ad wasn't ready yet.")
+        }
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
+            R.id.navigation_drawer_remove_ads -> showRewardedAds()
             R.id.navigation_drawer_rate -> openPlaystore(this, false)
             R.id.navigation_drawer_more_apps -> openPlaystore(this)
             R.id.navigation_drawer_more_senior_laguna -> openGithub(this)
-            R.id.navigation_drawer_donation -> openPatreon(this)
 
             R.id.navigation_drawer_basic_calculator -> startTool(BasicFragment.TOOL_ID)
             R.id.navigation_drawer_scientific_calculator -> startTool(ScientificFragment.TOOL_ID)
-            R.id.navigation_drawer_my_constants -> startTool(MyConstantsFragment.TOOL_ID)
-            R.id.navigation_drawer_my_functions -> startTool(MyFunctionsFragment.TOOL_ID)
-            R.id.navigation_drawer_graph -> startTool(GraphFragment.TOOL_ID)
         }
 
         onBackPressed()
@@ -120,17 +189,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigation_view.setNavigationItemSelectedListener(this)
     }
 
+    override fun setTheme(resId: Int) {
+        super.setTheme(resId)
+        themeId = resId
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (themeId != globalViewModel.settings.theme) {
+            recreate()
+        }
+    }
+
     // start tool and save selection
     private fun startTool(toolId : Int) {
 
         // show selection in navigation drawer
         navigation_view.setCheckedItem(when (toolId) {
-            BasicFragment.TOOL_ID -> R.id.navigation_drawer_basic_calculator
             ScientificFragment.TOOL_ID -> R.id.navigation_drawer_scientific_calculator
-            MyConstantsFragment.TOOL_ID -> R.id.navigation_drawer_my_constants
-            MyFunctionsFragment.TOOL_ID -> R.id.navigation_drawer_my_functions
-            GraphFragment.TOOL_ID -> R.id.navigation_drawer_graph
-            else -> R.id.navigation_drawer_donation
+            else -> R.id.navigation_drawer_basic_calculator
         })
 
         supportFragmentManager.let { manager ->
@@ -155,12 +232,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // add fragment
                 add(R.id.fragment_container,
                     when (toolId) {
-                        BasicFragment.TOOL_ID  -> BasicFragment()
                         ScientificFragment.TOOL_ID -> ScientificFragment()
-                        MyConstantsFragment.TOOL_ID -> MyConstantsFragment()
-                        MyFunctionsFragment.TOOL_ID -> MyFunctionsFragment()
-                        GraphFragment.TOOL_ID -> GraphFragment()
-                        else -> DefaultFragment()
+                        else -> BasicFragment()
                     },
                     toolId.toString()
                 )

@@ -13,16 +13,12 @@
     <string name="navigation_drawer_group_tools">Tools</string>
     <string name="navigation_drawer_basic_calculator">Basic Mode</string>
     <string name="navigation_drawer_scientific_calculator">Scientific Mode</string>
-    <string name="navigation_drawer_my_constants">My Constants</string>
-    <string name="navigation_drawer_my_functions">My Functions</string>
-    <string name="navigation_drawer_graph">Graph</string>
 
     <string name="navigation_drawer_group_more">More</string>
+    <string name="navigation_remove_ads">Remove Ads For Free</string>
     <string name="navigation_drawer_rate">Rate</string>
     <string name="navigation_drawer_more_apps">More Apps</string>
     <string name="navigation_drawer_more_senior_laguna">More Senior Laguna</string>
-    <string name="navigation_drawer_donate">Donate</string>
-
 
     <!-- Settings Activity -->
 
@@ -34,8 +30,6 @@
     <string name="app_rating_request">We need your feedback please! ;)</string>
     <string name="app_rating_request_no">Nope</string>
     <string name="app_rating_request_yes">Okay</string>
-
-    <string name="app_donation_request">Do you enjoy this app? Would you mind to donate a small amount of money to the developer to improve this app! :)</string>
 
     <!-- Instructor -->
     <string name="instructor_got_it">Got It!</string>
@@ -51,5 +45,26 @@
     <string name="choose_a_constant">Choose a constant</string>
     <string name="choose_a_function">Choose a function</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Ads -->
+    <string name="ads_dialog_title">News</string>
+    <string name="ads_dialog_text">We are running ads now! You can simply remove them for 30 days by watching a short video :)</string>
+    <string name="ads_dialog_ok">Remove Ads</string>
+    <string name="ads_dialog_dismiss">OK</string>
+    <string name="already_removed_toast">You removed ads already</string>
+    <string name="removed_ads_toast">Ads were removed for 30 days</string>
+
+    <string name="settings_contact_key" translatable="false">contact_key</string>
+    <string name="settings_contact_title">Contact</string>
+    <string name="settings_contact_url"></string>
+
+
+    <string name="settings_privacy_key" translatable="false">privacy_key</string>
+    <string name="settings_privacy_title">Privacy Policy</string>
+    <string name="settings_privacy_url"></string>
+
+    <string name="settings_terms_key" translatable="false">terms_key</string>
+    <string name="settings_terms_title">Terms Of Use</string>
+    <string name="settings_terms_url"></string>
 
 </resources>

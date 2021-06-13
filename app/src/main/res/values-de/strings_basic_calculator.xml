@@ -25,6 +25,7 @@
     <!-- Basic Calculator Settings -->
     <string name="prefs_basic_calculator_category_general">Allgemein</string>
     <string name="prefs_basic_calculator_category_history">Verlauf</string>
+    <string name="prefs_basic_calculator_category_design">Design</string>
     <string name="prefs_basic_calculator_category_advanced">Mehr</string>
 
     <string name="prefs_basic_calculator_decimal_places_key">basic_calculator_decimal_places_key</string>

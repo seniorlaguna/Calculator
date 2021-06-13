@@ -8,11 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import org.seniorlaguna.calculator.R
 
+private const val ADS_INTRODUCED_KEY = "ADS_INTRODUCED_KEY"
 private const val APP_STARTS_BEFORE_ASKING_KEY = "APP_STARTS_BEFORE_ASKING_KEY"
 private const val APP_STARTS_BEFORE_ASKING = 5
-
-private const val APP_STARTS_BEFORE_DONATION_KEY = "APP_STARTS_BEFORE_DONATION_KEY"
-private const val APP_STARTS_BEFORE_DONATION = 10
 
 fun openPlaystore(context: Context, developer : Boolean = true) {
     try {
@@ -28,8 +26,16 @@ fun openGithub(context: Context) {
     openUrl(context, context.getString(R.string.github_url))
 }
 
-fun openPatreon(context: Context) {
-    openUrl(context, "https://www.patreon.com/seniorlaguna")
+fun openTermsOfUse(context : Context) {
+    openUrl(context, context.getString(R.string.settings_terms_url))
+}
+
+fun openPrivacyPolicy(context: Context) {
+    openUrl(context, context.getString(R.string.settings_privacy_url))
+}
+
+fun openContact(context : Context) {
+    openUrl(context, context.getString(R.string.settings_contact_url))
 }
 
 private fun openUrl(context: Context, url : String) {
@@ -40,31 +46,6 @@ private fun openUrl(context: Context, url : String) {
     } catch (e: ActivityNotFoundException) {
         // TODO("Add exception handling if no activity found")
     }
-}
-
-fun askForDonation(context: Context) {
-
-    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    val starts = prefs.getInt(APP_STARTS_BEFORE_DONATION_KEY, 0)
-
-    // already asked for rating
-    if (starts < 0) return
-
-    // don't ask yet wait some time
-    if (starts < APP_STARTS_BEFORE_DONATION) {
-        prefs.edit().putInt(APP_STARTS_BEFORE_DONATION_KEY, starts + 1).apply()
-    }
-    else {
-        prefs.edit().putInt(APP_STARTS_BEFORE_DONATION_KEY, -1).apply()
-
-        // show request
-        val builder = AlertDialog.Builder(context)
-        builder.setView(R.layout.donation)
-        builder.setNegativeButton(R.string.app_rating_request_no, null)
-        builder.setPositiveButton(R.string.app_rating_request_yes) { _, _ -> openPatreon(context) }
-        builder.show()
-    }
-
 }
 
 fun askForAppRating(context: Context) {
@@ -89,5 +70,24 @@ fun askForAppRating(context: Context) {
         builder.setPositiveButton(R.string.app_rating_request_yes) { _, _ -> openPlaystore(context, false)}
         builder.show()
     }
+
+}
+
+fun introduceAds(context: Context, showAdsFun : () -> Unit) {
+
+    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    val introduced = prefs.getBoolean(ADS_INTRODUCED_KEY, false)
+
+    // already introduced
+    if (introduced) return
+
+    prefs.edit().putBoolean(ADS_INTRODUCED_KEY, true).apply()
+
+    // show request
+    val builder = AlertDialog.Builder(context)
+    builder.setView(R.layout.ads_intro)
+    builder.setNegativeButton(R.string.ads_dialog_dismiss, null)
+    builder.setPositiveButton(R.string.ads_dialog_ok) { _, _ -> showAdsFun()}
+    builder.show()
 
 }

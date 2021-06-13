@@ -25,6 +25,7 @@
     <!-- Basic Calculator Settings -->
     <string name="prefs_basic_calculator_category_general">General</string>
     <string name="prefs_basic_calculator_category_history">History</string>
+    <string name="prefs_basic_calculator_category_design">Design</string>
     <string name="prefs_basic_calculator_category_advanced">Advanced</string>
 
     <string name="prefs_basic_calculator_decimal_places_key">basic_calculator_decimal_places_key</string>
@@ -74,5 +75,8 @@
     <!-- Basic Calculator Misc -->
     <string name="basic_calculator_error">Error: Invalid Syntax</string>
     <string name="basic_calculator_parentheses_error">Error: Mismatched Parentheses</string>
+
+    <string name="theme_key" translatable="false">theme_key</string>
+    <string name="ad_free_key" translatable="false">ad_free_key</string>
 
 </resources>

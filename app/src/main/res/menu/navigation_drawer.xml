@@ -17,19 +17,6 @@
                         android:id="@+id/navigation_drawer_scientific_calculator"
                         android:title="@string/navigation_drawer_scientific_calculator"/>
 
-                <item
-                    android:id="@+id/navigation_drawer_my_constants"
-                    android:title="@string/navigation_drawer_my_constants"/>
-
-                <item
-                    android:id="@+id/navigation_drawer_my_functions"
-                    android:title="@string/navigation_drawer_my_functions"/>
-
-                <item
-                    android:id="@+id/navigation_drawer_graph"
-                    android:title="@string/navigation_drawer_graph"/>
-
-
             </group>
 
         </menu>
@@ -40,6 +27,10 @@
     <item android:title="@string/navigation_drawer_group_more">
 
         <menu>
+            <item
+                android:id="@+id/navigation_drawer_remove_ads"
+                android:icon="@drawable/ic_baseline_ondemand_video_24"
+                android:title="@string/navigation_remove_ads"/>
             <item
                     android:id="@+id/navigation_drawer_rate"
                     android:icon="@drawable/ic_heart_black_24dp"
@@ -54,10 +45,6 @@
                     android:icon="@drawable/ic_seniorlaguna_icon"
                     android:title="@string/navigation_drawer_more_senior_laguna"/>
 
-            <item
-                android:id="@+id/navigation_drawer_donation"
-                android:icon="@drawable/ic_baseline_free_breakfast_24"
-                android:title="@string/navigation_drawer_donate" />
         </menu>
     </item>
 

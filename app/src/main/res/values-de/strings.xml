@@ -13,16 +13,12 @@
     <string name="navigation_drawer_group_tools">Tools</string>
     <string name="navigation_drawer_basic_calculator">Basis Modus</string>
     <string name="navigation_drawer_scientific_calculator">Wissenschaftlicher Modus</string>
-    <string name="navigation_drawer_my_constants">Meine Konstanten</string>
-    <string name="navigation_drawer_my_functions">Meine Funktionen</string>
-    <string name="navigation_drawer_graph">Graph</string>
 
     <string name="navigation_drawer_group_more">Mehr</string>
+    <string name="navigation_remove_ads">Kostenlos Werbung Entfernen</string>
     <string name="navigation_drawer_rate">Bewerte die App</string>
     <string name="navigation_drawer_more_apps">Mehr Apps</string>
     <string name="navigation_drawer_more_senior_laguna">Mehr Senior Laguna</string>
-    <string name="navigation_drawer_donate">Spenden</string>
-
 
     <!-- Settings Activity -->
 
@@ -33,8 +29,6 @@
     <string name="app_rating_request">Wir brauchen dein Feedback! ;)</string>
     <string name="app_rating_request_no">Nein</string>
     <string name="app_rating_request_yes">Okay</string>
-
-    <string name="app_donation_request">Gefällt dir die App? Würdest du einen kleinen Betrag spenden um die App zu verbessern! :)</string>
 
     <!-- Instructor -->
     <string name="instructor_got_it">Verstanden</string>
@@ -49,5 +43,21 @@
     <string name="choose_a_constant">Konstante wählen</string>
     <string name="choose_a_function">Funktion wählen</string>
     <string name="cancel">Abbrechen</string>
+
+    <!-- Ads -->
+    <string name="ads_dialog_title">News</string>
+    <string name="ads_dialog_text">Wir zeigen jetzt Werbung aber du kannst sie schnell entfernen, indem du ein kurzes Video guckst :)</string>
+    <string name="ads_dialog_ok">Werbung entfernen</string>
+    <string name="ads_dialog_dismiss">OK</string>
+    <string name="already_removed_toast">Die Werbung ist schon weg</string>
+    <string name="removed_ads_toast">Die Werbung wurde für 30 Tage entfernt</string>
+
+    <string name="settings_privacy_title">Datenschutz</string>
+    <string name="settings_terms_title">Nutzungsbedingungen</string>
+    <string name="settings_contact_title">Impressum</string>
+
+    <string name="settings_contact_url"></string>
+    <string name="settings_privacy_url"></string>
+    <string name="settings_terms_url"></string>
 
 </resources>

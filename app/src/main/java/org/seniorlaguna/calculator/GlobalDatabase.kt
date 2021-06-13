@@ -12,8 +12,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  */
 
 @Database(
-    entities = arrayOf(Calculation::class, Constant::class, Function::class),
-    version = 3,
+    entities = arrayOf(Calculation::class),
+    version = 4,
     exportSchema = false
 )
 abstract class GlobalDatabase : RoomDatabase() {
@@ -34,11 +34,17 @@ abstract class GlobalDatabase : RoomDatabase() {
             }
         }
 
+        private val migration3To4 = object : Migration(3,4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+            }
+        }
+
         fun getInstance(context: Context) : GlobalDatabase {
 
             if (instance == null) {
                 instance = Room.databaseBuilder(context.applicationContext, GlobalDatabase::class.java, DB_FILE)
-                    .addMigrations(migration2To3)
+                    .addMigrations(migration2To3, migration3To4)
                     .allowMainThreadQueries()
                     .build()
             }
@@ -75,38 +81,6 @@ interface GlobalDao {
     @Query("DELETE FROM Calculation WHERE type = :calculationType AND id NOT IN (SELECT id FROM Calculation WHERE type = :calculationType ORDER BY id DESC LIMIT :limit)")
     fun adjustSize(calculationType: Int, limit : Int)
 
-    // Constants
-    @Insert
-    fun insertConstant(constant: Constant)
-
-    @Update
-    fun updateConstant(constant: Constant)
-
-    @Delete
-    fun deleteConstant(constant: Constant)
-
-    @Query("SELECT * FROM Constant")
-    fun getAllConstantsLive() : LiveData<List<Constant>>
-
-    @Query("SELECT * FROM Constant")
-    fun getAllConstants() : List<Constant>
-
-    // Functions
-    @Insert
-    fun insertFunction(function: Function)
-
-    @Update
-    fun updateFunction(function: Function)
-
-    @Delete
-    fun deleteFunction(function: Function)
-
-    @Query("SELECT * FROM Function")
-    fun getAllFunctionsLive() : LiveData<List<Function>>
-
-    @Query("SELECT * FROM Function")
-    fun getAllFunctions() : List<Function>
-
 }
 
 @Entity
@@ -123,16 +97,3 @@ class Calculation(
     }
 
 }
-
-@Entity
-class Function(
-    @PrimaryKey var title : String,
-    @ColumnInfo var expression : String
-)
-
-@Entity
-class Constant(
-    @PrimaryKey var title : String,
-    @ColumnInfo var value : String
-)
-

@@ -3,6 +3,7 @@ package org.seniorlaguna.calculator
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import org.seniorlaguna.calculator.settings.GlobalSettings
 
 class GlobalViewModel(application: Application) : AndroidViewModel(application) {
 

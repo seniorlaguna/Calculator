@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:fragment="org.seniorlaguna.calculator.settings.GeneralSettingsFragment"
+        app:title="@string/prefs_basic_calculator_category_general"
+        />
+
+    <Preference
+        app:fragment="org.seniorlaguna.calculator.settings.HistorySettingsFragment"
+        app:title="@string/prefs_basic_calculator_category_history"
+        />
+
+    <Preference
+        app:fragment="org.seniorlaguna.calculator.settings.DesignSettingsFragment"
+        app:title="@string/prefs_basic_calculator_category_design"
+        />
+
+    <Preference
+        app:fragment="org.seniorlaguna.calculator.settings.AdvancedSettingsFragment"
+        app:title="@string/navigation_drawer_group_more"
+        />
+
+
+        <Preference app:key="@string/settings_contact_key" app:title="@string/settings_contact_title" />
+
+        <Preference app:key="@string/settings_privacy_key" app:title="@string/settings_privacy_title" />
+
+        <Preference app:key="@string/settings_terms_key" app:title="@string/settings_terms_title" />
+
+
+</PreferenceScreen>

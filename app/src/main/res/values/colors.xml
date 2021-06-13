@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="calculatorDisplayTextColor">@android:color/black</color>
-    <color name="calculatorButtonDeleteAllColor">#ce2020</color>
-    <color name="calculatorButtonColor">@android:color/holo_blue_dark</color>
-    <color name="calculatorButtonEqualsColor">@android:color/holo_blue_light</color>
-    <color name="calculatorButtonSwitchPageColor">@android:color/holo_orange_dark</color>
+
+    <!-- Default Theme -->
+    <color name="defaultColorPrimary">#3F51B5</color>
+    <color name="defaultColorPrimaryDark">#303F9F</color>
+    <color name="defaultColorAccent">#FF4081</color>
+    <color name="defaultCalculatorButtonColor">@android:color/holo_blue_dark</color>
+    <color name="defaultCalculatorButtonDeleteAllColor">#ce2020</color>
+    <color name="defaultCalculatorButtonEqualsColor">@android:color/holo_blue_light</color>
+    <color name="defaultCalculatorButtonSwitchPageColor">@android:color/holo_orange_dark</color>
+    <color name="defaultCalculatorDisplayTextColor">@android:color/black</color>
+
+
+    <!-- Dark Theme -->
+    <color name="darkColorPrimary">#212121</color>
+    <color name="darkColorPrimaryDark">#000000</color>
+    <color name="darkColorAccent">#FFFFFF</color>
+    <color name="darkCalculatorDisplayTextColor">@android:color/white</color>
+    <color name="darkCalculatorButtonDeleteAllColor">#33FF0000</color>
+    <color name="darkCalculatorButtonColor">#222222</color>
+    <color name="darkCalculatorButtonEqualsColor">#444444</color>
+    <color name="darkCalculatorButtonSwitchPageColor">#333333</color>
 </resources>

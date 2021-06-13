@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- theme specific colors -->
+    <attr name="calculatorButtonEqualsColor" format="color|reference"/>
+    <attr name="calculatorButtonDeleteAllColor" format="color|reference"/>
+    <attr name="calculatorButtonColor" format="color|reference"/>
+    <attr name="calculatorDisplayTextColor" format="color|reference" />
+    <attr name="calculatorButtonSwitchPageColor" format="color|reference" />
+
+</resources>
