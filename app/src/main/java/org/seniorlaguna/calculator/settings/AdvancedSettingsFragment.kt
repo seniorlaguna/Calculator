@@ -1,6 +1,7 @@
 package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
+import androidx.annotation.Keep
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -8,6 +9,7 @@ import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 
 
+@Keep
 class AdvancedSettingsFragment : PreferenceFragmentCompat() {
 
     // global view model

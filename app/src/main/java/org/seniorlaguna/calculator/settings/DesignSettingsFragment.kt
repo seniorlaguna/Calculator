@@ -3,6 +3,7 @@ package org.seniorlaguna.calculator.settings
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.Keep
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.*
 import org.seniorlaguna.calculator.Calculation
@@ -11,6 +12,7 @@ import org.seniorlaguna.calculator.R
 import java.lang.Exception
 
 
+@Keep
 class DesignSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 
     // global view model
