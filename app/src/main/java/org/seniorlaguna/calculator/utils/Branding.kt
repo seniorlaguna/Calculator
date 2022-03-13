@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import org.seniorlaguna.calculator.R
 
-private const val ADS_INTRODUCED_KEY = "ADS_INTRODUCED_KEY"
 private const val APP_STARTS_BEFORE_ASKING_KEY = "APP_STARTS_BEFORE_ASKING_KEY"
 private const val APP_STARTS_BEFORE_ASKING = 5
 
@@ -70,24 +69,5 @@ fun askForAppRating(context: Context) {
         builder.setPositiveButton(R.string.app_rating_request_yes) { _, _ -> openPlaystore(context, false)}
         builder.show()
     }
-
-}
-
-fun introduceAds(context: Context, showAdsFun : () -> Unit) {
-
-    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    val introduced = prefs.getBoolean(ADS_INTRODUCED_KEY, false)
-
-    // already introduced
-    if (introduced) return
-
-    prefs.edit().putBoolean(ADS_INTRODUCED_KEY, true).apply()
-
-    // show request
-    val builder = AlertDialog.Builder(context)
-    builder.setView(R.layout.ads_intro)
-    builder.setNegativeButton(R.string.ads_dialog_dismiss, null)
-    builder.setPositiveButton(R.string.ads_dialog_ok) { _, _ -> showAdsFun()}
-    builder.show()
 
 }

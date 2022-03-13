@@ -12,10 +12,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
@@ -24,7 +22,6 @@ import org.seniorlaguna.calculator.settings.SettingsActivity
 import org.seniorlaguna.calculator.tool.basic.BasicFragment
 import org.seniorlaguna.calculator.tool.scientific.ScientificFragment
 import org.seniorlaguna.calculator.utils.*
-import java.time.LocalDateTime
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -60,19 +57,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             // ask for app rating
             askForAppRating(this)
-            introduceAds(this
-            ) { showRewardedAds() }
         }
 
     }
 
-    fun initAds() {
+    private fun initAds() {
         // ads
         MobileAds.initialize(this) {}
-        var adRequest = AdRequest.Builder().build()
+        val adRequest = AdRequest.Builder().build()
         RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("MainActivity", adError?.message)
+                Log.d("MainActivity", adError.message)
                 mRewardedAd = null
             }
 
@@ -88,13 +83,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // start settings activity
         startActivity(Intent(this, SettingsActivity::class.java))
         return true
     }
 
-    fun onRewardedAdsSuccess() {
+    private fun onRewardedAdsSuccess() {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, 30)
         globalViewModel.settings.adFreeUntil = calendar.timeInMillis
@@ -102,7 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Toast.makeText(this, R.string.removed_ads_toast, Toast.LENGTH_SHORT).show()
     }
 
-    fun showRewardedAds() {
+    private fun showRewardedAds() {
         if (globalViewModel.settings.isAdFree) {
             Log.d("MainActivity", "ads already removed")
             Toast.makeText(this, R.string.already_removed_toast, Toast.LENGTH_SHORT).show()
@@ -174,7 +169,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // register title observer
-        globalViewModel.toolbarTitle.observe(this, Observer {
+        globalViewModel.toolbarTitle.observe(this, {
             toolbar_title.text = it
         })
 

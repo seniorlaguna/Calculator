@@ -47,24 +47,20 @@
     <string name="cancel">Cancel</string>
 
     <!-- Ads -->
-    <string name="ads_dialog_title">News</string>
-    <string name="ads_dialog_text">We are running ads now! You can simply remove them for 30 days by watching a short video :)</string>
-    <string name="ads_dialog_ok">Remove Ads</string>
-    <string name="ads_dialog_dismiss">OK</string>
     <string name="already_removed_toast">You removed ads already</string>
     <string name="removed_ads_toast">Ads were removed for 30 days</string>
 
     <string name="settings_contact_key" translatable="false">contact_key</string>
     <string name="settings_contact_title">Contact</string>
-    <string name="settings_contact_url"></string>
+    <string name="settings_contact_url" translatable="false">https://seniorlaguna.github.io/contact.html</string>
 
 
     <string name="settings_privacy_key" translatable="false">privacy_key</string>
     <string name="settings_privacy_title">Privacy Policy</string>
-    <string name="settings_privacy_url"></string>
+    <string name="settings_privacy_url">https://seniorlaguna.github.io/calculator/privacy_en.html</string>
 
     <string name="settings_terms_key" translatable="false">terms_key</string>
     <string name="settings_terms_title">Terms Of Use</string>
-    <string name="settings_terms_url"></string>
+    <string name="settings_terms_url">https://seniorlaguna.github.io/calculator/terms_en.html</string>
 
 </resources>

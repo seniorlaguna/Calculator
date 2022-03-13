@@ -49,7 +49,7 @@ class GlobalSettings(context: Context) {
         set(value) { sharedPreferences.edit().putInt(currentToolKey, value).commit() }
 
     private val _theme : String
-        get() = sharedPreferences.getString(context.getString(R.string.theme_key), "1")
+        get() = sharedPreferences.getString(context.getString(R.string.theme_key), "1")!!
 
     var themeChanged : Boolean = false
 
