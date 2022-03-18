@@ -26,7 +26,7 @@ class GeneralSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferen
         initPreferenceIconSpace()
     }
 
-    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+    override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
 
         return try {
             when (preference?.key) {

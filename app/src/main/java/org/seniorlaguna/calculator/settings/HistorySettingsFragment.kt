@@ -26,7 +26,7 @@ class HistorySettingsFragment : PreferenceFragmentCompat(), Preference.OnPrefere
         initPreferenceIconSpace(false)
     }
 
-    override fun onPreferenceClick(preference: Preference?): Boolean {
+    override fun onPreferenceClick(preference: Preference): Boolean {
         globalViewModel.database.clearCalculationHistory(Calculation.TYPE_BASIC)
         globalViewModel.database.clearCalculationHistory(Calculation.TYPE_SCIENTIFIC)
         return true

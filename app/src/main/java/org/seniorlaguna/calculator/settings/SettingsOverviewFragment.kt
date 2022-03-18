@@ -27,7 +27,7 @@ class SettingsOverviewFragment: PreferenceFragmentCompat(), Preference.OnPrefere
         initPreferenceIconSpace()
     }
 
-    override fun onPreferenceClick(preference: Preference?): Boolean {
+    override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference?.key) {
             getString(R.string.settings_privacy_key) -> openPrivacyPolicy(requireContext())
             getString(R.string.settings_terms_key) -> openTermsOfUse(requireContext())

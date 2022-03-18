@@ -29,7 +29,7 @@ class DesignSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenc
         initPreferenceIconSpace()
     }
 
-    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+    override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         globalViewModel.settings.themeChanged = true
         (requireActivity() as SettingsActivity).run {
             recreate()

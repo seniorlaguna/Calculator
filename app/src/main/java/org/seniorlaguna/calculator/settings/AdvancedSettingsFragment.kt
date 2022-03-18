@@ -27,13 +27,13 @@ class AdvancedSettingsFragment : PreferenceFragmentCompat() {
     private fun initPreferenceIconSpace(enabled : Boolean) {
 
         for (i in 0 until preferenceScreen.preferenceCount) {
-            preferenceScreen.getPreference(i)?.run {
+            preferenceScreen.getPreference(i).run {
                 isIconSpaceReserved = enabled
 
                 // remove space from children
                 val category = (this as PreferenceCategory)
                 for (j in 0 until category.preferenceCount) {
-                    category.getPreference(j)?.run {
+                    category.getPreference(j).run {
                         isIconSpaceReserved = enabled
                     }
                 }
