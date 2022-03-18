@@ -12,11 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_basic_history.*
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
+import org.seniorlaguna.calculator.databinding.FragmentBasicHistoryBinding
 
 open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickListener {
 
@@ -27,7 +27,11 @@ open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickL
 
     // view models
     protected lateinit var globalViewModel: GlobalViewModel
-    protected lateinit var toolViewModel: BasicViewModel
+    private lateinit var toolViewModel: BasicViewModel
+
+    // view binding
+    private var _binding : FragmentBasicHistoryBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -35,19 +39,26 @@ open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickL
         globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
         toolViewModel = ViewModelProviders.of(requireParentFragment())[BasicViewModel::class.java]
 
-        return inflater.inflate(R.layout.fragment_basic_history, container, false)
+        _binding = FragmentBasicHistoryBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        history.layoutManager = LinearLayoutManager(this.context)
-        history.adapter = calculationAdapter
-        history.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.history.layoutManager = LinearLayoutManager(this.context)
+        binding.history.adapter = calculationAdapter
+        binding.history.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         globalViewModel.database.getAllCalculations(calculationType).observe(requireActivity(),
             Observer<List<Calculation>> { t -> if (t != null) calculationAdapter.setData(t as ArrayList<Calculation>) })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onClick(v: View?) {

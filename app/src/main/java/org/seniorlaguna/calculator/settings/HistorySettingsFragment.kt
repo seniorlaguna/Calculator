@@ -36,7 +36,7 @@ class HistorySettingsFragment : PreferenceFragmentCompat(), Preference.OnPrefere
         listOf<Preference?>(
             findPreference<Preference>(getString(R.string.prefs_basic_calculator_history_clear_key))
         ).forEach {
-            it?.setOnPreferenceClickListener(this)
+            it?.onPreferenceClickListener = this
         }
     }
 

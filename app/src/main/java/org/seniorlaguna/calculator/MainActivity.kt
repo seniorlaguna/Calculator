@@ -14,12 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.initialization.InitializationStatus
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import org.seniorlaguna.calculator.databinding.ActivityMainBinding
 import org.seniorlaguna.calculator.settings.SettingsActivity
 import org.seniorlaguna.calculator.tool.basic.BasicFragment
 import org.seniorlaguna.calculator.tool.scientific.ScientificFragment
@@ -38,6 +36,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // rewarded ads
     private var mRewardedAd : RewardedAd? = null
 
+    // view binding
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -46,14 +47,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setTheme(globalViewModel.settings.theme)
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-        initAds()
         if (!globalViewModel.settings.isAdFree) {
-            //initAds()
+            initAds()
         }
-
 
         initToolbar()
 
@@ -69,8 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initAds() {
         // ads
-        MobileAds.initialize(this
-        ) {}
+        MobileAds.initialize(this) {}
 
         // ONLY FOR TEST PURPOSE
         val configuration = RequestConfiguration.Builder()
@@ -162,8 +160,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
 
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
         else {
             super.onBackPressed()
@@ -174,27 +172,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initToolbar() {
 
         // make toolbar visible in portrait and invisible in landscape mode
-        toolbar.visibility = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.VISIBLE else View.GONE
+        binding.toolbar.visibility = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.VISIBLE else View.GONE
 
 
         // set support action bar without default title
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // register title observer
-        globalViewModel.toolbarTitle.observe(this, {
-            toolbar_title.text = it
-        })
+        globalViewModel.toolbarTitle.observe(this) {
+            binding.toolbarTitle.text = it
+        }
 
         // add navigation drawer
-        ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close).run {
+        ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close).run {
             drawerArrowDrawable.color = ContextCompat.getColor(this@MainActivity, android.R.color.white)
-            drawer_layout.addDrawerListener(this)
+            binding.drawerLayout.addDrawerListener(this)
             syncState()
         }
 
         // set navigation drawer listener
-        navigation_view.setNavigationItemSelectedListener(this)
+        binding.navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun setTheme(resId: Int) {
@@ -213,7 +211,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun startTool(toolId : Int) {
 
         // show selection in navigation drawer
-        navigation_view.setCheckedItem(when (toolId) {
+        binding.navigationView.setCheckedItem(when (toolId) {
             ScientificFragment.TOOL_ID -> R.id.navigation_drawer_scientific_calculator
             else -> R.id.navigation_drawer_basic_calculator
         })
