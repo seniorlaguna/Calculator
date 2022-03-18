@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
@@ -26,8 +26,8 @@ open class DisplayFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
-        globalViewModel = ViewModelProviders.of(requireActivity())[GlobalViewModel::class.java]
-        toolViewModel = ViewModelProviders.of(requireParentFragment())[BasicViewModel::class.java]
+        globalViewModel = ViewModelProvider(requireActivity())[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProvider(requireParentFragment())[BasicViewModel::class.java]
 
         return inflater.inflate(R.layout.fragment_basic_display, container, false)
     }

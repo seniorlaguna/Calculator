@@ -2,7 +2,7 @@ package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
 import androidx.annotation.Keep
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import org.seniorlaguna.calculator.GlobalViewModel
@@ -18,7 +18,7 @@ class AdvancedSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         // get global view model
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
 
         addPreferencesFromResource(R.xml.advanced_preferences)
         initPreferenceIconSpace(false)

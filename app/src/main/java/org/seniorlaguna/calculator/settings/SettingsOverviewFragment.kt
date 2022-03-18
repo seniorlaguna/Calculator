@@ -1,16 +1,14 @@
 package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
-import androidx.preference.*
-import org.seniorlaguna.calculator.Calculation
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.utils.openContact
-import org.seniorlaguna.calculator.utils.openGithub
 import org.seniorlaguna.calculator.utils.openPrivacyPolicy
 import org.seniorlaguna.calculator.utils.openTermsOfUse
-import java.lang.Exception
 
 class SettingsOverviewFragment: PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {
 
@@ -20,7 +18,7 @@ class SettingsOverviewFragment: PreferenceFragmentCompat(), Preference.OnPrefere
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         // get global view model
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
 
         addPreferencesFromResource(R.xml.settings_overview)
         initOnPreferenceClickListener()
@@ -28,7 +26,7 @@ class SettingsOverviewFragment: PreferenceFragmentCompat(), Preference.OnPrefere
     }
 
     override fun onPreferenceClick(preference: Preference): Boolean {
-        when (preference?.key) {
+        when (preference.key) {
             getString(R.string.settings_privacy_key) -> openPrivacyPolicy(requireContext())
             getString(R.string.settings_terms_key) -> openTermsOfUse(requireContext())
         getString(R.string.settings_contact_key) -> openContact(requireContext())
@@ -49,7 +47,7 @@ class SettingsOverviewFragment: PreferenceFragmentCompat(), Preference.OnPrefere
     private fun initPreferenceIconSpace(enabled : Boolean = false) {
 
         for (i in 0 until preferenceScreen.preferenceCount) {
-            preferenceScreen.getPreference(i)?.run {
+            preferenceScreen.getPreference(i).run {
                 isIconSpaceReserved = enabled
             }
 

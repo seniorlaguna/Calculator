@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 
@@ -16,7 +16,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // get global view model
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
         setTheme(globalViewModel.settings.theme)
 
         super.onCreate(savedInstanceState)

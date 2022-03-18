@@ -2,12 +2,13 @@ package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
 import androidx.annotation.Keep
-import androidx.lifecycle.ViewModelProviders
-import androidx.preference.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceFragmentCompat
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
-import java.lang.Exception
 
 
 @Keep
@@ -19,7 +20,7 @@ class GeneralSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferen
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         // get global view model
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
 
         addPreferencesFromResource(R.xml.general_preferences)
         initOnPreferenceChangeListener()
@@ -29,7 +30,7 @@ class GeneralSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferen
     override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
 
         return try {
-            when (preference?.key) {
+            when (preference.key) {
                 getString(R.string.prefs_basic_calculator_decimal_places_key) -> isValidDecimalPlaces((newValue as String).toInt())
                 getString(R.string.prefs_basic_calculator_history_length_key) -> isValidHistoryLength((newValue as String).toInt()).also { if (it) globalViewModel.database.adjustSize(Calculation.TYPE_BASIC, (newValue).toInt()) }
                 getString(R.string.prefs_basic_calculator_precision_key) -> isValidPrecision((newValue as String).toInt())
@@ -60,13 +61,13 @@ class GeneralSettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferen
     private fun initPreferenceIconSpace(enabled : Boolean = false) {
 
         for (i in 0 until preferenceScreen.preferenceCount) {
-            preferenceScreen.getPreference(i)?.run {
+            preferenceScreen.getPreference(i).run {
                 isIconSpaceReserved = enabled
 
                 // remove space from children
                 val category = (this as PreferenceCategory)
                 for (j in 0 until category.preferenceCount) {
-                    category.getPreference(j)?.run {
+                    category.getPreference(j).run {
                         isIconSpaceReserved = enabled
                     }
                 }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
@@ -16,8 +16,8 @@ class DisplayFragment : DisplayFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
-        globalViewModel = ViewModelProviders.of(requireActivity())[GlobalViewModel::class.java]
-        toolViewModel = ViewModelProviders.of(requireParentFragment())[ScientificViewModel::class.java]
+        globalViewModel = ViewModelProvider(requireActivity())[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProvider(requireParentFragment())[ScientificViewModel::class.java]
 
         return inflater.inflate(R.layout.fragment_basic_display, container, false)
     }

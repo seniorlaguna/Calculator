@@ -2,7 +2,7 @@ package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
 import androidx.annotation.Keep
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.*
 import org.seniorlaguna.calculator.Calculation
 import org.seniorlaguna.calculator.GlobalViewModel
@@ -19,7 +19,7 @@ class HistorySettingsFragment : PreferenceFragmentCompat(), Preference.OnPrefere
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         // get global view model
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
 
         addPreferencesFromResource(R.xml.history_preferences)
         initOnPreferenceClickListener()
@@ -43,13 +43,13 @@ class HistorySettingsFragment : PreferenceFragmentCompat(), Preference.OnPrefere
     private fun initPreferenceIconSpace(enabled : Boolean) {
 
         for (i in 0 until preferenceScreen.preferenceCount) {
-            preferenceScreen.getPreference(i)?.run {
+            preferenceScreen.getPreference(i).run {
                 isIconSpaceReserved = enabled
 
                 // remove space from children
                 val category = (this as PreferenceCategory)
                 for (j in 0 until category.preferenceCount) {
-                    category.getPreference(j)?.run {
+                    category.getPreference(j).run {
                         isIconSpaceReserved = enabled
                     }
                 }

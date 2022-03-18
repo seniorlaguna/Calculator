@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import androidx.core.view.updateMargins
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 
@@ -24,7 +24,7 @@ open class KeyboardFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
-        toolViewModel = ViewModelProviders.of(requireParentFragment())[BasicViewModel::class.java]
+        toolViewModel = ViewModelProvider(requireParentFragment())[BasicViewModel::class.java]
 
         tableLayout = TableLayout(requireContext())
         return tableLayout

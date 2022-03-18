@@ -1,7 +1,5 @@
 package org.seniorlaguna.calculator.tool.scientific
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -12,7 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateMargins
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import org.seniorlaguna.calculator.GlobalViewModel
 import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.tool.basic.KeyboardFragment
@@ -27,8 +25,8 @@ class KeyboardFragment : KeyboardFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
-        globalViewModel = ViewModelProviders.of(requireParentFragment())[GlobalViewModel::class.java]
-        toolViewModel = ViewModelProviders.of(requireParentFragment())[ScientificViewModel::class.java]
+        globalViewModel = ViewModelProvider(requireParentFragment())[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProvider(requireParentFragment())[ScientificViewModel::class.java]
 
         tableLayout = TableLayout(requireContext())
         return tableLayout

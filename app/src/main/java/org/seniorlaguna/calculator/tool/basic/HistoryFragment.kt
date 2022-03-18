@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.seniorlaguna.calculator.Calculation
@@ -36,8 +36,8 @@ open class HistoryFragment : Fragment(), View.OnClickListener, View.OnLongClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // get view models
-        globalViewModel = ViewModelProviders.of(this)[GlobalViewModel::class.java]
-        toolViewModel = ViewModelProviders.of(requireParentFragment())[BasicViewModel::class.java]
+        globalViewModel = ViewModelProvider(this)[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProvider(requireParentFragment())[BasicViewModel::class.java]
 
         _binding = FragmentBasicHistoryBinding.inflate(inflater, container, false)
 

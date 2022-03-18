@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.ads.AdRequest
-import org.seniorlaguna.calculator.*
+import org.seniorlaguna.calculator.GlobalViewModel
+import org.seniorlaguna.calculator.R
 import org.seniorlaguna.calculator.customviews.ExtendedViewPager
 import org.seniorlaguna.calculator.databinding.FragmentBasicBinding
 import org.seniorlaguna.calculator.utils.showInstruction
@@ -34,8 +35,8 @@ open class BasicFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // get view models
-        globalViewModel =  ViewModelProviders.of(requireActivity())[GlobalViewModel::class.java]
-        toolViewModel = ViewModelProviders.of(this)[BasicViewModel::class.java]
+        globalViewModel =  ViewModelProvider(requireActivity())[GlobalViewModel::class.java]
+        toolViewModel = ViewModelProvider(this)[BasicViewModel::class.java]
 
         _binding = FragmentBasicBinding.inflate(inflater, container, false)
         return binding.root
