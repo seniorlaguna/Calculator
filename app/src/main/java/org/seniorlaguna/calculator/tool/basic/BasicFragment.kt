@@ -1,6 +1,7 @@
 package org.seniorlaguna.calculator.tool.basic
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import kotlinx.android.synthetic.main.fragment_basic.*
 import kotlinx.android.synthetic.main.fragment_basic.fragment_root
 import kotlinx.android.synthetic.main.fragment_basic.fragment_viewpager
@@ -45,6 +48,8 @@ open class BasicFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         if (!globalViewModel.settings.isAdFree) {
             val adRequest = AdRequest.Builder().build()

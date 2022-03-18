@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.ads.*
+import com.google.android.gms.ads.initialization.InitializationStatus
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
@@ -21,8 +23,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.seniorlaguna.calculator.settings.SettingsActivity
 import org.seniorlaguna.calculator.tool.basic.BasicFragment
 import org.seniorlaguna.calculator.tool.scientific.ScientificFragment
-import org.seniorlaguna.calculator.utils.*
+import org.seniorlaguna.calculator.utils.askForAppRating
+import org.seniorlaguna.calculator.utils.openGithub
+import org.seniorlaguna.calculator.utils.openPlaystore
 import java.util.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -44,8 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
 
+        initAds()
         if (!globalViewModel.settings.isAdFree) {
-            initAds()
+            //initAds()
         }
 
 
@@ -63,16 +69,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initAds() {
         // ads
-        MobileAds.initialize(this) {}
+        MobileAds.initialize(this
+        ) {}
+
+        // ONLY FOR TEST PURPOSE
+        val configuration = RequestConfiguration.Builder()
+            .setTestDeviceIds(listOf("48A5AEC0AD67D16D5285734B61C36518")).build()
+        MobileAds.setRequestConfiguration(configuration)
+
         val adRequest = AdRequest.Builder().build()
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(this, "ca-app-pub-7519220681088057/6105623946", adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("MainActivity", adError.message)
+                Log.d("MainActivity Rewarded", adError.message)
                 mRewardedAd = null
             }
 
             override fun onAdLoaded(rewardedAd: RewardedAd) {
-                Log.d("MainActivity", "Ad was loaded.")
+                Log.d("MainActivity Rewarded", "Ad was loaded.")
                 mRewardedAd = rewardedAd
             }
         })

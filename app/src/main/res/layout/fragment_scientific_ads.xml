@@ -22,8 +22,10 @@
         android:layout_above="@id/fragment_keyboard"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        ads:adUnitId="ca-app-pub-7519220681088057/4994640686">
     </com.google.android.gms.ads.AdView>
+
+    <!-- Test Ad ads:adUnitId="ca-app-pub-3940256099942544/6300978111" -->
 
     <fragment
             android:id="@+id/fragment_keyboard"

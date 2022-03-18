@@ -85,5 +85,4 @@ dependencies {
     // banner ads lite
     implementation 'com.google.android.gms:play-services-ads-lite:20.6.0'
 
-
 }
