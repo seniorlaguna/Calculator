@@ -45,7 +45,6 @@ abstract class GlobalDatabase : RoomDatabase() {
             if (instance == null) {
                 instance = Room.databaseBuilder(context.applicationContext, GlobalDatabase::class.java, DB_FILE)
                     .addMigrations(migration2To3, migration3To4)
-                    .allowMainThreadQueries()
                     .build()
             }
 
@@ -57,6 +56,32 @@ abstract class GlobalDatabase : RoomDatabase() {
 
     abstract fun dao() : GlobalDao
 
+}
+
+class AsyncDatabase(private val dao : GlobalDao) : GlobalDao {
+    override fun insertCalculation(calculation: Calculation) {
+        Thread {dao.insertCalculation(calculation)}.start()
+    }
+
+    override fun updateCalculation(calculation: Calculation) {
+        Thread {dao.updateCalculation(calculation)}.start()
+    }
+
+    override fun deleteCalculation(calculation: Calculation) {
+        Thread {dao.deleteCalculation(calculation)}.start()
+    }
+
+    override fun clearCalculationHistory(calculationType: Int) {
+        Thread {dao.clearCalculationHistory(calculationType)}.start()
+    }
+
+    override fun getAllCalculations(calculationType: Int): LiveData<List<Calculation>> {
+        return dao.getAllCalculations(calculationType)
+    }
+
+    override fun adjustSize(calculationType: Int, limit: Int) {
+        Thread {dao.adjustSize(calculationType, limit)}.start()
+    }
 }
 
 @Dao

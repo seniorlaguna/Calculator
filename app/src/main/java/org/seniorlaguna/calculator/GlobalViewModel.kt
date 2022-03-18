@@ -8,6 +8,6 @@ import org.seniorlaguna.calculator.settings.GlobalSettings
 class GlobalViewModel(application: Application) : AndroidViewModel(application) {
 
     val settings = GlobalSettings.getInstance(application.applicationContext)
-    val database = GlobalDatabase.getInstance(application.applicationContext).dao()
+    val database = AsyncDatabase(GlobalDatabase.getInstance(application.applicationContext).dao())
     val toolbarTitle : MutableLiveData<String> = MutableLiveData()
 }
