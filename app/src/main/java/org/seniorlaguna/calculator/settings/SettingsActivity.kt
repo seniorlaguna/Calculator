@@ -28,7 +28,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             supportFragmentManager.beginTransaction().apply {
                 add(
                     R.id.fragment_container,
-                    SettingsOverviewFragment(),
+                    SettingsFragment(),
                     "overview"
                 )
                 commit()
