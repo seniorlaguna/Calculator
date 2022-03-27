@@ -27,51 +27,51 @@
     <string name="prefs_scientific_calculator_category_history">History</string>
     <string name="prefs_scientific_calculator_category_advanced">Advanced</string>
 
-    <string name="prefs_scientific_calculator_decimal_places_key">scientific_calculator_decimal_places_key</string>
+    <string name="prefs_scientific_calculator_decimal_places_key" translatable="false">scientific_calculator_decimal_places_key</string>
     <string name="prefs_scientific_calculator_decimal_places_title">Decimal Places</string>
     <string name="prefs_scientific_calculator_decimal_places_summary">How many decimal places do you want</string>
 
-    <string name="prefs_scientific_calculator_round_up_key">scientific_calculator_round_up_key</string>
+    <string name="prefs_scientific_calculator_round_up_key" translatable="false">scientific_calculator_round_up_key</string>
     <string name="prefs_scientific_calculator_round_up_title">Round Up</string>
     <string name="prefs_scientific_calculator_round_up_summary">Rounding up the result</string>
 
-    <string name="prefs_scientific_calculator_auto_delete_key">scientific_calculator_auto_delete_key</string>
+    <string name="prefs_scientific_calculator_auto_delete_key" translatable="false">scientific_calculator_auto_delete_key</string>
     <string name="prefs_scientific_calculator_auto_delete_title">Auto Delete</string>
     <string name="prefs_scientific_calculator_auto_delete_summary">Delete result on next input</string>
 
-    <string name="prefs_scientific_calculator_instant_result_key">scientific_calculator_instant_result_key</string>
+    <string name="prefs_scientific_calculator_instant_result_key" translatable="false">scientific_calculator_instant_result_key</string>
     <string name="prefs_scientific_calculator_instant_result_title">Instant Result</string>
     <string name="prefs_scientific_calculator_instant_result_summary">Shows the current result instantly</string>
 
-    <string name="prefs_prefs_scientific_calculator_rad_deg_key">prefs_scientific_calculator_rad_deg_key</string>
+    <string name="prefs_prefs_scientific_calculator_rad_deg_key" translatable="false">prefs_scientific_calculator_rad_deg_key</string>
     <string name="prefs_prefs_scientific_calculator_rad_deg_title">Use Radians</string>
     <string name="prefs_prefs_scientific_calculator_rad_deg_summary">Switch between radians or degrees</string>
 
-    <string name="prefs_scientific_calculator_history_key">scientific_calculator_history_key</string>
+    <string name="prefs_scientific_calculator_history_key" translatable="false">scientific_calculator_history_key</string>
     <string name="prefs_scientific_calculator_history_title">History</string>
     <string name="prefs_scientific_calculator_history_summary">Do you want a history</string>
 
-    <string name="prefs_scientific_calculator_history_length_key">scientific_calculator_history_length_key</string>
+    <string name="prefs_scientific_calculator_history_length_key" translatable="false">scientific_calculator_history_length_key</string>
     <string name="prefs_scientific_calculator_history_length_title">History Length</string>
     <string name="prefs_scientific_calculator_history_length_summary">How many entries do you want to save</string>
 
-    <string name="prefs_scientific_calculator_history_save_results_key">scientific_calculator_history_save_results_key</string>
+    <string name="prefs_scientific_calculator_history_save_results_key" translatable="false">scientific_calculator_history_save_results_key</string>
     <string name="prefs_scientific_calculator_history_save_results_title">Save Results</string>
     <string name="prefs_scientific_calculator_history_save_results_summary">Otherwise there are just the calculations</string>
 
-    <string name="prefs_scientific_calculator_history_disable_input_key">scientific_calculator_history_disable_input_key</string>
+    <string name="prefs_scientific_calculator_history_disable_input_key" translatable="false">scientific_calculator_history_disable_input_key</string>
     <string name="prefs_scientific_calculator_history_disable_input_title">Disable Input In History</string>
     <string name="prefs_scientific_calculator_history_disable_input_summary">Your inputs in history tab were not processed</string>
 
-    <string name="prefs_scientific_calculator_history_switch_on_input_key">scientific_calculator_history_switch_on_input_key</string>
+    <string name="prefs_scientific_calculator_history_switch_on_input_key" translatable="false">scientific_calculator_history_switch_on_input_key</string>
     <string name="prefs_scientific_calculator_history_switch_on_input_title">Switch On Input</string>
     <string name="prefs_scientific_calculator_history_switch_on_input_summary">Inputs in history tab switch to display</string>
 
-    <string name="prefs_scientific_calculator_history_clear_key">scientific_calculator_history_clear_key</string>
+    <string name="prefs_scientific_calculator_history_clear_key" translatable="false">scientific_calculator_history_clear_key</string>
     <string name="prefs_scientific_calculator_history_clear_title">Clear History</string>
     <string name="prefs_scientific_calculator_history_clear_summary">Remove all entries from history</string>
 
-    <string name="prefs_scientific_calculator_precision_key">scientific_calculator_precision_key</string>
+    <string name="prefs_scientific_calculator_precision_key" translatable="false">scientific_calculator_precision_key</string>
     <string name="prefs_scientific_calculator_precision_title">Precision</string>
     <string name="prefs_scientific_calculator_precision_summary">The higher the better</string>
 

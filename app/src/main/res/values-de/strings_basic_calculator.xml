@@ -28,47 +28,36 @@
     <string name="prefs_basic_calculator_category_design">Design</string>
     <string name="prefs_basic_calculator_category_advanced">Mehr</string>
 
-    <string name="prefs_basic_calculator_decimal_places_key">basic_calculator_decimal_places_key</string>
     <string name="prefs_basic_calculator_decimal_places_title">Nachkommastellen</string>
     <string name="prefs_basic_calculator_decimal_places_summary">Wie viele Nachkommastellen sollen angezeigt werden</string>
 
-    <string name="prefs_basic_calculator_round_up_key">basic_calculator_round_up_key</string>
     <string name="prefs_basic_calculator_round_up_title">Aufrunden</string>
     <string name="prefs_basic_calculator_round_up_summary">Das Ergebnis wird aufgerundet</string>
 
-    <string name="prefs_basic_calculator_auto_delete_key">basic_calculator_auto_delete_key</string>
     <string name="prefs_basic_calculator_auto_delete_title">Auto Delete</string>
     <string name="prefs_basic_calculator_auto_delete_summary">Löscht das Ergebnis bei der nächsten Eingabe</string>
 
-    <string name="prefs_basic_calculator_instant_result_key">basic_calculator_instant_result_key</string>
     <string name="prefs_basic_calculator_instant_result_title">Instant Result</string>
     <string name="prefs_basic_calculator_instant_result_summary">Zeigt das Ergebnis der aktuellen Berechnung sofort an</string>
 
-    <string name="prefs_basic_calculator_history_key">basic_calculator_history_key</string>
     <string name="prefs_basic_calculator_history_title">Verlauf</string>
     <string name="prefs_basic_calculator_history_summary">Aktiviere den Verlauf</string>
 
-    <string name="prefs_basic_calculator_history_length_key">basic_calculator_history_length_key</string>
     <string name="prefs_basic_calculator_history_length_title">Anzahl der Einträge im Verlauf</string>
     <string name="prefs_basic_calculator_history_length_summary">Wie viele Einträge sollen maximal gespeichert werden</string>
 
-    <string name="prefs_basic_calculator_history_save_results_key">basic_calculator_history_save_results_key</string>
     <string name="prefs_basic_calculator_history_save_results_title">Ergebnisse im Verlauf speichern</string>
     <string name="prefs_basic_calculator_history_save_results_summary">Ansonsten wird nur der Rechenweg gespeichert</string>
 
-    <string name="prefs_basic_calculator_history_disable_input_key">basic_calculator_history_disable_input_key</string>
     <string name="prefs_basic_calculator_history_disable_input_title">Eingaben im Verlauf deaktivieren</string>
     <string name="prefs_basic_calculator_history_disable_input_summary">Eingaben im Tab Verlauf werden nicht verarbeitet</string>
 
-    <string name="prefs_basic_calculator_history_switch_on_input_key">basic_calculator_history_switch_on_input_key</string>
     <string name="prefs_basic_calculator_history_switch_on_input_title">Wechsel bei Eingaben</string>
     <string name="prefs_basic_calculator_history_switch_on_input_summary">Eingaben im Tab Verlauf wechseln zum Display</string>
 
-    <string name="prefs_basic_calculator_history_clear_key">basic_calculator_history_clear_key</string>
     <string name="prefs_basic_calculator_history_clear_title">Verlauf löschen</string>
     <string name="prefs_basic_calculator_history_clear_summary">Entfernt alle Einträge im Verlauf</string>
 
-    <string name="prefs_basic_calculator_precision_key">basic_calculator_precision_key</string>
     <string name="prefs_basic_calculator_precision_title">Genauigkeit</string>
     <string name="prefs_basic_calculator_precision_summary">Umso höher desto genauer</string>
 

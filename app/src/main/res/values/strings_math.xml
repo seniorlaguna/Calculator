@@ -4,64 +4,64 @@
     <!-- KeyboardLayout -->
     <string name="math_small_space" translatable="false"> </string>
 
-    <string name="math_00">00</string>
-    <string name="math_0">0</string>
-    <string name="math_1">1</string>
-    <string name="math_2">2</string>
-    <string name="math_3">3</string>
-    <string name="math_4">4</string>
-    <string name="math_5">5</string>
-    <string name="math_6">6</string>
-    <string name="math_7">7</string>
-    <string name="math_8">8</string>
-    <string name="math_9">9</string>
+    <string name="math_00" translatable="false">00</string>
+    <string name="math_0" translatable="false">0</string>
+    <string name="math_1" translatable="false">1</string>
+    <string name="math_2" translatable="false">2</string>
+    <string name="math_3" translatable="false">3</string>
+    <string name="math_4" translatable="false">4</string>
+    <string name="math_5" translatable="false">5</string>
+    <string name="math_6" translatable="false">6</string>
+    <string name="math_7" translatable="false">7</string>
+    <string name="math_8" translatable="false">8</string>
+    <string name="math_9" translatable="false">9</string>
 
-    <string name="math_plus">+</string>
-    <string name="math_minus">-</string>
-    <string name="math_times">×</string>
-    <string name="math_divide">÷</string>
-    <string name="math_power">^</string>
-    <string name="math_square_root">√</string>
-    <string name="math_factorial">!</string>
-    <string name="math_percentage">%</string>
+    <string name="math_plus" translatable="false">+</string>
+    <string name="math_minus" translatable="false">-</string>
+    <string name="math_times" translatable="false">×</string>
+    <string name="math_divide" translatable="false">÷</string>
+    <string name="math_power" translatable="false">^</string>
+    <string name="math_square_root" translatable="false">√</string>
+    <string name="math_factorial" translatable="false">!</string>
+    <string name="math_percentage" translatable="false">%</string>
 
-    <string name="math_sin">sin</string>
-    <string name="math_cos">cos</string>
-    <string name="math_tan">tan</string>
-    <string name="math_cot">cot</string>
+    <string name="math_sin" translatable="false">sin</string>
+    <string name="math_cos" translatable="false">cos</string>
+    <string name="math_tan" translatable="false">tan</string>
+    <string name="math_cot" translatable="false">cot</string>
 
-    <string name="math_asin">asin</string>
-    <string name="math_acos">acos</string>
-    <string name="math_atan">atan</string>
-    <string name="math_acot">acot</string>
+    <string name="math_asin" translatable="false">asin</string>
+    <string name="math_acos" translatable="false">acos</string>
+    <string name="math_atan" translatable="false">atan</string>
+    <string name="math_acot" translatable="false">acot</string>
 
-    <string name="math_sinh">sinh</string>
-    <string name="math_cosh">cosh</string>
-    <string name="math_tanh">tanh</string>
-    <string name="math_coth">coth</string>
+    <string name="math_sinh" translatable="false">sinh</string>
+    <string name="math_cosh" translatable="false">cosh</string>
+    <string name="math_tanh" translatable="false">tanh</string>
+    <string name="math_coth" translatable="false">coth</string>
 
-    <string name="math_asinh">asinh</string>
-    <string name="math_acosh">acosh</string>
-    <string name="math_atanh">atanh</string>
-    <string name="math_acoth">acoth</string>
+    <string name="math_asinh" translatable="false">asinh</string>
+    <string name="math_acosh" translatable="false">acosh</string>
+    <string name="math_atanh" translatable="false">atanh</string>
+    <string name="math_acoth" translatable="false">acoth</string>
 
 
 
-    <string name="math_lg">lg</string>
-    <string name="math_ln">ln</string>
-    <string name="math_abs">|x|</string>
+    <string name="math_lg" translatable="false">lg</string>
+    <string name="math_ln" translatable="false">ln</string>
+    <string name="math_abs" translatable="false">|x|</string>
 
-    <string name="math_dot">.</string>
-    <string name="math_clear_one">←</string>
-    <string name="math_clear">C</string>
-    <string name="math_bracket_open">(</string>
-    <string name="math_bracket_close">)</string>
-    <string name="math_equals">=</string>
+    <string name="math_dot" translatable="false">.</string>
+    <string name="math_clear_one" translatable="false">←</string>
+    <string name="math_clear" translatable="false">C</string>
+    <string name="math_bracket_open" translatable="false">(</string>
+    <string name="math_bracket_close" translatable="false">)</string>
+    <string name="math_equals" translatable="false">=</string>
 
-    <string name="math_pi">π</string>
-    <string name="math_e">e</string>
+    <string name="math_pi" translatable="false">π</string>
+    <string name="math_e" translatable="false">e</string>
 
-    <string name="math_switch_page">⇄</string>
+    <string name="math_switch_page" translatable="false">⇄</string>
 
 
 </resources>
