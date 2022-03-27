@@ -1,6 +1,5 @@
 package org.seniorlaguna.calculator.tool.basic
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -32,46 +31,10 @@ open class KeyboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initKeyboard(tableLayout, keyboard1)
     }
 
-    protected fun initKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
-
-        // differentiate betwenn display orientations
-        when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> initLandscapeKeyboard(table, keyboardLayout)
-            Configuration.ORIENTATION_PORTRAIT -> initPortraitKeyboard(table, keyboardLayout)
-        }
-
-    }
-
-    private fun initLandscapeKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
-
-        // TODO("Fix size (height, width, font size) determing algorithm")
-        val height = resources.displayMetrics.heightPixels / 8
-        val width = resources.displayMetrics.widthPixels / 69 * 10
-
-        val margin = 2//(resources.displayMetrics.widthPixels - (7 * width)) / 13
-        table.removeAllViews()
-
-        keyboardLayout.landscapeLayout?.forEach { row ->
-
-            val tableRow = TableRow(table.context)
-
-            row.forEach { column ->
-                val btn = Button(table.context)
-                styleButton(btn, column[0] as Int, height, width, margin,  20f)
-                btn.setOnClickListener { onClick(column[0] as Int, column[1] as String?) }
-                tableRow.addView(btn)
-            }
-
-            table.addView(tableRow, TableLayout.LayoutParams().apply { setMargins(0); updateMargins(0,0,0,0) })
-        }
-
-    }
-
-    private fun initPortraitKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
+    fun initKeyboard(table : TableLayout, keyboardLayout : KeyboardLayout) {
 
         val size = resources.displayMetrics.widthPixels / 51 * 10
         val margin = (resources.displayMetrics.widthPixels - (5 * size)) / 10
