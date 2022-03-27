@@ -34,14 +34,10 @@
     <string name="instructor_got_it">Verstanden</string>
     <string name="instructor_intro1">Wische nach rechts um den Verlauf zu öffnen!</string>
     <string name="instructor_intro2">Tippe kurz um den Eintrag zu benutzen. Tippe länger um den Eintrag zu verändern.</string>
-    <string name="instructor_intro3">Der wissenschaftliche Taschenrechner hat hier und da noch ein paar Problemchen. Wir arbeiten dran!</string>
 
     <string name="name">Name</string>
     <string name="value">Wert</string>
-    <string name="nothing_to_configure">Hier gibt es nichts einzustellen ;)</string>
     <string name="delete">Löschen</string>
-    <string name="choose_a_constant">Konstante wählen</string>
-    <string name="choose_a_function">Funktion wählen</string>
     <string name="cancel">Abbrechen</string>
 
     <!-- Ads -->
@@ -54,5 +50,6 @@
 
     <string name="settings_privacy_url">https://seniorlaguna.github.io/calculator/privacy_de.html</string>
     <string name="settings_terms_url">https://seniorlaguna.github.io/calculator/terms_de.html</string>
+    <string name="history_cleared_toast">Verlauf gelöscht!</string>
 
 </resources>

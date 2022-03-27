@@ -35,15 +35,10 @@
     <string name="instructor_got_it">Got It!</string>
     <string name="instructor_intro1">Swipe right to show history!</string>
     <string name="instructor_intro2">Click to use. Long click for options!</string>
-    <string name="instructor_intro3">The scientific calculator is not fully functional yet. We do our best to make it work!</string>
-
 
     <string name="name">Name</string>
     <string name="value">Value</string>
-    <string name="nothing_to_configure">Here is nothing to configure ;)</string>
     <string name="delete">Delete</string>
-    <string name="choose_a_constant">Choose a constant</string>
-    <string name="choose_a_function">Choose a function</string>
     <string name="cancel">Cancel</string>
 
     <!-- Ads -->
@@ -62,5 +57,6 @@
     <string name="settings_terms_key" translatable="false">terms_key</string>
     <string name="settings_terms_title">Terms Of Use</string>
     <string name="settings_terms_url">https://seniorlaguna.github.io/calculator/terms_en.html</string>
+    <string name="history_cleared_toast">History cleared successfully!</string>
 
 </resources>

@@ -2,7 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- KeyboardLayout -->
-    <string name="math_empty" />
     <string name="math_small_space" translatable="false"> </string>
 
     <string name="math_00">00</string>
@@ -63,9 +62,6 @@
     <string name="math_e">e</string>
 
     <string name="math_switch_page">⇄</string>
-
-    <string name="math_my_functions" tools:ignore="MissingTranslation">f(x)</string>
-    <string name="math_my_constants" tools:ignore="MissingTranslation">π</string>
 
 
 </resources>

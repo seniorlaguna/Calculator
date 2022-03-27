@@ -1,6 +1,7 @@
 package org.seniorlaguna.calculator.settings
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -96,6 +97,7 @@ class SettingsFragment: PreferenceFragmentCompat(), Preference.OnPreferenceClick
     private fun clearHistory() {
         globalViewModel.database.clearCalculationHistory(Calculation.TYPE_BASIC)
         globalViewModel.database.clearCalculationHistory(Calculation.TYPE_SCIENTIFIC)
+        Toast.makeText(requireContext(), getString(R.string.history_cleared_toast), Toast.LENGTH_SHORT).show()
     }
 
     private fun isGreaterThanZero(value : Int) = 0 <= value
