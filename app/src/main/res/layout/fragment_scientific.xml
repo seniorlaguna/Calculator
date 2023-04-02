@@ -14,19 +14,6 @@
             android:layout_height="match_parent"
             android:layout_above="@id/fragment_keyboard"/>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/fragment_keyboard"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-7519220681088057/4994640686">
-    </com.google.android.gms.ads.AdView>
-
-    <!-- Test Ad ads:adUnitId="ca-app-pub-3940256099942544/6300978111" -->
-
     <fragment
             android:id="@+id/fragment_keyboard"
             android:name="org.seniorlaguna.calculator.tool.scientific.KeyboardFragment"

@@ -45,13 +45,6 @@ open class BasicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (globalViewModel.settings.isAdFree) {
-            binding.root.removeView(binding.adView)
-        } else {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-        }
-
         // init view pager
         initViewPager(view)
 

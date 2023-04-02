@@ -1,5 +1,8 @@
 package org.seniorlaguna.calculator
 
+import android.app.Activity
+import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -7,15 +10,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.material.navigation.NavigationView
 import org.seniorlaguna.calculator.databinding.ActivityMainBinding
 import org.seniorlaguna.calculator.settings.SettingsActivity
@@ -26,6 +27,219 @@ import org.seniorlaguna.calculator.utils.openGithub
 import org.seniorlaguna.calculator.utils.openPlaystore
 import java.util.*
 
+private const val LOG_TAG = "AppOpenAdManager"
+private const val AD_UNIT_ID = "ca-app-pub-7519220681088057/3826693588"
+
+/** Application class that initializes, loads and show ads when activities change states. */
+class CalculatorApplication : Application(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
+
+    private lateinit var appOpenAdManager: AppOpenAdManager
+    private var currentActivity: Activity? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        registerActivityLifecycleCallbacks(this)
+
+        // Log the Mobile Ads SDK version.
+        Log.d(LOG_TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion())
+
+        MobileAds.initialize(this) {}
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        appOpenAdManager = AppOpenAdManager()
+    }
+
+    /** LifecycleObserver method that shows the app open ad when the app moves to foreground. */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onMoveToForeground() {
+        // Show the ad (if available) when the app moves to foreground.
+        currentActivity?.let { appOpenAdManager.showAdIfAvailable(it) }
+    }
+
+    /** ActivityLifecycleCallback methods. */
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+
+    override fun onActivityStarted(activity: Activity) {
+        // An ad activity is started when an ad is showing, which could be AdActivity class from Google
+        // SDK or another activity class implemented by a third party mediation partner. Updating the
+        // currentActivity only when an ad is not showing will ensure it is not an ad activity, but the
+        // one that shows the ad.
+        if (!appOpenAdManager.isShowingAd) {
+            currentActivity = activity
+        }
+    }
+
+    override fun onActivityResumed(activity: Activity) {}
+
+    override fun onActivityPaused(activity: Activity) {}
+
+    override fun onActivityStopped(activity: Activity) {}
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+    override fun onActivityDestroyed(activity: Activity) {}
+
+    /**
+     * Shows an app open ad.
+     *
+     * @param activity the activity that shows the app open ad
+     * @param onShowAdCompleteListener the listener to be notified when an app open ad is complete
+     */
+    fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
+        // We wrap the showAdIfAvailable to enforce that other classes only interact with MyApplication
+        // class.
+        appOpenAdManager.showAdIfAvailable(activity, onShowAdCompleteListener)
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when an app open ad is complete (i.e.
+     * dismissed or fails to show).
+     */
+    interface OnShowAdCompleteListener {
+        fun onShowAdComplete()
+    }
+
+    /** Inner class that loads and shows app open ads. */
+    private inner class AppOpenAdManager {
+
+        private var appOpenAd: AppOpenAd? = null
+        private var isLoadingAd = false
+        var isShowingAd = false
+
+        /** Keep track of the time an app open ad is loaded to ensure you don't show an expired ad. */
+        private var loadTime: Long = 0
+
+        /**
+         * Load an ad.
+         *
+         * @param context the context of the activity that loads the ad
+         */
+        fun loadAd(context: Context) {
+            // Do not load ad if there is an unused ad or one is already loading.
+            if (isLoadingAd || isAdAvailable()) {
+                return
+            }
+
+            isLoadingAd = true
+            val request = AdRequest.Builder().build()
+            AppOpenAd.load(
+                context,
+                AD_UNIT_ID,
+                request,
+                AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
+                object : AppOpenAd.AppOpenAdLoadCallback() {
+                    /**
+                     * Called when an app open ad has loaded.
+                     *
+                     * @param ad the loaded app open ad.
+                     */
+                    override fun onAdLoaded(ad: AppOpenAd) {
+                        appOpenAd = ad
+                        isLoadingAd = false
+                        loadTime = Date().time
+                        Log.d(LOG_TAG, "onAdLoaded.")
+                    }
+
+                    /**
+                     * Called when an app open ad has failed to load.
+                     *
+                     * @param loadAdError the error.
+                     */
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        isLoadingAd = false
+                        Log.d(LOG_TAG, "onAdFailedToLoad: " + loadAdError.message)
+                    }
+                }
+            )
+        }
+
+        /** Check if ad was loaded more than n hours ago. */
+        private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
+            val dateDifference: Long = Date().time - loadTime
+            val numMilliSecondsPerHour: Long = 3600000
+            return dateDifference < numMilliSecondsPerHour * numHours
+        }
+
+        /** Check if ad exists and can be shown. */
+        private fun isAdAvailable(): Boolean {
+            // Ad references in the app open beta will time out after four hours, but this time limit
+            // may change in future beta versions. For details, see:
+            // https://support.google.com/admob/answer/9341964?hl=en
+            return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
+        }
+
+        /**
+         * Show the ad if one isn't already showing.
+         *
+         * @param activity the activity that shows the app open ad
+         */
+        fun showAdIfAvailable(activity: Activity) {
+            showAdIfAvailable(
+                activity,
+                object : OnShowAdCompleteListener {
+                    override fun onShowAdComplete() {
+                        // Empty because the user will go back to the activity that shows the ad.
+                    }
+                }
+            )
+        }
+
+        /**
+         * Show the ad if one isn't already showing.
+         *
+         * @param activity the activity that shows the app open ad
+         * @param onShowAdCompleteListener the listener to be notified when an app open ad is complete
+         */
+        fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
+            // If the app open ad is already showing, do not show the ad again.
+            if (isShowingAd) {
+                Log.d(LOG_TAG, "The app open ad is already showing.")
+                return
+            }
+
+            // If the app open ad is not available yet, invoke the callback then load the ad.
+            if (!isAdAvailable()) {
+                Log.d(LOG_TAG, "The app open ad is not ready yet.")
+                onShowAdCompleteListener.onShowAdComplete()
+                loadAd(activity)
+                return
+            }
+
+            Log.d(LOG_TAG, "Will show ad.")
+
+            appOpenAd!!.setFullScreenContentCallback(
+                object : FullScreenContentCallback() {
+                    /** Called when full screen content is dismissed. */
+                    override fun onAdDismissedFullScreenContent() {
+                        // Set the reference to null so isAdAvailable() returns false.
+                        appOpenAd = null
+                        isShowingAd = false
+                        Log.d(LOG_TAG, "onAdDismissedFullScreenContent.")
+
+                        onShowAdCompleteListener.onShowAdComplete()
+                        loadAd(activity)
+                    }
+
+                    /** Called when fullscreen content failed to show. */
+                    override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                        appOpenAd = null
+                        isShowingAd = false
+                        Log.d(LOG_TAG, "onAdFailedToShowFullScreenContent: " + adError.message)
+
+                        onShowAdCompleteListener.onShowAdComplete()
+                        loadAd(activity)
+                    }
+
+                    /** Called when fullscreen content is shown. */
+                    override fun onAdShowedFullScreenContent() {
+                        Log.d(LOG_TAG, "onAdShowedFullScreenContent.")
+                    }
+                }
+            )
+            isShowingAd = true
+            appOpenAd!!.show(activity)
+        }
+    }
+}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,12 +247,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var globalViewModel: GlobalViewModel
     private var themeId : Int = 0
 
-    // rewarded ads
-    private var mRewardedAd : RewardedAd? = null
-
     // view binding
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,10 +259,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        if (!globalViewModel.settings.isAdFree) {
-            initAds()
-        }
 
         initToolbar()
 
@@ -65,30 +271,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     }
-
-    private fun initAds() {
-        // ads
-        MobileAds.initialize(this) {}
-
-        // ONLY FOR TEST PURPOSE
-        val configuration = RequestConfiguration.Builder()
-            .setTestDeviceIds(listOf("48A5AEC0AD67D16D5285734B61C36518")).build()
-        MobileAds.setRequestConfiguration(configuration)
-
-        val adRequest = AdRequest.Builder().build()
-        RewardedAd.load(this, "ca-app-pub-7519220681088057/6105623946", adRequest, object : RewardedAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("MainActivity Rewarded", adError.message)
-                mRewardedAd = null
-            }
-
-            override fun onAdLoaded(rewardedAd: RewardedAd) {
-                Log.d("MainActivity Rewarded", "Ad was loaded.")
-                mRewardedAd = rewardedAd
-            }
-        })
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -100,52 +282,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun onRewardedAdsSuccess() {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_MONTH, 30)
-        globalViewModel.settings.adFreeUntil = calendar.timeInMillis
-        recreate()
-        Toast.makeText(this, R.string.removed_ads_toast, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showRewardedAds() {
-        if (globalViewModel.settings.isAdFree) {
-            Log.d("MainActivity", "ads already removed")
-            Toast.makeText(this, R.string.already_removed_toast, Toast.LENGTH_SHORT).show()
-
-            return
-        }
-
-        mRewardedAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                Log.d("MainActivity", "Ad was dismissed.")
-            }
-
-            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                Log.d("MainActivity", "Ad failed to show.")
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                Log.d("MainActivity", "Ad showed fullscreen content.")
-                // Called when ad is dismissed.
-                // Don't set the ad reference to null to avoid showing the ad a second time.
-                mRewardedAd = null
-            }
-        }
-
-        if (mRewardedAd != null) {
-            mRewardedAd?.show(this) {
-                Log.d("MainActivity", "reward earned")
-                onRewardedAdsSuccess()
-            }
-        } else {
-            Log.d("MainActivity", "The rewarded ad wasn't ready yet.")
-        }
-    }
-
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
-            R.id.navigation_drawer_remove_ads -> showRewardedAds()
             R.id.navigation_drawer_rate -> openPlaystore(this, false)
             R.id.navigation_drawer_more_apps -> openPlaystore(this)
             R.id.navigation_drawer_more_senior_laguna -> openGithub(this)

@@ -28,10 +28,6 @@
 
         <menu>
             <item
-                android:id="@+id/navigation_drawer_remove_ads"
-                android:icon="@drawable/ic_baseline_ondemand_video_24"
-                android:title="@string/navigation_remove_ads"/>
-            <item
                     android:id="@+id/navigation_drawer_rate"
                     android:icon="@drawable/ic_heart_black_24dp"
                     android:title="@string/navigation_drawer_rate"/>
